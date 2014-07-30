@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Full featured example</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- TinyMCE -->
+<script type="text/javascript" src="./resources/tinyMCE/jscripts/tiny_mce/tiny_mce_src.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="./nflcime.js"></script>
+<script type="text/javascript" src="../ext/ext-all.js"></script>
+
+
+<script>
+	
+/**
+ * An Language area widget which requires the following :
+ * --  TinyMCE with ice and bloom plugins
+ * --  NFLCIME.js
+ */
+	
+Ext.define('Btk.view.widget.Langarea', {
+	extend : 'Ext.form.field.TextArea',
+	alias : 'widget.langarea',
+	height : 100,
+	width : 400,
+	padding : '50 0 10 50',
+	labelSeparator : ':',
+	enforceMaxLength : false,// validation must be done within tinyMCE
+	maxLength : 200,
+	initComponent : function() {
+		var me = this;
+		me.callParent();
+	},
+	setValue : function(value) {
+		var me = this, i, rte = tinyMCE.get(me.itemId);
+		if (Ext.isObject(rte)) {
+			rte.setContent(value);
+		}
+		me.callParent([value]);
+	},
+	getValue : function() {
+		var me = this, i, rte = tinyMCE.get(me.itemId);
+		if (Ext.isObject(rte)) {
+			return rte.getContent({
+						format : 'html'
+					});
+		}
+		return me.callParent();
+	},
+	listeners : {
+		focus : function(){
+			var ed = this.editor;
+			this.editor.show();
+			window.setTimeout(function(){
+				ed.focus();
+				ed.getBody().focus();
+			},500)
+		},
+		blur : function(e,t){
+			//tinymce.DOM.hide(this.editor.id + "_external");		
+		},
+		destroy : function() {
+			var me = this, rte = tinyMCE.get(me.itemId);
+			if (Ext.isObject(rte)) {
+				rte.destroy(true);
+			}
+		},
+		afterrender : function(taf) {
+			var me = this, height = me.getHeight(), spk, ed;
+			
+			me.getEl().dom.setAttribute('NFLCIME',"kb,cvt,rt")
+			
+			ed = new tinyMCE.Editor(taf.inputId, {
+			// General options
+			mode : "none",
+			theme : "advanced",
+			plugins : "ice, bloom",
+			theme_advanced_buttons1 : "bold,italic,underline,numlist,bullist,strikethrough,justifyleft,justifyright,charmap,|,ice_togglechanges,ice_toggleshowchanges,iceacceptall,icerejectall,iceaccept,icereject,languageselect",
+
+			theme_advanced_toolbar_location : "external",
+			theme_advanced_toolbar_align : "left",
+			theme_advanced_statusbar_location : 'none', // 'bottom'
+			theme_advanced_resizing : true,
+			extended_valid_elements: "p[*],span[*],delete[*],insert[*]",
+			ice: {
+				user: { name: 'Miss T', id: 1},
+				preserveOnPaste: 'p,a[href],i,em,strong,span[*]',
+				// Optional param - defaults to the css found in the plugin directory
+				css: './css/ice.css'
+			},
+			//TODO FEB 22, 2013, consider making this a json object and adding to the plugin
+			bloom: {
+				languages : "albanian=sqi,ltr;amharic=amh,ltr;msa=arb,rtl;azeri=aze,ltr;bambara=bam,ltr;balochi=bal,rtl;belarussian=bel,ltr;bengali=ben,ltr;brahui=brh,rtl;bulgarian=bul,ltr;burmese=mya,ltr;chechen=che,ltr;chinese=zho,ltr;croatian=hrv,ltr;czech=ces,ltr;danish=dan,ltr;dari=prs,rtl;dinka=din,ltr;dutch=nld,ltr;estonian=est,ltr;farsi=fas,rtl;finnish=fin,ltr;french=fra,ltr;georgian=kat,ltr;german=deu,ltr;greek=ell,ltr;gujarati=guj,ltr;haitian=hat,ltr;hassaniyya=mey,rtl;hausa=hau,ltr;hebrew=heb,rtl;" +
+				"hindi=hin,ltr;hindko=hno,rtl;hungarian=hun,ltr;igbo=ibo,ltr;iraqi=acm,rtl;italian=ita,ltr;japanese=jpn,ltr;kashmiri=kas,rtl;kazakh=kaz,ltr;korean=kor,ltr;kurdish=kur,;kurmanji=kmr,ltr;kyrgyz=kir,ltr;latvian=lav,ltr;lithuanian=lit,ltr;lao=lao,ltr;macedonian=mkd,ltr;maguindanao=mdh,ltr;maranao=mrw,ltr;norwegian=nor,ltr;pashto=pus,rtl;potwari=phr,rtl;polish=pol,ltr;epunjabi=pan,ltr;wpunjabi=pnb,rtl;portugese=por,ltr;quechua=que,ltr;romanian=ron,ltr;russian=rus,ltr;sama=ssb,ltr;serbian=srp,ltr;" +
+				"sindhi=snd,rtl;siraiki=skr,rtl;slovene=slv,ltr;slovak=slk,ltr;sorani=ckb,rtl;spanish=spa,ltr;sudanese=apd,rtl;swahili=swa,ltr;swedish=swe,ltr;tagalog=tgl,ltr;tajik=tgk,ltr;thai=tha,ltr;tigrinya=tir,ltr;turkish=tur,ltr;turkmen=tuk,ltr;ukrainian=ukr,ltr;uzbek=uzb,ltr;wolof=wol,ltr;urdu=urd,rtl;vietnamese=vie,ltr;yakan=yka,ltr;yoruba=yor,ltr;",
+				default_languge : false,
+				services : "kb,cvt,rt",
+				css: './css/styles.css',
+				Modules:[
+					{ id:'pers.cookie', activate:true },
+					{ id:'ui.iframe', activate:true },
+					{ id:'editor.tinymce', activate:true },
+					{ id:'rt.scrube', activate:true },
+					{ id:'lang', activate:true }
+				],
+				UIModules:[
+					{ id:'ui.trace', url:'xtra.ui.trace.html', options: { hAlign:'right', vAlign:'top', width:400, height:500 } }
+				]
+			},
+			//Drop lists for link/image/media/template dialogs
+			template_external_list_url : "lists/template_list.js",
+			external_link_list_url : "lists/link_list.js",
+			external_image_list_url : "lists/image_list.js",
+			media_external_list_url : "lists/media_list.js",
+			// Style formats
+			style_formats : [
+				{title : 'Bold text', inline : 'b'},
+				{title : 'Red text', inline : 'span', styles : {color : '#ff0000'}},
+				{title : 'Red header', block : 'h1', styles : {color : '#ff0000'}},
+				{title : 'Example 1', inline : 'span', classes : 'example1'},
+				{title : 'Example 2', inline : 'span', classes : 'example2'},
+				{title : 'Table styles'},
+				{title : 'Table row 1', selector : 'tr', classes : 'tablerow1'}
+			],
+			height : (height > 500) ? 500 : height,
+			width  : "400",
+			// Replace values for the template plugin
+			template_replace_values : {
+				username : "Some User",
+				staffid : "991234"
+			},
+			setup : function(ed) {
+				ed.onPostRender.add(function(ed, cm) {
+				  me.editor = this;
+				  ed.hide();
+				});
+			}
+			});
+			
+			ed.render()
+		},
+
+	}
+});
+
+
+Ext.application({
+    name: 'MyApp',
+    launch: function() {
+	 Ext.create('Ext.container.Viewport', {
+            items: [{xtype:'langarea'},
+		    { xtype:'langarea'},
+		    { xtype:'langarea'}]
+        });
+    }
+});
+</script>
+<!-- /TinyMCE -->
+
+</head>
+<body role="application">
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link id="interface-css" rel="stylesheet" type="text/css" />
+<link id="module-css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="xtra.ui.trace.js"></script>
+</head>
+<body class="h-resize v-resize" unselectable="on" minWidth="100" minHeight="150">
+<table id="frame" width="100%" height="100%" cellspacing="0" cellpadding="0" unselectable="on">
+	<tr unselectable="on">
+		<td unselectable="on"><div id="frame-top-left" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-top" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-top-right" unselectable="on"></div></td>
+	</tr>
+
+	<tr>
+		<td rowspan="2" unselectable="on"><div id="frame-left" unselectable="on"></div></td>
+		<td unselectable="on">
+			<div id="frame-drag-bar" unselectable="on">
+				<!-- title bar -->
+				<div id="title-bar" unselectable="on">
+					<div id="corner-button-left" unselectable="on"><div class="corner-button" unselectable="on"></div></div>
+					<div id="corner-button-right" unselectable="on"><div id="close-button" class="corner-button" unselectable="on"></div></div>
+					<div id="title" unselectable="on">Trace</div>
+				</div>
+			</div>
+		</td>
+		<td rowspan="2" unselectable="on"><div id="frame-right" unselectable="on"></div></td>
+	</tr>
+
+	<tr height="100%" unselectable="on">
+		<td width="100%" unselectable="on">
+			<!-- content area -->
+			<textarea id="tracebox" wrap="off"></textarea>
+		</td>
+	</tr>
+
+	<tr>
+		<td unselectable="on"><div id="frame-bottom-left" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-bottom" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-bottom-right" unselectable="on"></div></td>
+	</tr>	
+</table>
+</body>
+</html>
