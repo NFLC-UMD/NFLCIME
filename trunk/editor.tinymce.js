@@ -1,20 +1,27 @@
+
 NFLCIME.dispatchEvent({
 	type: 'ModuleAdd',
 	module: {
 		id: 'editor.tinymce',
 		type: 'editor integration',
 		onModuleActivate: function(evt) {
+			
 			var module = evt.module;
-			if (module == this && !this.active) {
+			// need to look at more than one instance
+			// if (module == this && !this.active) {
+			if (module == this) {
 				this.active = true;
 				var list = [];
 				NFLCIME.dispatchEvent({
 					type: 'WindowGetList',
 					list: list
 				});
+				
+				console.log('list:',list);
 
 				for (var i = 0; i < list.length; i++) {
 					var win = list[i];
+					// debugger;
 					if (win.tinyMCE) {
 						this.attachTinyMCEHandlers(win.tinyMCE);
 
@@ -97,6 +104,7 @@ NFLCIME.dispatchEvent({
 		},
 		
 		onLanguageChange: function(evt) {
+		    console.log('langchange', evt);
 			var editor = tinyMCE.activeEditor,
 				editor_lang = editor && editor.language,
 				keyboard_lang = evt && evt.languageTag,
