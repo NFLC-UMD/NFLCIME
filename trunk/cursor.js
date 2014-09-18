@@ -411,6 +411,7 @@ NFLCIME.dispatchEvent({
 		},
 		// Insert HTML at the cursor
 		onCursorInsertHTML : function(evt) {
+			debugger;
 			var edit = evt.target;
 			var html = evt.html;
 			var plain_text = evt.text;
@@ -431,24 +432,61 @@ NFLCIME.dispatchEvent({
 						break;
 					case 'firefox' :
 					case 'safari' :
+						// debugger;
 						var win = doc.defaultView;
 						var selection = win.getSelection();
 						var range = selection.getRangeAt(0);
-						var fragment = range.createContextualFragment(html);
+						// var fragment = range.createContextualFragment(html);
+						var fragment = range.createContextualFragment(evt.text);
 						var last = fragment.lastChild;
 						var parNode = range.startContainer.parentNode;
+						if (parNode.nodeName == 'BODY') {
+							parNode = range.startContainer;
+						}
 						
 						range.deleteContents();
-						
-						if(parNode.getAttribute('lang')){
+						console.log(parNode.getAttribute('lang'));
+
+						var selectedLang = "";
+						if (tinyMCE && tinyMCE.activeEditor.language) {
+							var selectedLang = tinyMCE.activeEditor.language;
+						} 
+
+						if(parNode.getAttribute('lang') && parNode.getAttribute('lang') == selectedLang){
+							console.log('lang present');
+							return;
 							var langRange = document.createRange();
 							langRange.setStartAfter(parNode);
 							langRange.insertNode(fragment)
 						}else{
-							range.insertNode(fragment);
+							if (tinyMCE && tinyMCE.activeEditor.language ) {
+							 // debugger;
+							  parNode.setAttribute("class","lang-" + tinyMCE.activeEditor.language);
+							  parNode.setAttribute("lang",tinyMCE.activeEditor.language);
+							  // var newChar = document.createTextNode(evt.text);
+							  // parNode.appendChild(newChar);
+							  range.insertNode(fragment);
+							} else {
+								range.insertNode(fragment);
+							}
+							/*
+							
+								console.log('new p tag');
+								var newNode = document.createElement("p");
+								newNode.setAttribute("class","lang-" + tinyMCE.activeEditor.language);
+								newNode.setAttribute("lang",tinyMCE.activeEditor.language);
+								newNode.appendChild(document.createTextNode(evt.text));
+								range.insertNode(newNode);
+								debugger;
+							
+							} else {
+								
+							}
+							*/
 						}
 						
 						// set cursor to behind last item
+
 						if (last) {
 							selection.collapse(last, (last.nodeType == 3)
 											? last.nodeValue.length

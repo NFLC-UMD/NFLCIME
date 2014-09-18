@@ -110,26 +110,56 @@ NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 							this.pasteDesination = edit;
 							this.onPasteComplete(true);
 						} else {
+							
+							var clipData = evt.clipboardData.getData('text/plain');
 							var doc = edit.ownerDocument;
 							var win = doc.defaultView;
 							var selection = win.getSelection();
 							var range = selection.getRangeAt(0);
+							var parNode = range.startContainer.parentNode;
+
+							var selectedLang = "";
+							if (tinyMCE && tinyMCE.activeEditor.language) {
+								var selectedLang = tinyMCE.activeEditor.language;
+							} 
+
+							if(parNode.getAttribute('lang') && parNode.getAttribute('lang') == selectedLang){
+								// already in language block
+								// therefore simply paste unformatted
+								var txtNode = document.createTextNode(clipData);
+								range.deleteContents();
+								range.insertNode(txtNode);
+								// stop default paste behavior
+								return false;
+							} else {
+								// discard default behavior
+								// and transfer control to cursor insert behavior
+								NFLCIME.dispatchEvent( { type:'CursorInsertHTML', target: edit, text:clipData, html:clipData } );
+								return false;
+							}
+							/*
+							var doc = edit.ownerDocument;
+							var win = doc.defaultView;
+							var selection = win.getSelection();
+							var range = selection.getRangeAt(0);
+							var clipData = evt.clipboardData.getData('text/plain');
 							// extract the content behind and ahead of cursor
 							var range_behind = doc.createRange();
 							range_behind.setStart(edit, 0);
 							range_behind.setEnd(range.startContainer, range.startOffset);
-							this.fragmentBehindCursor = range_behind.extractContents();
+							// this.fragmentBehindCursor = range_behind.extractContents();
 							var range_ahead = doc.createRange();
 							range_ahead.setStart(range.endContainer, range.endOffset);
 							range_ahead.setEnd(edit, edit.childNodes.length);
-							this.fragmentAheadOfCursor = range_ahead.extractContents();
+							// this.fragmentAheadOfCursor = range_ahead.extractContents();
 							// select the edit (this works, but for some reason it isn't possible to select individual elements inside the edit)
 							range.selectNodeContents(edit);
 							selection.addRange(range);
 							// grab the contents once Safari has pasted them
 							this.pasteTrueTarget = edit;
 							this.pasteDesination = edit;
-							this.onPasteComplete(true);
+							// this.onPasteComplete(true);
+							*/
 						}
 						break;
 				}

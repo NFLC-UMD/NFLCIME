@@ -341,9 +341,10 @@ NFLCIME.dispatchEvent({
 						if (container.nodeName == 'BODY') {
 							container = pEl;
 						}
-
-						var langAttr = container.getAttribute('lang');
-
+						
+						if (container)
+						  var langAttr = container.getAttribute('lang');
+						
 						// within same language block
 						if (langAttr && lang.code3 == langAttr) {
 							NFLCIME.dispatchEvent({
@@ -356,7 +357,7 @@ NFLCIME.dispatchEvent({
 						} else {
 
 							// determine if we need to add a span, or modify P
-
+							// debugger;
 							if (pEl && !(pEl.getAttribute('lang'))) {
 
 								// configure paragraph element
