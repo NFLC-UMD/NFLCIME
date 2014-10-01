@@ -59,7 +59,17 @@ NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 	onPaste:function(evt) {
 		// find the actual edit
 		var edit = this.getFocusedEdit();
+		
 		if(edit) {
+
+			if (edit.className.indexOf('mce-content-body') >= 0) {
+				// pasting into a tinymce field
+				// therefore let tinymce paste handlers do
+				// the work
+				return true;
+			}
+
+
 			if(this.isServiceApplicable(edit)) {
 				this.isPasting = true;
 				switch(this.browser) {
