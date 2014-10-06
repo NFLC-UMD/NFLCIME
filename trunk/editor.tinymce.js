@@ -111,6 +111,11 @@ NFLCIME.dispatchEvent({
 				keyboard_lang = (keyboard_lang == 'null' || keyboard_lang == 'unknown') ? '' : keyboard_lang,
 				direction = evt.languageDir;
 
+
+			editor.fire('langchange', {
+				lang: keyboard_lang
+			});
+
 			if (editor_lang != keyboard_lang && editor.onLanguageChange) {
 				editor.language = keyboard_lang;
 				editor.onLanguageChange.dispatch({
