@@ -364,6 +364,21 @@ NFLCIME.extend(NFLCIME, {
 		}
 	},
 	// Initialization function
+
+	reinitialize: function() {
+		this.removeEventListener('WindowListen', this);
+		this.removeEventListener('WindowIgnore', this);
+		this.removeEventListener('WindowGetList', this);
+		this.removeEventListener('ServiceApplicable', this);
+		this.removeEventListener('ModuleAdd', this);
+		this.removeEventListener('ModuleRegister', this);
+		this.removeEventListener('ModuleActivate', this);
+		this.removeEventListener('ModuleLoad', this);
+		this.removeEventListener('ModuleGetList', this);
+
+		this.initialize();
+	},
+
 	initialize:function() {
 		// figure out the url root of this script
 		var scripts = document.getElementsByTagName('SCRIPT');
