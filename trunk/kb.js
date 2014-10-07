@@ -320,13 +320,19 @@ NFLCIME.dispatchEvent({
 
 						// THIS IS IMPORTANT!!!!!!!
 						// add custom attributes for language
-
+						//debugger;
 
 						var doc = edit.ownerDocument;
 						var win = doc.defaultView;
 						var selection = win.getSelection();
 						var range = selection.getRangeAt(0);
-						var container = range.commonAncestorContainer.parentNode
+
+						if (range.startContainer.nodeName == 'P' && range.startContainer.lang) {
+							var container = range.startContainer;
+						} else {
+							var container = range.commonAncestorContainer.parentNode;
+						}
+
 						var origContainer = container;
 
 						var pEl = null;
@@ -366,7 +372,7 @@ NFLCIME.dispatchEvent({
 								pEl.setAttribute("class", "lang-" + lang.code3);
 								pEl.setAttribute("dir", lang.direction);
 
-
+								console.log('cursorinserttext');
 								NFLCIME.dispatchEvent({
 									type: 'CursorInsertText',
 									target: edit,
