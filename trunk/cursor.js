@@ -411,7 +411,7 @@ NFLCIME.dispatchEvent({
 		},
 		// Insert HTML at the cursor
 		onCursorInsertHTML : function(evt) {
-		
+		    
 			var edit = evt.target;
 			var html = evt.html;
 			var plain_text = evt.text;
@@ -432,19 +432,34 @@ NFLCIME.dispatchEvent({
 						break;
 					case 'firefox' :
 					case 'safari' :
+						
 						var win = doc.defaultView;
 						var selection = win.getSelection();
 						var range = selection.getRangeAt(0);
-						var fragment = range.createContextualFragment(html);
-						var last = fragment.lastChild;
-						var parNode = range.startContainer.parentNode;
+
+						// html at this point will contain span tag
+						// with lang attribute
+						// var fragment = range.createContextualFragment(html);
+
+						// var last = fragment.lastChild;
+						
+						// var parNode = range.startContainer.parentNode;
 						// var parNode = range.startContainer;
 						
+						// delete contents of range, if
+						// user had a range selected
+
 						range.deleteContents();
 						
-						if (range.startContainer.getAttribute('lang')) {
+						var fragment = range.createContextualFragment(evt.text);
+						range.insertNode(fragment);
+							
+
+						/*
+						if (range.startContainer.parentNode.getAttribute('lang')) {
 							fragment = range.createContextualFragment(evt.text);
 							range.insertNode(fragment);
+							last = fragment.lastChild;
 						} else {
 							if(parNode.getAttribute('lang')){
 								var langRange = document.createRange();
@@ -454,6 +469,8 @@ NFLCIME.dispatchEvent({
 								range.insertNode(fragment);
 							}
 						}
+						
+
 						
 						// set cursor to behind last item
 						if (last) {
@@ -465,6 +482,7 @@ NFLCIME.dispatchEvent({
 									: last;
 							element.scrollIntoView(false);
 						}
+						*/
 						break;
 				}
 			}
