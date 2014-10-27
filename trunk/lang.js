@@ -4,7 +4,7 @@ NFLCIME.dispatchEvent({
 		id: 'lang',
 		type: 'language',
 		dependency: ['cursor'],
-		showLangInterface: false, // set to true to turn language box options on
+		showLangInterface: true, // set to true to turn language box options on
 		onModuleActivate: function(evt) {
 			var module = evt.module;
 			if (module == this) {
