@@ -1,0 +1,245 @@
+BODY {
+	font-family: Arial Unicode MS;
+	background-color: #DDDDDD;
+	cursor: default;
+}
+
+.section {
+	width: 98%;
+	clear: both;
+	border: 2px groove #CCCCCC;
+	overflow: auto;
+	padding: 18px 8px 8px 8px;
+	margin-top: 16px;
+}
+
+.section-title {
+	position: absolute;
+	background-color: #DDDDDD;
+	margin-top: -32px;
+	padding: 0px 4px 0px 4px;
+}
+
+.section-contents {
+	position: relative;
+}
+
+#kb-container {
+	border: 8px solid red;
+	width: 418px;
+}
+
+.kb-plane {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	height: 141px;
+	width: 418px;
+	background-color: #EEEEEE;
+}
+
+.key {
+	position: relative;
+	position: absolute;
+	cursor: pointer;
+	border: 1px outset black;
+	-moz-border-radius: 3px;
+	background-image: url('../img/xtra.builder.ui.kb.gradient.png')
+}
+
+.key DIV {
+	position: absolute;
+	width: 100%;	
+	text-align: center;
+	vertical-align: bottom;
+
+	top: 1px;
+	left: 0px;
+}
+
+.key-selected {
+	position: relative;
+	position: absolute;
+	cursor: pointer;
+	border: 1px solid yellow;
+	background-color: #CCCCCC;
+	-moz-border-radius: 3px;
+}
+
+.key-selected DIV {
+	position: absolute;
+	width: 100%;	
+	text-align: center;
+	vertical-align: bottom;
+
+	top: 1px;
+	left: 0px;
+}
+
+.key-fixed {
+	font-family: Arial Unicode MS;
+	font-size: 12pt;
+	text-align: center;
+	vertical-align: bottom;
+	position: absolute;
+	border: 1px outset black;
+	-moz-border-radius: 3px;
+	background-image: url('../img/xtra.builder.ui.kb.gradient.png');	
+}
+
+.key-fixed DIV {
+	position: absolute;
+	width: 100%;	
+	text-align: center;
+	vertical-align: bottom;
+	
+	top: 1px;
+	left: 0px;
+}
+
+.key-0xc0 { left: 1px; top: 1px; width: 25px; height: 25px; }
+.key-0x31 { left: 29px; top: 1px; width: 25px; height: 25px; }
+.key-0x32 { left: 57px; top: 1px; width: 25px; height: 25px; }
+.key-0x33 { left: 85px; top: 1px; width: 25px; height: 25px; }
+.key-0x34 { left: 113px; top: 1px; width: 25px; height: 25px; }
+.key-0x35 { left: 141px; top: 1px; width: 25px; height: 25px; }
+.key-0x36 { left: 169px; top: 1px; width: 25px; height: 25px; }
+.key-0x37 { left: 197px; top: 1px; width: 25px; height: 25px; }
+.key-0x38 { left: 225px; top: 1px; width: 25px; height: 25px; }
+.key-0x39 { left: 253px; top: 1px; width: 25px; height: 25px; }
+.key-0x30 { left: 281px; top: 1px; width: 25px; height: 25px; }
+.key-0xbd { left: 309px; top: 1px; width: 25px; height: 25px; }
+.key-0xbb { left: 337px; top: 1px; width: 25px; height: 25px; }
+.key-0x08 { left: 365px; top: 1px; width: 50px; height: 25px; }
+
+.key-0x09 { left: 1px; top: 29px; width: 39px; height: 25px; }
+.key-0x51 { left: 43px; top: 29px; width: 25px; height: 25px; }
+.key-0x57 { left: 71px; top: 29px; width: 25px; height: 25px; }
+.key-0x45 { left: 99px; top: 29px; width: 25px; height: 25px; }
+.key-0x52 { left: 127px; top: 29px; width: 25px; height: 25px; }
+.key-0x54 { left: 155px; top: 29px; width: 25px; height: 25px; }
+.key-0x59 { left: 183px; top: 29px; width: 25px; height: 25px; }
+.key-0x55 { left: 211px; top: 29px; width: 25px; height: 25px; }
+.key-0x49 { left: 239px; top: 29px; width: 25px; height: 25px; }
+.key-0x4f { left: 267px; top: 29px; width: 25px; height: 25px; }
+.key-0x50 { left: 295px; top: 29px; width: 25px; height: 25px; }
+.key-0xdb { left: 323px; top: 29px; width: 25px; height: 25px; }
+.key-0xdd { left: 351px; top: 29px; width: 25px; height: 25px; }
+.key-0xdc { left: 379px; top: 29px; width: 36px; height: 25px; }
+
+.key-caps { left: 1px; top: 57px; width: 50px; height: 25px; }
+.key-0x41 { left: 54px; top: 57px; width: 25px; height: 25px; }
+.key-0x53 { left: 82px; top: 57px; width: 25px; height: 25px; }
+.key-0x44 { left: 110px; top: 57px; width: 25px; height: 25px; }
+.key-0x46 { left: 138px; top: 57px; width: 25px; height: 25px; }
+.key-0x47 { left: 166px; top: 57px; width: 25px; height: 25px; }
+.key-0x48 { left: 194px; top: 57px; width: 25px; height: 25px; }
+.key-0x4a { left: 222px; top: 57px; width: 25px; height: 25px; }
+.key-0x4b { left: 250px; top: 57px; width: 25px; height: 25px; }
+.key-0x4c { left: 278px; top: 57px; width: 25px; height: 25px; }
+.key-0xba { left: 306px; top: 57px; width: 25px; height: 25px; }
+.key-0xde { left: 334px; top: 57px; width: 25px; height: 25px; }
+.key-0x0d { left: 362px; top: 57px; width: 53px; height: 25px; }
+
+.key-lshift { left: 1px; top: 85px; width: 65px; height: 25px; }
+.key-0x5a { left: 69px; top: 85px; width: 25px; height: 25px; }
+.key-0x58 { left: 97px; top: 85px; width: 25px; height: 25px; }
+.key-0x43 { left: 125px; top: 85px; width: 25px; height: 25px; }
+.key-0x56 { left: 153px; top: 85px; width: 25px; height: 25px; }
+.key-0x42 { left: 181px; top: 85px; width: 25px; height: 25px; }
+.key-0x4e { left: 209px; top: 85px; width: 25px; height: 25px; }
+.key-0x4d { left: 237px; top: 85px; width: 25px; height: 25px; }
+.key-0xbc { left: 265px; top: 85px; width: 25px; height: 25px; }
+.key-0xbe { left: 293px; top: 85px; width: 25px; height: 25px; }
+.key-0xbf { left: 321px; top: 85px; width: 25px; height: 25px; }
+.key-rshift { left: 349px; top: 85px; width: 66px; height: 25px; }
+
+.key-lctrl { left: 1px; top: 113px; width: 50px; height: 25px; }
+.key-lalt { left: 54px; top: 113px; width: 50px; height: 25px; }
+.key-0x20 { left: 107px; top: 113px; width: 202px; height: 25px; }
+.key-ralt { left: 312px; top: 113px; width: 50px; height: 25px; }
+.key-rctrl { left: 365px; top: 113px; width: 50px; height: 25px; }
+
+#kb-image-control {
+	position: absolute;
+	top: 0px;
+	left: 440px;
+	right: 0px;
+	bottom: 0px;
+	padding: 8px 8px 8px 8px;
+	margin-left: 4px;
+}
+
+#arrow-container {
+	position: relative;
+	margin: -8px 8px 8px 0px;
+	width: 150px;
+	height: 100px;
+}
+
+#arrow-up {
+	position: absolute;
+	left: 150px;
+	top: 0px;
+}
+
+#arrow-down {
+	position: absolute;
+	left: 150px;
+	top: 50px;
+}
+
+#arrow-left {
+	position: absolute;
+	left: 100px;
+	top: 25px;
+}
+
+#arrow-right {
+	position: absolute;
+	left: 200px;
+	top: 25px;
+}
+
+#restore-button{
+	position: absolute;
+	left: 250px;
+	top: 0px;
+}
+
+#move-all-checkbox {
+	position: absolute;
+	left: 250px;
+	top: 60px;
+	width: 100px;
+}
+
+#orange-button {
+	background-image: url('img/xtra.builder.ui.kb.gradient.orange.png');	
+}
+
+#red-button {
+	background-image: url('img/xtra.builder.ui.kb.gradient.red.png');	
+}
+
+#green-button {
+	background-image: url('img/xtra.builder.ui.kb.gradient.green.png');	
+}
+
+#yellow-button {
+	background-image: url('img/xtra.builder.ui.kb.gradient.yellow.png');	
+}
+
+#normal-button {
+	background-image: url('img/xtra.builder.ui.kb.gradient.png');	
+}
+
+#message {
+	width: 460;
+}
+
+.code {
+	font-family: Consolas;
+	width: 100%;
+	height: 600px;
+}
