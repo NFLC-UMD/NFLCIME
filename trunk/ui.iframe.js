@@ -1049,6 +1049,12 @@ NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 		}
 	},
 	onUIModuleLoad:function(evt) {
+
+
+		if (evt.url) {
+			evt.url = NFLCIME.mapUrlToPackage(evt.url);
+		}
+
 		var id = evt.moduleId;
 		var url = (evt.url) ? evt.url : evt.moduleId + '.html';
 		var options = evt.options;

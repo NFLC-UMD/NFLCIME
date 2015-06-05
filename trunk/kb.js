@@ -568,6 +568,9 @@ NFLCIME.dispatchEvent({
 			return this['map' + this.combinedKeyboardStates.plane];
 		},
 		lookUpKey: function(key, context) {
+			
+			console.log('lookupkey', arguments);
+
 			var result = {
 				insert: '',
 				context: '',
