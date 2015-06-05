@@ -1,0 +1,221 @@
+BODY {
+	font-family: sans-serif;
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+	border: 0px;
+}
+
+#frame {
+	border: 1px outset #CCCCCC;
+	cursor: default;
+	background-color: #EEEEEE;
+}
+
+#frame-top-left {
+	height: 3px;
+	width: 3px;
+	font-size: 0px;
+}
+
+#frame-top {
+	height: 3px;
+	font-size: 0px;
+}
+
+#frame-top-right {
+	height: 3px;
+	width: 3px;
+	font-size: 0px;
+}
+
+#frame-left {
+	width: 3px;
+	height: 100%;
+	font-size: 0px;
+}
+
+#frame-right {
+	width: 3px;
+	height: 100%;
+	font-size: 0px;
+}
+
+#frame-bottom-left {
+	height: 3px;
+	width: 3px;
+	font-size: 0px;
+}
+
+#frame-bottom {
+	height: 3px;
+	font-size: 0px;
+}
+
+#frame-bottom-right {
+	height: 3px;
+	width: 3px;
+	font-size: 0px;
+}
+
+#frame-drag-bar {
+	width: 100%;
+	margin: 0px;
+}
+
+.h-resize.v-resize #frame-top-left {
+	cursor: nw-resize;
+}
+
+.h-resize #frame-top-left {
+	cursor: w-resize;
+}
+
+.v-resize #frame-top-left {
+	cursor: n-resize;
+}
+
+.v-resize #frame-top {
+	cursor: n-resize;
+}
+
+.h-resize.v-resize #frame-top-right {
+	cursor: ne-resize;
+}
+
+.h-resize #frame-top-right {
+	cursor: e-resize;
+}
+
+.v-resize #frame-top-right {
+	cursor: n-resize;
+}
+
+.h-resize #frame-left {
+	cursor: w-resize;
+}
+
+.h-resize #frame-right {
+	cursor: e-resize;
+}
+
+.h-resize.v-resize #frame-bottom-left {
+	cursor: sw-resize;
+}
+
+.h-resize #frame-bottom-left {
+	cursor: w-resize;
+}
+
+.v-resize #frame-bottom-left {
+	cursor: s-resize;
+}
+
+.v-resize #frame-bottom {
+	cursor: s-resize;
+}
+
+.h-resize.v-resize #frame-bottom-right {
+	cursor: se-resize;
+}
+
+.h-resize #frame-bottom-right {
+	cursor: e-resize;
+}
+
+.v-resize #frame-bottom-right {
+	cursor: s-resize;
+}
+
+#corner-button-left {
+	text-align: left;
+	float: left;
+}
+	
+#title-bar {
+	border: 1px solid #BBBBBB;
+	background-color: #FFEECC;
+	text-align: center;
+	text-overflow: ellipsis;
+	vertical-align: abs-center;
+	overflow: hidden;
+	margin-bottom: 2px;
+	padding-bottom: 1px;
+}
+
+#corner-button-right {
+	text-align: right;
+	float: right;
+}
+
+.corner-button {
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+	margin-bottom: 0px;
+	width: 15px;
+	height: 15px;
+}
+
+#close-button {
+	background-image: url(img/ui.button.close.png);
+	background-repeat: no-repeat;
+}
+
+#collapse-button {
+	background-image: url(img/ui.button.collapse.png);
+	background-repeat: no-repeat;
+}
+
+.collapsed #title-bar {
+	margin-bottom: 0px;
+}
+
+.collapsed #frame-top-left {
+	cursor: default;
+}
+
+.h-resize.v-resize .collapsed #frame-top-left {
+	cursor: default;
+}
+
+.collapsed #frame-top {
+	cursor: default;
+}
+
+.collapsed #frame-top-right {
+	cursor: default;
+}
+
+.h-resize.v-resize .collapsed #frame-top-right {
+	cursor: default;
+}
+
+.collapsed #frame-left {
+	cursor: default;
+}
+
+.collapsed #frame-right {
+	cursor: default;
+}
+
+.collapsed #frame-bottom-left {
+	cursor: default;
+}
+
+.h-resize.v-resize .collapsed #frame-bottom-left {
+	cursor: default;
+	
+}
+
+.collapsed #frame-bottom {
+	cursor: default;
+}
+
+.collapsed #frame-bottom-right {
+	cursor: default;
+}
+
+.h-resize.v-resize .collapsed #frame-bottom-right {
+	cursor: default;
+}
