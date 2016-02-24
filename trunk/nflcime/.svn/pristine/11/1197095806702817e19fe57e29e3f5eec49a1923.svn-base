@@ -1,0 +1,36 @@
+/*
+ * CKPackager - NFLCIME package file
+ */
+
+header :
+	'/*'												+ '\n' +
+	' * This file has been compressed with CKPackager'	+ '\n' +
+	' */'												+ '\n' +
+	'\n',
+	noCheck : false,
+
+	constants :
+		{
+		'NFLCIME.COMPRESSED': 1
+		},
+packages :
+	[
+		{
+			output : 'bloom_pack_nflcime.js',
+			compactJavascript : false,
+			wrap: true,
+			files :
+				[
+				'nflcime_f.js',
+				'nflcime.js',
+				'pers.cookie.js',
+				'ui.iframe.js',
+				'editor.ckeditor.js',
+				'cursor.js',
+				'kb.js',
+				'lang.js',
+				'rt.js',
+				'rt.scrube.js'
+				]
+		}
+	]

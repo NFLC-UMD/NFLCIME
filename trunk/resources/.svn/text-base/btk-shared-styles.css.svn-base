@@ -1,0 +1,188 @@
+@font-face {
+	font-family:Walkway_Bold;
+	src:url("fonts/Walkway_Bold.ttf")
+}
+@font-face {
+	font-family:Walkway_UltraBold;
+	src:url("fonts/Walkway_UltraBold.ttf")
+}
+/* used by /shared/Notification.js */
+.ux-notification-window .x-window-body {
+	text-align:left;
+	padding:15px 5px 15px 5px;
+	width:200px;
+}
+.ux-notification-icon-information {
+	background-image:url('images/icon16_info.png');
+}
+.ux-notification-icon-error {
+	background-image:url('images/icon16_error.png');
+}
+.ux-notification-light .x-window-header {
+	background-color:transparent;
+}
+body .ux-notification-light {
+	background-image:url('images/fader.png');
+}
+.ux-notification-light .x-window-body {
+	text-align:left;
+	padding:10px 4px 12px 4px;
+	width:200px;
+	background-color:transparent;
+	border:0px solid white;
+}
+.ux-notification-light .x-window-body li {
+	padding:4px 0px 0px 0px;
+	list-style:disc;
+}
+/* Welcome screens */
+.x-welcome-header-text {
+	display:block;
+	font-size:2.5em;
+	font-family:tahoma,arial,verdana,sans-serif;
+}
+.x-welcome-body {
+	display:block;
+	font-size:1.2em;
+	font-family:tahoma,arial,verdana,sans-serif;
+	margin-top:40px;
+}
+.x-welcome-body ol {
+	padding-left:20px;
+}
+.x-welcome-body li {
+	list-style-type:disc;
+}
+/* a panel header with ui=btk */
+.x-panel-header-text-btk h1 {
+	font-size:2em;
+	font-weight:100;
+	font-family:tahoma,arial,verdana,sans-serif;
+}
+.x-panel-header-text-btk ol, .x-panel-header-text-btk ul {
+	padding-left:20px;
+}
+.x-panel-header-text-btk li {
+	font-size:1.1em;
+	font-weight:100;
+	font-family:tahoma,arial,verdana,sans-serif;
+	padding:2px 0px 2px 0px;
+}
+.x-panel-header-text-btk ol li {
+	list-style-type:decimal;
+}
+.x-panel-header-text-btk ul li {
+	list-style-type:disc;
+}
+/*used only in the tree navigator; can possibly move this later */
+.add-folder {
+	background-image:url(images/folder-add-icon.gif);
+	background-repeat:no-repeat;
+}
+.edit-icon {
+	background-image:url('../../CIT/resources/images/iconEdit.png') !important;
+}
+.email-icon {
+	background-image:url('../../CIT/resources/images/iconEmail.png') !important;
+}
+.audio-icon {
+	width:50px !important;
+	height:50px !important;
+	background-image:url('images/speaker.png') !important;
+}
+.app-header {
+	background-image:-webkit-linear-gradient(top, #fc0, #e1b500);
+	background-image:-moz-linear-gradient(top, #fc0, #e1b500);
+	background-image:-o-linear-gradient(top, #fc0, #e1b500);
+	background-image:linear-gradient(top, #ffcc00,#e1b500);
+	padding:0 10px 0px 20px;
+	border:0px
+}
+.app-header .x-logo {
+	padding:10px 10px 10px 45px;
+	background:url(/apps/CIT/resources/images/bee.png) no-repeat 1px 8px;
+	color:#fff;
+	font-size:24px;
+	text-shadow:2px 2px 6px #777777;
+	font-family:'Walkway_UltraBold';
+	letter-spacing:2px
+}
+.app-header #tagline {
+	font-size:8px;
+	color:#000000;
+	letter-spacing:0;
+	font-weight:bold;
+	text-shadow:0 0 0 #333333;
+	text-transform:uppercase;
+	font-family:'Walkway_Bold';
+	margin-top:3px;
+	text-align:center
+}
+.app-footer {
+	background:#9d9d9d;
+	filter:progid:DXImageTransform.Microsoft.rbheadbkgd(startColorstr='$first', endColorstr='$second');
+	background:-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#9d9d9d));
+	background:-moz-linear-gradient(top, #ccc, #9d9d9d);
+	background-color:#9D9D9D;
+	color:#555555;
+	font-size:13px;
+	padding-top:8px;
+	padding-left:10px background-image :-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #b7b7b7), color-stop(100%, #9d9d9d));
+	background-image:-webkit-linear-gradient(top, #b7b7b7, #9d9d9d);
+	background-image:-moz-linear-gradient(top, #b7b7b7, #9d9d9d);
+	background-image:-o-linear-gradient(top, #b7b7b7, #9d9d9d);
+	background-image:linear-gradient(top, #b7b7b7,#9d9d9d);
+}
+/* Btk.view.widget.Breadcrumb */
+.x-bread-crumb-user {
+	border:0px;
+	color:#666666;
+	font-weight:bold;
+	font-family: "Arial Unicode MS", Arial;
+	font-size: 13px;
+}
+.x-bread-crumb {
+	font-family:Walkway_Bold !important;
+	font-size:larger !important;
+	letter-spacing:1.4px;
+	line-height:38px;
+	top:0px !important;
+	padding-left:6px;
+	padding-right:6px;
+}
+.x-bread-crumb-selected {
+	font-family:Walkway_Bold !important;
+	font-size:larger !important;
+	letter-spacing:1.4px;
+	background-color:rgb(234, 234, 234);
+	line-height:38px;
+	top:0px !important;
+	padding-left:6px;
+	padding-right:6px;
+}
+.x-bread-crumb-delimiter {
+	color:#000000;
+}
+
+/* Filters - Showing # of # */
+.tb-filters-applied {
+	text-align:center;
+	color: #585858 !important;
+	font-weight: bold !important;
+	vertical-align:middle;
+	border:2px dotted #585858;
+	padding:4px 5px 2px 5px;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+}
+
+/* final obj table styles */
+a.btk-link:hover {
+	text-decoration:underline;
+	cursor:pointer;
+}
+.btk-action-preview-icon {
+	width: 28px;
+	height:16px;
+}

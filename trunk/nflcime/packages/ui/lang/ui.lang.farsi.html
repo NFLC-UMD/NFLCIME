@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<link id="interface-css" rel="stylesheet" type="text/css" />
+<link id="module-css" rel="stylesheet" type="text/css" />
+<script src="ui.lang.js" language="javascript"></script>
+</head>
+<body class="v-resize" minWidth="250" minHeight="110" unselectable="on">
+<table id="frame" cellspacing="0" width="250" height="100%" cellpadding="0" unselectable="on">
+	<tr unselectable="on">
+		<td unselectable="on"><div id="frame-top-left" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-top" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-top-right" unselectable="on"></div></td>
+	</tr>
+
+	<tr>
+		<td rowspan="2" unselectable="on"><div id="frame-left" unselectable="on"></div></td>
+		<td unselectable="on">
+			<div id="frame-drag-bar" unselectable="on">
+				<!-- title bar -->
+				<div id="title-bar" unselectable="on">
+					<div id="corner-button-left" unselectable="on"><div id="collapse-button" class="corner-button" unselectable="on"></div></div>
+					<div id="corner-button-right" unselectable="on"><div class="corner-button" unselectable="on"></div></div>
+					<div id="title" unselectable="on">Input Options</div>
+				</div>
+			</div>
+		</td>
+		<td rowspan="2" unselectable="on"><div id="frame-right" unselectable="on"></div></td>
+	</tr>
+
+	<tr unselectable="on" height="100%">
+		<td unselectable="on" width="100%">
+			<!-- content area -->
+			<div class="container-offset-parent" unselectable="on">
+				<div class="container" unselectable="on">
+					<div class="section-collapsed" id="section-kb" unselectable="on">
+						<div class="header" unselectable="on">
+							<div class="arrow" unselectable="on"></div>
+							<div class="icon" unselectable="on">
+								<div id="keyboard-icon" class="image" for="use-keyboard" unselectable="on"></div>
+								<input class="option" type="checkbox" id="use-keyboard" checked unselectable="on">
+							</div>
+							<div class="title" style="float: left" unselectable="on">
+								<span class="label" for="use-keyboard" unselectable="on">Keyboard</span>
+							</div>
+						</div>
+						<div class="contents" unselectable="on">
+							<div class="item" unselectable="on">
+								<input class="selector" type="radio" name="keyboard-id" id="kb.arabic.farsi.phonetic" unselectable="on"> 
+								<span class="label" for="kb.arabic.farsi.phonetic" unselectable="on">Phonetic</span>
+							</div>
+							<div class="item" unselectable="on">
+								<input class="selector" type="radio" name="keyboard-id" id="kb.arabic.farsi.windows" checked unselectable="on"> 
+								<span class="label" for="kb.arabic.farsi.windows" unselectable="on">Windows</span>
+							</div>
+						</div>
+						<div class="contents" unselectable="on">
+							<div class="item" unselectable="on">
+								<input class="option" type="checkbox" id="show-keyboard" checked unselectable="on"> 
+								<span class="label" for="show-keyboard" unselectable="on">Show keyboard</span>
+							</div>	
+						</div>
+					</div>
+					<div class="section-collapsed" id="section-tools" unselectable="on">
+						<div class="header" unselectable="on">
+							<div class="arrow" unselectable="on"></div>
+							<div class="icon" unselectable="on">
+								<div id="tool-icon" class="image" unselectable="on"></div>
+							</div>
+							<div class="title" unselectable="on">
+								<span class="toggle" unselectable="on">Additional tools</span>
+							</div>
+						</div>
+					<div class="contents" unselectable="on">
+							<div class="item indent" unselectable="on">
+								<span class="link" id="ui.charmap" unselectable="on">Character Map</span>
+							</div>
+							<div class="item indent" unselectable="on">
+								<span class="link" id="ui.google.translation" unselectable="on">Google Translation</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+		<td unselectable="on"><div id="frame-bottom-left" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-bottom" unselectable="on"></div></td>
+		<td unselectable="on"><div id="frame-bottom-right" unselectable="on"></div></td>
+	</tr>	
+</table>
+</body>
+</html>
