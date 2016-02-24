@@ -1,0 +1,437 @@
+<html>
+<title>NFLCIME Keyboard Interface Builder</title>
+<link href="xtra.builder.ui.kb.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="xtra.builder.ui.kb.js"></script>
+<script language="javascript" src="../../nflcime.js">
+
+Modules:[
+	{ id:'kb.latin.english.us', activate:true },
+],
+
+</script>
+<body>
+<input type="text" id="hidden-edit" style="position: absolute; visibility: hidden" NFLCIME="on">
+<div class="section">
+	<div class="section-title">Keyboard Properties</div>	
+
+	<div class="section-contents">	
+		Identifier: <input id="keyboard-id" type="text" size="40" NFLCIME="on"><button onclick="loadKeyboard()">Load</button>
+		Title: <input id="keyboard-title" onchange="buildHTML()" onkeyup="buildHTML()" type="text" size="40" NFLCIME="on">
+	</div>
+</div>
+
+<div class="section">
+	<div class="section-title">Keyboard Image</div>	
+
+	<div class="section-contents">	
+		<div id="kb-container" style="">
+			<div class="kb-plane" id="kb-plane-normal" unselectable="on">
+				<div class="key key-0xc0" id="normal-key-0xc0" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x31" id="normal-key-0x31" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x32" id="normal-key-0x32" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x33" id="normal-key-0x33" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x34" id="normal-key-0x34" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x35" id="normal-key-0x35" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x36" id="normal-key-0x36" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x37" id="normal-key-0x37" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x38" id="normal-key-0x38" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x39" id="normal-key-0x39" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x30" id="normal-key-0x30" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbd" id="normal-key-0xbd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbb" id="normal-key-0xbb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x08" id="normal-key-0x08" unselectable="on"><div unselectable="on">Back</div></div>
+			
+				<div class="key-fixed key-0x09" id="normal-key-0x09" unselectable="on"><div unselectable="on">Tab</div></div>
+				<div class="key key-0x51" id="normal-key-0x51" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x57" id="normal-key-0x57" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x45" id="normal-key-0x45" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x52" id="normal-key-0x52" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x54" id="normal-key-0x54" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x59" id="normal-key-0x59" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x55" id="normal-key-0x55" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x49" id="normal-key-0x49" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4f" id="normal-key-0x4f" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x50" id="normal-key-0x50" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdb" id="normal-key-0xdb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdd" id="normal-key-0xdd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdc" id="normal-key-0xdc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+			
+				<div class="key-fixed key-caps" id="normal-key-caps" unselectable="on"><div unselectable="on">Caps</div></div>
+				<div class="key key-0x41" id="normal-key-0x41" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x53" id="normal-key-0x53" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x44" id="normal-key-0x44" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x46" id="normal-key-0x46" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x47" id="normal-key-0x47" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x48" id="normal-key-0x48" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4a" id="normal-key-0x4a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4b" id="normal-key-0x4b" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4c" id="normal-key-0x4c" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xba" id="normal-key-0xba" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xde" id="normal-key-0xde" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x0d" id="normal-key-0x0d" unselectable="on"><div unselectable="on">Enter</div></div>
+			
+				<div class="key-fixed key-lshift" id="normal-key-lshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key key-0x5a" id="normal-key-0x5a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x58" id="normal-key-0x58" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x43" id="normal-key-0x43" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x56" id="normal-key-0x56" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x42" id="normal-key-0x42" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4e" id="normal-key-0x4e" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4d" id="normal-key-0x4d" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbc" id="normal-key-0xbc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbe" id="normal-key-0xbe" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbf" id="normal-key-0xbf" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-rshift" id="normal-key-rshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key-fixed key-lctrl" id="normal-key-lctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+				<div class="key-fixed key-lalt" id="normal-key-lalt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-0x20" id="normal-key-0x20" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-ralt" id="normal-key-ralt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-rctrl" id="normal-key-rctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+			</div>
+			
+			<div class="kb-plane" id="kb-plane-shift" unselectable="on">
+				<div class="key key-0xc0" id="shift-key-0xc0" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x31" id="shift-key-0x31" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x32" id="shift-key-0x32" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x33" id="shift-key-0x33" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x34" id="shift-key-0x34" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x35" id="shift-key-0x35" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x36" id="shift-key-0x36" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x37" id="shift-key-0x37" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x38" id="shift-key-0x38" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x39" id="shift-key-0x39" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x30" id="shift-key-0x30" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbd" id="shift-key-0xbd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbb" id="shift-key-0xbb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x08" id="shift-key-0x08" unselectable="on"><div unselectable="on">Back</div></div>
+			
+				<div class="key-fixed key-0x09" id="shift-key-0x09" unselectable="on"><div unselectable="on">Tab</div></div>
+				<div class="key key-0x51" id="shift-key-0x51" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x57" id="shift-key-0x57" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x45" id="shift-key-0x45" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x52" id="shift-key-0x52" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x54" id="shift-key-0x54" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x59" id="shift-key-0x59" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x55" id="shift-key-0x55" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x49" id="shift-key-0x49" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4f" id="shift-key-0x4f" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x50" id="shift-key-0x50" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdb" id="shift-key-0xdb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdd" id="shift-key-0xdd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdc" id="shift-key-0xdc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+			
+				<div class="key-fixed key-caps" id="shift-key-caps" unselectable="on"><div unselectable="on">Caps</div></div>
+				<div class="key key-0x41" id="shift-key-0x41" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x53" id="shift-key-0x53" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x44" id="shift-key-0x44" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x46" id="shift-key-0x46" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x47" id="shift-key-0x47" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x48" id="shift-key-0x48" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4a" id="shift-key-0x4a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4b" id="shift-key-0x4b" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4c" id="shift-key-0x4c" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xba" id="shift-key-0xba" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xde" id="shift-key-0xde" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x0d" id="shift-key-0x0d" unselectable="on"><div unselectable="on">Enter</div></div>
+			
+				<div class="key-fixed key-lshift" id="shift-key-lshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key key-0x5a" id="shift-key-0x5a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x58" id="shift-key-0x58" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x43" id="shift-key-0x43" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x56" id="shift-key-0x56" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x42" id="shift-key-0x42" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4e" id="shift-key-0x4e" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4d" id="shift-key-0x4d" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbc" id="shift-key-0xbc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbe" id="shift-key-0xbe" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbf" id="shift-key-0xbf" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-rshift" id="shift-key-rshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key-fixed key-lctrl" id="shift-key-lctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+				<div class="key-fixed key-lalt" id="shift-key-lalt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-0x20" id="shift-key-0x20" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-ralt" id="shift-key-ralt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-rctrl" id="shift-key-rctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+			</div>
+	
+			<div class="kb-plane" id="kb-plane-altctrl" unselectable="on" style="display: none">
+				<div class="key key-0xc0" id="altctrl-key-0xc0" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x31" id="altctrl-key-0x31" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x32" id="altctrl-key-0x32" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x33" id="altctrl-key-0x33" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x34" id="altctrl-key-0x34" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x35" id="altctrl-key-0x35" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x36" id="altctrl-key-0x36" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x37" id="altctrl-key-0x37" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x38" id="altctrl-key-0x38" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x39" id="altctrl-key-0x39" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x30" id="altctrl-key-0x30" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbd" id="altctrl-key-0xbd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbb" id="altctrl-key-0xbb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x08" id="altctrl-key-0x08" unselectable="on"><div unselectable="on">Back</div></div>
+			
+				<div class="key-fixed key-0x09" id="altctrl-key-0x09" unselectable="on"><div unselectable="on">Tab</div></div>
+				<div class="key key-0x51" id="altctrl-key-0x51" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x57" id="altctrl-key-0x57" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x45" id="altctrl-key-0x45" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x52" id="altctrl-key-0x52" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x54" id="altctrl-key-0x54" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x59" id="altctrl-key-0x59" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x55" id="altctrl-key-0x55" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x49" id="altctrl-key-0x49" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4f" id="altctrl-key-0x4f" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x50" id="altctrl-key-0x50" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdb" id="altctrl-key-0xdb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdd" id="altctrl-key-0xdd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdc" id="altctrl-key-0xdc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+			
+				<div class="key-fixed key-caps" id="altctrl-key-caps" unselectable="on"><div unselectable="on">Caps</div></div>
+				<div class="key key-0x41" id="altctrl-key-0x41" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x53" id="altctrl-key-0x53" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x44" id="altctrl-key-0x44" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x46" id="altctrl-key-0x46" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x47" id="altctrl-key-0x47" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x48" id="altctrl-key-0x48" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4a" id="altctrl-key-0x4a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4b" id="altctrl-key-0x4b" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4c" id="altctrl-key-0x4c" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xba" id="altctrl-key-0xba" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xde" id="altctrl-key-0xde" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x0d" id="altctrl-key-0x0d" unselectable="on"><div unselectable="on">Enter</div></div>
+			
+				<div class="key-fixed key-lshift" id="altctrl-key-lshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key key-0x5a" id="altctrl-key-0x5a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x58" id="altctrl-key-0x58" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x43" id="altctrl-key-0x43" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x56" id="altctrl-key-0x56" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x42" id="altctrl-key-0x42" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4e" id="altctrl-key-0x4e" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4d" id="altctrl-key-0x4d" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbc" id="altctrl-key-0xbc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbe" id="altctrl-key-0xbe" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbf" id="altctrl-key-0xbf" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-rshift" id="altctrl-key-rshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key-fixed key-lctrl" id="altctrl-key-lctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+				<div class="key-fixed key-lalt" id="altctrl-key-lalt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-0x20" id="altctrl-key-0x20" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-ralt" id="altctrl-key-ralt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-rctrl" id="altctrl-key-rctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+			</div>
+	
+			<div class="kb-plane" id="kb-plane-altctrlshift" unselectable="on" style="display: none">
+				<div class="key key-0xc0" id="altctrlshift-key-0xc0" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x31" id="altctrlshift-key-0x31" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x32" id="altctrlshift-key-0x32" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x33" id="altctrlshift-key-0x33" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x34" id="altctrlshift-key-0x34" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x35" id="altctrlshift-key-0x35" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x36" id="altctrlshift-key-0x36" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x37" id="altctrlshift-key-0x37" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x38" id="altctrlshift-key-0x38" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x39" id="altctrlshift-key-0x39" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x30" id="altctrlshift-key-0x30" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbd" id="altctrlshift-key-0xbd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbb" id="altctrlshift-key-0xbb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x08" id="altctrlshift-key-0x08" unselectable="on"><div unselectable="on">Back</div></div>
+			
+				<div class="key-fixed key-0x09" id="altctrlshift-key-0x09" unselectable="on"><div unselectable="on">Tab</div></div>
+				<div class="key key-0x51" id="altctrlshift-key-0x51" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x57" id="altctrlshift-key-0x57" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x45" id="altctrlshift-key-0x45" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x52" id="altctrlshift-key-0x52" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x54" id="altctrlshift-key-0x54" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x59" id="altctrlshift-key-0x59" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x55" id="altctrlshift-key-0x55" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x49" id="altctrlshift-key-0x49" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4f" id="altctrlshift-key-0x4f" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x50" id="altctrlshift-key-0x50" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdb" id="altctrlshift-key-0xdb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdd" id="altctrlshift-key-0xdd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdc" id="altctrlshift-key-0xdc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+			
+				<div class="key-fixed key-caps" id="altctrlshift-key-caps" unselectable="on"><div unselectable="on">Caps</div></div>
+				<div class="key key-0x41" id="altctrlshift-key-0x41" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x53" id="altctrlshift-key-0x53" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x44" id="altctrlshift-key-0x44" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x46" id="altctrlshift-key-0x46" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x47" id="altctrlshift-key-0x47" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x48" id="altctrlshift-key-0x48" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4a" id="altctrlshift-key-0x4a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4b" id="altctrlshift-key-0x4b" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4c" id="altctrlshift-key-0x4c" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xba" id="altctrlshift-key-0xba" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xde" id="altctrlshift-key-0xde" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x0d" id="altctrlshift-key-0x0d" unselectable="on"><div unselectable="on">Enter</div></div>
+			
+				<div class="key-fixed key-lshift" id="altctrlshift-key-lshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key key-0x5a" id="altctrlshift-key-0x5a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x58" id="altctrlshift-key-0x58" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x43" id="altctrlshift-key-0x43" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x56" id="altctrlshift-key-0x56" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x42" id="altctrlshift-key-0x42" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4e" id="altctrlshift-key-0x4e" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4d" id="altctrlshift-key-0x4d" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbc" id="altctrlshift-key-0xbc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbe" id="altctrlshift-key-0xbe" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbf" id="altctrlshift-key-0xbf" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-rshift" id="altctrlshift-key-rshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key-fixed key-lctrl" id="altctrlshift-key-lctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+				<div class="key-fixed key-lalt" id="altctrlshift-key-lalt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-0x20" id="altctrlshift-key-0x20" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-ralt" id="altctrlshift-key-ralt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-rctrl" id="altctrlshift-key-rctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+			</div>
+	
+			<div class="kb-plane" id="kb-plane-capslock" unselectable="on" style="display: none">
+				<div class="key key-0xc0" id="capslock-key-0xc0" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x31" id="capslock-key-0x31" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x32" id="capslock-key-0x32" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x33" id="capslock-key-0x33" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x34" id="capslock-key-0x34" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x35" id="capslock-key-0x35" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x36" id="capslock-key-0x36" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x37" id="capslock-key-0x37" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x38" id="capslock-key-0x38" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x39" id="capslock-key-0x39" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x30" id="capslock-key-0x30" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbd" id="capslock-key-0xbd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbb" id="capslock-key-0xbb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x08" id="capslock-key-0x08" unselectable="on"><div unselectable="on">Back</div></div>
+			
+				<div class="key-fixed key-0x09" id="capslock-key-0x09" unselectable="on"><div unselectable="on">Tab</div></div>
+				<div class="key key-0x51" id="capslock-key-0x51" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x57" id="capslock-key-0x57" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x45" id="capslock-key-0x45" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x52" id="capslock-key-0x52" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x54" id="capslock-key-0x54" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x59" id="capslock-key-0x59" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x55" id="capslock-key-0x55" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x49" id="capslock-key-0x49" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4f" id="capslock-key-0x4f" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x50" id="capslock-key-0x50" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdb" id="capslock-key-0xdb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdd" id="capslock-key-0xdd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdc" id="capslock-key-0xdc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+			
+				<div class="key-fixed key-caps" id="capslock-key-caps" unselectable="on"><div unselectable="on">Caps</div></div>
+				<div class="key key-0x41" id="capslock-key-0x41" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x53" id="capslock-key-0x53" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x44" id="capslock-key-0x44" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x46" id="capslock-key-0x46" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x47" id="capslock-key-0x47" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x48" id="capslock-key-0x48" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4a" id="capslock-key-0x4a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4b" id="capslock-key-0x4b" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4c" id="capslock-key-0x4c" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xba" id="capslock-key-0xba" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xde" id="capslock-key-0xde" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x0d" id="capslock-key-0x0d" unselectable="on"><div unselectable="on">Enter</div></div>
+			
+				<div class="key-fixed key-lshift" id="capslock-key-lshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key key-0x5a" id="capslock-key-0x5a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x58" id="capslock-key-0x58" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x43" id="capslock-key-0x43" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x56" id="capslock-key-0x56" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x42" id="capslock-key-0x42" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4e" id="capslock-key-0x4e" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4d" id="capslock-key-0x4d" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbc" id="capslock-key-0xbc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbe" id="capslock-key-0xbe" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbf" id="capslock-key-0xbf" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-rshift" id="capslock-key-rshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key-fixed key-lctrl" id="capslock-key-lctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+				<div class="key-fixed key-lalt" id="capslock-key-lalt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-0x20" id="capslock-key-0x20" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-ralt" id="capslock-key-ralt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-rctrl" id="capslock-key-rctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+			</div>
+	
+			<div class="kb-plane" id="kb-plane-capslockshift" unselectable="on" style="display: none">
+				<div class="key key-0xc0" id="capslockshift-key-0xc0" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x31" id="capslockshift-key-0x31" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x32" id="capslockshift-key-0x32" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x33" id="capslockshift-key-0x33" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x34" id="capslockshift-key-0x34" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x35" id="capslockshift-key-0x35" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x36" id="capslockshift-key-0x36" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x37" id="capslockshift-key-0x37" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x38" id="capslockshift-key-0x38" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x39" id="capslockshift-key-0x39" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x30" id="capslockshift-key-0x30" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbd" id="capslockshift-key-0xbd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbb" id="capslockshift-key-0xbb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x08" id="capslockshift-key-0x08" unselectable="on"><div unselectable="on">Back</div></div>
+			
+				<div class="key-fixed key-0x09" id="capslockshift-key-0x09" unselectable="on"><div unselectable="on">Tab</div></div>
+				<div class="key key-0x51" id="capslockshift-key-0x51" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x57" id="capslockshift-key-0x57" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x45" id="capslockshift-key-0x45" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x52" id="capslockshift-key-0x52" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x54" id="capslockshift-key-0x54" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x59" id="capslockshift-key-0x59" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x55" id="capslockshift-key-0x55" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x49" id="capslockshift-key-0x49" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4f" id="capslockshift-key-0x4f" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x50" id="capslockshift-key-0x50" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdb" id="capslockshift-key-0xdb" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdd" id="capslockshift-key-0xdd" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xdc" id="capslockshift-key-0xdc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+			
+				<div class="key-fixed key-caps" id="capslockshift-key-caps" unselectable="on"><div unselectable="on">Caps</div></div>
+				<div class="key key-0x41" id="capslockshift-key-0x41" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x53" id="capslockshift-key-0x53" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x44" id="capslockshift-key-0x44" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x46" id="capslockshift-key-0x46" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x47" id="capslockshift-key-0x47" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x48" id="capslockshift-key-0x48" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4a" id="capslockshift-key-0x4a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4b" id="capslockshift-key-0x4b" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4c" id="capslockshift-key-0x4c" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xba" id="capslockshift-key-0xba" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xde" id="capslockshift-key-0xde" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-0x0d" id="capslockshift-key-0x0d" unselectable="on"><div unselectable="on">Enter</div></div>
+			
+				<div class="key-fixed key-lshift" id="capslockshift-key-lshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key key-0x5a" id="capslockshift-key-0x5a" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x58" id="capslockshift-key-0x58" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x43" id="capslockshift-key-0x43" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x56" id="capslockshift-key-0x56" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x42" id="capslockshift-key-0x42" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4e" id="capslockshift-key-0x4e" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0x4d" id="capslockshift-key-0x4d" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbc" id="capslockshift-key-0xbc" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbe" id="capslockshift-key-0xbe" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key key-0xbf" id="capslockshift-key-0xbf" onclick="selectKey(this)" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-rshift" id="capslockshift-key-rshift" unselectable="on"><div unselectable="on">Shift</div></div>
+				<div class="key-fixed key-lctrl" id="capslockshift-key-lctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+				<div class="key-fixed key-lalt" id="capslockshift-key-lalt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-0x20" id="capslockshift-key-0x20" unselectable="on"><div unselectable="on"></div></div>
+				<div class="key-fixed key-ralt" id="capslockshift-key-ralt" unselectable="on"><div unselectable="on">Alt</div></div>
+				<div class="key-fixed key-rctrl" id="capslockshift-key-rctrl" unselectable="on"><div unselectable="on">Ctrl</div></div>
+			</div>
+		</div>
+		<div id="kb-image-control">
+			CSS style: <input type="text" id="key-style" size="40" NFLCIME="on"><button onclick="applyStyle()">Apply</button><br><br>
+			<div id="arrow-container">
+				Position:
+				<button id="arrow-left" onclick="move('left')">&#706;</button>
+				<button id="arrow-right" onclick="move('right')">&#707;</button>
+				<button id="arrow-up" onclick="move('up')">&#708;</button>
+				<button id="arrow-down" onclick="move('down')">&#709;</button>
+				<button id="restore-button" onclick="restorePosition()">Restore</button>
+				<div id="move-all-checkbox">
+					<input type="checkbox" id="move-all" checked><label for="move-all">Move all</label>
+				</div>
+			</div>
+			Key label: <input type="text" id="key-label" size="40" NFLCIME="on"><button onclick="setLabel()">Set</button>
+			<br><br>
+			<div id="message"></div>
+		</div>
+	</div>
+</div>
+<div class="section">
+	<div class="section-title">HTML</div>
+	
+	<textarea id="html" class="code" readonly wrap="off"></textarea>
+</div>
+</body>
+</html>
