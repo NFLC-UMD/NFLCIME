@@ -1,0 +1,7 @@
+{
+    "--": ["nflcime/nflcime.js","nflcime/src"],
+    "--welcome": "resources/docs/coverpage.html",
+    "--head-html" : "<link rel=\"stylesheet\" href=\"../resources/docs/style.css\" type=\"text/css\">",
+    "--examples" : "jsduck-examples.json",
+    "--output" : "docs"
+}

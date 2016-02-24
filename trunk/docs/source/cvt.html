@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='CVT'>/**
+</span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com&gt;
+ *
+ * @class CVT
+ *
+ */
+
+NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
+{
+	id:&#39;cvt&#39;,
+	type:&#39;core&#39;,
+	dependency:[&#39;rt&#39;],
+	//--- Event handlers
+	onModuleActivate:function(evt) {
+		var module = evt.module;
+		if(module == this) {
+			if(!this.active) {
+				this.active = true;
+				NFLCIME.addEventListener(&#39;RichTextPaste&#39;, this, true);
+				NFLCIME.addEventListener(&#39;ServiceApplicable&#39;, this, true);
+			}
+		} else {
+			// deactivate this converter if another one is activated
+			if(module.type == &#39;encoding converter&#39;) {
+				NFLCIME.dispatchEvent( { type:&#39;ModuleDeactivate&#39;, module:this } );
+			}
+		}
+	},
+	// Stop handling DOM event when module is deactivated
+	onModuleDeactivate:function(evt) {
+		var module = evt.module;
+		if(module == this) {
+			if(this.active) {
+				this.active = false;
+				NFLCIME.removeEventListener(&#39;RichTextPaste&#39;, this, true);
+				NFLCIME.removeEventListener(&#39;ServiceApplicable&#39;, this, true);
+			}
+		}
+	},
+	onRichTextPaste:function(evt) {
+		var edit = evt.target;
+		var segments = evt.textSegments;
+		if(this.isServiceApplicable(edit)) {
+			for(var i = 0; i &lt; segments.length; i++) {
+				var segment = segments[i];
+				// convert the text if it isn&#39;t employing a font known to be a real Unicode font
+				if(!this.isKnownNonHackFont(segment.style.fontFamily)) {
+					this.convertTextSegment(segment);
+				}
+			}
+		}
+	},
+	onServiceApplicable:function(evt) {
+		var service = evt.service;
+		var edit = evt.target;
+		// if the cvt service is applicable to the edit, the rt service is applicable as well
+		// since the conversion process requires handling of rich-text
+		if(service == &#39;rt&#39;) {
+			evt.applicable = this.isServiceApplicable(edit);
+			return true;
+		}
+	},
+	//--- Private functions
+	// Attach a closure to a DOM element that sends the events to the named handler
+	attachDOMHandler:function(element, eventName, handlerName, capturing) {
+		var handler = this[handlerName];
+		var closure = this.closures[handlerName];
+		if(!closure) {
+			var self = this;
+			switch(this.browser) {
+				case &#39;ie&#39;:
+					closure = function(evt) {
+						if(!evt.target) {
+							evt.target = evt.srcElement;
+						}
+						evt.returnValue = handler.call(self, evt);
+					}
+					break;
+				case &#39;firefox&#39;:
+				case &#39;safari&#39;:
+					closure = function(evt) {
+						var result = handler.call(self, evt);
+						if(result != undefined &amp;&amp; result == false) {
+							evt.preventDefault();
+						}
+					}
+			}
+			this.closures[handlerName] = closure;
+		}
+		switch(this.browser) {
+			case &#39;ie&#39;:
+				element.attachEvent(&#39;on&#39; + eventName, closure);
+				break;
+			case &#39;firefox&#39;:
+			case &#39;safari&#39;:
+				element.addEventListener(eventName, closure, capturing ? true : false);
+				break;
+		}
+	},
+	// Detach an earlier attached closure
+	detachDOMHandler:function(element, eventName, handlerName, capturing) {
+		var closure = this.closures[handlerName];
+		if(closure) {
+			switch(this.browser) {
+				case &#39;ie&#39;:
+					element.detachEvent(&#39;on&#39; + eventName, closure);
+					break;
+				case &#39;firefox&#39;:
+				case &#39;safari&#39;:
+					element.removeEventListener(eventName, closure, capturing ? true : false);
+					break;
+			}
+		}
+	},
+	// See if the font list contains a known non-hacked font (meaning the glyphs appear as defined in Unicode--hence no conversion is needed)
+	isKnownNonHackFont:function(fontList) {
+		var fonts = fontList.split(/\s*,\s*/);
+		for(var i = 0; i &lt; fonts.length; i++) {
+			var font = fonts[i].toLowerCase();
+			if(this.isKnownNonHackFonts[font]) {
+				return true;
+			}
+		}
+		return false;
+	},
+	// See if the cvt service is active for edit
+	isServiceApplicable:function(edit) {
+		var evt = { type:&#39;ServiceApplicable&#39;, target:edit, service:&#39;cvt&#39;, applicable:false };
+		NFLCIME.dispatchEvent(evt);
+		return evt.applicable;
+	},
+	// Apply a mapping table on the given text
+	applyMappings:function(mappings, text) {
+		var r = text;
+		for(var i = 0, l = mappings.length; i &lt; l; i++) {
+			var a = mappings[i];
+			r = r.replace(a[0], a[1]);
+		}
+		return r;
+	},
+	// Convert the text segment using mapping table
+	convertTextSegment:function(segment) {
+		segment.text = this.applyMappings(this.mappings, segment.text);
+		segment.lang = this.lang;
+	},
+	initialize:function(env, subclassing) {
+		this.browser = env.browser;
+		if(!subclassing) {
+			// create known non-hacked hash
+			for(var i = 0; i &lt; this.knownNonHackFonts.length; i++) {
+				var name = this.knownNonHackFonts[i].toLowerCase();
+				this.isKnownNonHackFonts[name] = true;
+			}
+		}
+		// only actual converters can be activated
+		if(this.type == &#39;encoding converter&#39;) {
+			NFLCIME.addEventListener(&#39;ModuleActivate&#39;, this);
+			NFLCIME.addEventListener(&#39;ModuleDeactivate&#39;, this)
+		}
+	},
+	active:false,
+	browser:&#39;&#39;,
+	converter:null,
+	converterId:null,
+	converterActive:false,
+	// fonts shipped with Windows 7 and Office 2007
+	knownNonHackFonts: [ &quot;Agency FB&quot;, &quot;Aharoni&quot;, &quot;Algerian&quot;, &quot;Andalus&quot;, &quot;Angsana New&quot;, &quot;AngsanaUPC&quot;, &quot;Aparajita&quot;, &quot;Arabic Typesetting&quot;, &quot;Arial&quot;, &quot;Arial Black&quot;, &quot;Arial Narrow&quot;, &quot;Arial Rounded MT&quot;, &quot;Arial Unicode MS&quot;, &quot;Baskerville Old Face&quot;, &quot;Batang&quot;, &quot;BatangChe&quot;, &quot;Bauhaus 93&quot;, &quot;Bell MT&quot;, &quot;Berlin Sans FB&quot;, &quot;Berlin Sans FB Demi&quot;, &quot;Bernard MT Condensed&quot;, &quot;Blackadder ITC&quot;, &quot;Bodoni MT&quot;, &quot;Bodoni MT Black&quot;, &quot;Bodoni MT Condensed&quot;, &quot;Bodoni MT Poster Compressed&quot;, &quot;Book Antiqua&quot;, &quot;Bookman Old Style&quot;, &quot;Bradley Hand ITC&quot;, &quot;Britannic&quot;, &quot;Broadway&quot;, &quot;Browallia New&quot;, &quot;BrowalliaUPC&quot;, &quot;Brush Script MT&quot;, &quot;Calibri&quot;, &quot;Californian FB&quot;, &quot;Calisto MT&quot;, &quot;Cambria&quot;, &quot;Cambria &amp; Cambria Math&quot;, &quot;Cambria Math&quot;, &quot;Candara&quot;, &quot;Centaur&quot;, &quot;Century&quot;, &quot;Century Gothic&quot;, &quot;Century Schoolbook&quot;, &quot;Chiller&quot;, &quot;Colonna MT&quot;, &quot;Comic Sans MS&quot;, &quot;Consolas&quot;, &quot;Constantia&quot;, &quot;Cooper Black&quot;, &quot;Copperplate Gothic&quot;, &quot;Copperplate Gothic Light&quot;, &quot;Corbel&quot;, &quot;Cordia New&quot;, &quot;CordiaUPC&quot;, &quot;Courier New&quot;, &quot;Curlz MT&quot;, &quot;DaunPenh&quot;, &quot;David&quot;, &quot;DFKai-SB&quot;, &quot;DilleniaUPC&quot;, &quot;DokChampa&quot;, &quot;Dotum&quot;, &quot;DotumChe&quot;, &quot;Ebrima&quot;, &quot;Edwardian Script ITC&quot;, &quot;Elephant&quot;, &quot;Engraveras&quot;, &quot;Eras  ITC&quot;, &quot;Eras Demi ITC&quot;, &quot;Eras Light ITC&quot;, &quot;Eras Medium ITC&quot;, &quot;Estrangelo Edessa&quot;, &quot;EucrosiaUPC&quot;, &quot;Euphemia&quot;, &quot;FangSong&quot;, &quot;Felix Titling&quot;, &quot;Footlight MT Light&quot;, &quot;Forte&quot;, &quot;Franklin&quot;, &quot;Franklin Gothic Book&quot;, &quot;Franklin Gothic Demi&quot;, &quot;Franklin Gothic Demi Cond&quot;, &quot;Franklin Gothic Heavy&quot;, &quot;Franklin Gothic Medium&quot;, &quot;Franklin Gothic Medium Cond&quot;, &quot;FrankRuehl&quot;, &quot;FreesiaUPC&quot;, &quot;Freestyle Script&quot;, &quot;French Script MT&quot;, &quot;Gabriola&quot;, &quot;Garamond&quot;, &quot;Gautami&quot;, &quot;Georgia&quot;, &quot;Gigi&quot;, &quot;Gill Sans MT&quot;, &quot;Gill Sans MT Condensed&quot;, &quot;Gill Sans MT Ext Condensed&quot;, &quot;Gill Sans Ultra&quot;, &quot;Gill Sans Ultra  Condensed&quot;, &quot;Gisha&quot;, &quot;Gloucester MT Extra Condensed&quot;, &quot;Gothic Book&quot;, &quot;Goudy Old Style&quot;, &quot;Goudy Stout&quot;, &quot;Gulim&quot;, &quot;GulimChe&quot;, &quot;Gungsuh&quot;, &quot;GungsuhChe&quot;, &quot;Haettenschweiler&quot;, &quot;Harlow Solid&quot;, &quot;Harrington&quot;, &quot;High Tower Text&quot;, &quot;Impact&quot;, &quot;Imprint MT Shadow&quot;, &quot;Informal Roman&quot;, &quot;IrisUPC&quot;, &quot;Iskoola Pota&quot;, &quot;JasmineUPC&quot;, &quot;Jokerman&quot;, &quot;Juice ITC&quot;, &quot;KaiTi&quot;, &quot;Kalinga&quot;, &quot;Kartika&quot;, &quot;Khmer UI&quot;, &quot;KodchiangUPC&quot;, &quot;Kokila&quot;, &quot;Kristen ITC&quot;, &quot;Kunstler Script&quot;, &quot;Lao UI&quot;, &quot;Latha&quot;, &quot;Leelawadee&quot;, &quot;Levenim MT&quot;, &quot;LilyUPC&quot;, &quot;Lucida Bright&quot;, &quot;Lucida Calligraphy&quot;, &quot;Lucida Console&quot;, &quot;Lucida Fax&quot;, &quot;Lucida Handwriting&quot;, &quot;Lucida Sans&quot;, &quot;Lucida Sans Typewriter&quot;, &quot;Lucida Sans Unicode&quot;, &quot;Magneto&quot;, &quot;Maiandra GD&quot;, &quot;Malgun Gothic&quot;, &quot;Mangal&quot;, &quot;Matura MT Script Capitals&quot;, &quot;Meiryo&quot;, &quot;Meiryo UI&quot;, &quot;Microsoft Himalaya&quot;, &quot;Microsoft JhengHei&quot;, &quot;Microsoft New Tai Lue&quot;, &quot;Microsoft PhagsPa&quot;, &quot;Microsoft Sans Serif&quot;, &quot;Microsoft Tai Le&quot;, &quot;Microsoft Uighur&quot;, &quot;Microsoft YaHei&quot;, &quot;Microsoft Yi Baiti&quot;, &quot;MingLiU&quot;, &quot;MingLiU_HKSCS&quot;, &quot;MingLiU_HKSCS-ExtB&quot;, &quot;MingLiU-ExtB&quot;, &quot;Miriam&quot;, &quot;Miriam Fixed&quot;, &quot;Mistral&quot;, &quot;Modern No. 20&quot;, &quot;Mongolian Baiti&quot;, &quot;Monotype Corsiva&quot;, &quot;MoolBoran&quot;, &quot;MS Gothic&quot;, &quot;MS Mincho&quot;, &quot;MS Outlook&quot;, &quot;MS PGothic&quot;, &quot;MS PMincho&quot;, &quot;MS Reference Sans Serif&quot;, &quot;MS Reference Specialty&quot;, &quot;MS UI Gothic&quot;, &quot;MT Extra&quot;, &quot;MV Boli&quot;, &quot;Narkisim&quot;, &quot;Niagara Engraved&quot;, &quot;Niagara Solid&quot;, &quot;NSimSun&quot;, &quot;Nyala&quot;, &quot;OCR A Extended&quot;, &quot;Old English Text MT&quot;, &quot;Onyx&quot;, &quot;Palace Script MT&quot;, &quot;Palatino Linotype&quot;, &quot;Papyrus&quot;, &quot;Parchment&quot;, &quot;Perpetua&quot;, &quot;Perpetua Titling MT&quot;, &quot;Perpetua Titling MT Light&quot;, &quot;Plantagenet Cherokee&quot;, &quot;Playbill&quot;, &quot;PMingLiU&quot;, &quot;PMingLiU-ExtB&quot;, &quot;Poor Richard&quot;, &quot;Pristina&quot;, &quot;Raavi&quot;, &quot;Rage&quot;, &quot;Ravie Rockwell&quot;, &quot;Rockwell&quot;, &quot;Rockwell Condensed&quot;, &quot;Rockwell Extra&quot;, &quot;Rod&quot;, &quot;Sakkal Majalla&quot;, &quot;Script MT&quot;, &quot;Segoe Print&quot;, &quot;Segoe Script&quot;, &quot;Segoe UI&quot;, &quot;Segoe UI Light&quot;, &quot;Segoe UI Semibold&quot;, &quot;Segoe UI Symbol&quot;, &quot;Shonar Bangla&quot;, &quot;Showcard Gothic&quot;, &quot;Shruti&quot;, &quot;SimHei&quot;, &quot;Simplified Arabic&quot;, &quot;Simplified Arabic Fixed&quot;, &quot;SimSun&quot;, &quot;SimSun-ExtB&quot;, &quot;Snap ITC&quot;, &quot;Stencil&quot;, &quot;Sylfaen&quot;, &quot;Symbol&quot;, &quot;Tahoma&quot;, &quot;Tempus Sans ITC&quot;, &quot;Times New Roman&quot;, &quot;Traditional Arabic&quot;, &quot;Trebuchet MS&quot;, &quot;Tunga&quot;, &quot;Tw Cen MT&quot;, &quot;Tw Cen MT Condensed&quot;, &quot;Tw Cen MT Condensed Extra&quot;, &quot;Utsaah&quot;, &quot;Vani&quot;, &quot;Verdana&quot;, &quot;Vijaya&quot;, &quot;Viner Hand ITC&quot;, &quot;Vivaldi&quot;, &quot;Vladimir Script&quot;, &quot;Vrinda&quot;, &quot;Webdings&quot;, &quot;Wide Latin&quot;, &quot;Wingdings&quot;, &quot;Wingdings 2&quot;, &quot;Wingdings 3&quot; ],
+	isKnownNonHackFonts:{}
+}
+} );</pre>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Persistence'>/**
+</span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com&gt;
+ *
+ * @class Persistence
+ *
+ */
+
+
+NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
+{
+	id:&#39;pers.cookie&#39;,
+	type:&#39;persistence&#39;,
+	//--- Event handlers
+	onModuleActivate:function(evt) {
+		var module = evt.module;
+		if(module == this) {
+			NFLCIME.addEventListener(&#39;PersistenceGetValue&#39;, this);
+			NFLCIME.addEventListener(&#39;PersistenceSetValue&#39;, this);
+		}
+	},
+	// Stop handling DOM event when module is deactivated
+	onModuleDeactivate:function(evt) {
+		var module = evt.module;
+		if(module == this) {
+			NFLCIME.removeEventListener(&#39;PersistenceGetValue&#39;, this);
+			NFLCIME.removeEventListener(&#39;PersistenceSetValue&#39;, this);
+		}
+	},
+	onPersistenceGetValue:function(evt) {
+		evt.value = this.getValue(evt.id, evt.name);
+	},
+	onPersistenceSetValue:function(evt) {
+		this.setValue(evt.id, evt.name, evt.value);
+	},
+	//--- Private functions
+	getValue:function(group, name) {
+		var cookie_values = this.cookieValueGroups[group];
+		if(!cookie_values) {
+			this.cookieValueGroups[group] = cookie_values = this.getCookieValues(group);
+		}
+		var value = cookie_values[name];
+		return value;
+	},
+	setValue:function(group, name, value) {
+		var cookie_values = this.cookieValueGroups[group];
+		if(!cookie_values) {
+			this.cookieValueGroups[group] = cookie_values = this.getCookieValues(group);
+		}
+		cookie_values[name] = value + &#39;&#39;;
+		var cookie_pairs = [], n;
+		for(n in cookie_values) {
+			var val = cookie_values[n];
+			if(typeof(val) != &#39;function&#39;) {
+				cookie_pairs.push(n + &#39;::&#39; + val);
+			}
+		}
+		var now = new Date();
+		var next_year = new Date(now.getTime() + 31536000000);
+		document.cookie = group + &#39;=&quot;&#39; + cookie_pairs.join(&#39;//&#39;) + &#39;&quot;&#39; + &#39;; expires=&#39; + next_year;
+	},
+	getCookieValues:function(group) {
+		var cookie_values = Array();
+		var regex = new RegExp(&#39;(^|\\s)&#39; + group + &#39;=&quot;([^&quot;]*)&quot;&#39;, &#39;i&#39;);
+		var match;
+		if(match = regex.exec(document.cookie)) {
+			var cookie_pairs = match[2].split(&#39;//&#39;);
+			for(var i = 0; i &lt; cookie_pairs.length; i++) {
+				var a = cookie_pairs[i].split(&#39;::&#39;);
+				var name = a[0], value = a[1];
+				if(name != &#39;PHPSESSID&#39;) {
+					cookie_values[name] = value;
+				}
+			}
+		}
+		return cookie_values;
+	},
+	initialize:function(env, subclassing) {
+		NFLCIME.addEventListener(&#39;ModuleActivate&#39;, this);
+		NFLCIME.addEventListener(&#39;ModuleDeactivate&#39;, this)
+	},
+	//--- Private variables
+	cookieValueGroups:{}
+}
+} );</pre>
+</body>
+</html>
