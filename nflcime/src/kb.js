@@ -1,7 +1,7 @@
 /**
  * @docauthor Steve Drucker <sdrucker@figleaf.com>
  *
- * @class Keyboard
+ * @class NFLCIME.Keyboard
  *
  * Keyboard listener functions
  * The {@link #onKeyPress} handler contains critical functionality for adding
@@ -205,10 +205,10 @@ NFLCIME.dispatchEvent({
 		 */
 
 		onKeyboardSetStates: function(evt) {
-			if (evt.states.altKey != undefined) this.virtualKeyboardStates.altKey = !this.physicalKeyboardStates.altKey && evt.states.altKey;
-			if (evt.states.ctrlKey != undefined) this.virtualKeyboardStates.ctrlKey = !this.physicalKeyboardStates.ctrlKey && evt.states.ctrlKey;
-			if (evt.states.shiftKey != undefined) this.virtualKeyboardStates.shiftKey = !this.physicalKeyboardStates.shiftKey && evt.states.shiftKey;
-			if (evt.states.capsLock != undefined) this.virtualKeyboardStates.capsLock = !this.physicalKeyboardStates.capsLock && evt.states.capsLock;
+			if (evt.states.altKey !== undefined) this.virtualKeyboardStates.altKey = !this.physicalKeyboardStates.altKey && evt.states.altKey;
+			if (evt.states.ctrlKey !== undefined) this.virtualKeyboardStates.ctrlKey = !this.physicalKeyboardStates.ctrlKey && evt.states.ctrlKey;
+			if (evt.states.shiftKey !== undefined) this.virtualKeyboardStates.shiftKey = !this.physicalKeyboardStates.shiftKey && evt.states.shiftKey;
+			if (evt.states.capsLock !== undefined) this.virtualKeyboardStates.capsLock = !this.physicalKeyboardStates.capsLock && evt.states.capsLock;
 			this.dispatchKeyboardStateChangeEvent();
 		},
 
@@ -224,9 +224,9 @@ NFLCIME.dispatchEvent({
 				var from;
 				var mappings = this.getKeyMappings();
 				if (mappings) {
-					var prefix = this.currentContext
+					var prefix = this.currentContext;
 					for (from in this.multikeyCombinations) {
-						if (from.indexOf(prefix) == 0 && prefix.length < from.length) {
+						if (from.indexOf(prefix) === 0 && prefix.length < from.length) {
 							var next = from.substr(prefix.length);
 							var code;
 							for (code in mappings) {
@@ -260,9 +260,9 @@ NFLCIME.dispatchEvent({
 						var entry = mappings[code];
 						if (typeof(entry) == 'object' && !entry.insert) {
 							var character = entry.context;
-							for (from in this.multikeyCombinations) {
-								if (from.indexOf(character) == 0) {
-									evt.keyCodes.push(parseInt(code))
+							for (var from in this.multikeyCombinations) {
+								if (from.indexOf(character) === 0) {
+									evt.keyCodes.push(parseInt(code));
 								}
 							}
 						}
@@ -387,10 +387,10 @@ NFLCIME.dispatchEvent({
 						type: 'KeyboardReleased',
 						target: edit,
 						keyCode: key
-					})
+					});
 					this.clearVirtualKeys();
 				}
-			};
+			}
 
 		},
 
@@ -420,7 +420,6 @@ NFLCIME.dispatchEvent({
 					// fake; charCode isn't set by ui.kb.js however, so we know
 					var fake = (this.browser == 'firefox') ? !evt.charCode : evt.fake;
 					// set what changes will be effected by the key;
-					// this 
 					var changes = this.determineChanges(edit, key);
 					// don't handle carriage return or space unless the event is fake
 					if ((key == 0x0d || key == 0x20) && !fake) {
@@ -431,7 +430,7 @@ NFLCIME.dispatchEvent({
 					}
 					// see if there's text selected and let default action go forward if so (unless the event is fake)
 					if ((key == 0x08 || key == 0x24) && (!fake || this.browser == 'firefox')) {
-						var evt = {
+						evt = {
 							type: 'CursorGetSelectedText',
 							target: edit,
 							text: ''
@@ -443,11 +442,11 @@ NFLCIME.dispatchEvent({
 					}
 					if (key == 0x08 && (fake && this.browser != 'firefox')) {
 						// we typically leave it to the browser to handle backspace;
-						// when the event is fake, however, we need to do so in IE 
+						// when the event is fake, however, we need to do so in IE
 						// and Safari since they don't react to the event
 						if (!changes) {
 							// make sure there's text behind the cursor
-							var evt = {
+							evt = {
 								type: 'CursorGetContext',
 								target: edit,
 								textAhead: '',
@@ -493,11 +492,13 @@ NFLCIME.dispatchEvent({
 						var win = doc.defaultView;
 						var selection = win.getSelection();
 						var range = selection.getRangeAt(0);
+						var container = null;
+						var langAttr = null;
 
 						if (range.startContainer.nodeName == 'P' && range.startContainer.lang) {
-							var container = range.startContainer;
+							container = range.startContainer;
 						} else {
-							var container = range.commonAncestorContainer.parentNode;
+							container = range.commonAncestorContainer.parentNode;
 						}
 
 						var origContainer = container;
@@ -517,7 +518,7 @@ NFLCIME.dispatchEvent({
 						}
 
 						if (container)
-							var langAttr = container.getAttribute('lang');
+							langAttr = container.getAttribute('lang');
 
 						// within same language block
 						if (langAttr && lang.code3 == langAttr) {
@@ -552,7 +553,7 @@ NFLCIME.dispatchEvent({
 
 							} else {
 
-								// add span element - 
+								// add span element -
 								// we have a language within a language
 
 								var html = '<span ';
@@ -569,7 +570,7 @@ NFLCIME.dispatchEvent({
 									text: changes.insert,
 									html: html
 								});
-							};
+							}
 
 
 						}
@@ -634,16 +635,16 @@ NFLCIME.dispatchEvent({
 								evt.target = evt.srcElement;
 							}
 							evt.returnValue = handler.call(self, evt);
-						}
+						};
 						break;
 					case 'firefox':
 					case 'safari':
 						closure = function(evt) {
 							var result = handler.call(self, evt);
-							if (result != undefined && result == false) {
+							if (result !== undefined && result === false) {
 								evt.preventDefault();
 							}
-						}
+						};
 				}
 				this.closures[handlerName] = closure;
 			}
@@ -776,7 +777,7 @@ NFLCIME.dispatchEvent({
 							plane = plane.replace('Capslock', '') + 'Shift';
 						}
 					}
-					if (plane == '') {
+					if (plane === '') {
 						plane = 'Normal';
 					}
 				}
@@ -845,7 +846,7 @@ NFLCIME.dispatchEvent({
 			var mappings = this.getKeyMappings();
 
 			var entry;
-			if (mappings && (entry = mappings[key]) != undefined) {
+			if (mappings && (entry == mappings[key]) !== undefined) {
 				// usually the entry is a Unicode string to be inserted; but sometimes we want to perform a look-up of possible combination
 				// without inserting a character should the look-up fail; in such a case the entry be an object instead of a string (e.g. kb.geez.amharic.powergeez)
 				if (entry instanceof Object) {
@@ -857,9 +858,9 @@ NFLCIME.dispatchEvent({
 					result.context = entry;
 				}
 				if (this.multikeyCombinations) {
-					// this keyboard has multi-key sequences (e.g. A + ' => �)
+					// this keyboard has multi-key sequences
 					entry = this.multikeyCombinations[context + result.context];
-					if (entry != undefined) {
+					if (entry !== undefined) {
 						result.isMultikey = true;
 						// do this again in case the multikey combination leave behind a context that isn't what will be inserted
 						if (entry instanceof Object) {
@@ -872,7 +873,7 @@ NFLCIME.dispatchEvent({
 					} else {
 						if (this.multikeyNoMatch) {
 							entry = this.multikeyNoMatch[result.context];
-							if (entry != undefined) {
+							if (entry !== undefined) {
 								result.isMultikey = true;
 								if (entry instanceof Object) {
 									result.insert = entry.insert;
@@ -917,7 +918,7 @@ NFLCIME.dispatchEvent({
 				} else {
 					if (!this.lastInsertion && this.currentContext) {
 						// the previous key was a dead-key; as we can't find any combination, just
-						// insert the character it stands for along with the new character--unless 
+						// insert the character it stands for along with the new character--unless
 						// it's a space, in which case we'll insert only the dead-key character
 						if (keyinfo.insert == ' ') {
 							changes.insert = this.currentContext;
@@ -972,7 +973,7 @@ NFLCIME.dispatchEvent({
 			// only keyboard layouts can be activated
 			if (this.type == 'keyboard layout') {
 				NFLCIME.addEventListener('ModuleActivate', this);
-				NFLCIME.addEventListener('ModuleDeactivate', this)
+				NFLCIME.addEventListener('ModuleDeactivate', this);
 			}
 
 			// keep an eye on focus change so the keyboard states can be updated when the browser lose or gain focus

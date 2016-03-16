@@ -1,7 +1,7 @@
 /**
  * @docauthor Steve Drucker <sdrucker@figleaf.com>
  *
- * @class CVT
+ * @class NFLCIME.CVT
  *
  */
 
