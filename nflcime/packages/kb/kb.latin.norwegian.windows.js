@@ -1,3 +1,11 @@
+/**
+ * @docauthor Christopher Rhodes <clrhodes@gmail.com>
+ *
+ * @class NFLCIME.kb.latin.norwegian.windows
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
 NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 {
 	id:'kb.latin.norwegian.windows',

@@ -1,3 +1,13 @@
+/**
+ * @docauthor Christopher Rhodes <clrhodes@gmail.com>
+ *
+ * @class NFLCIME.kb.arabic.pashto.globalwriter
+ * Pashto language global keyboard map class.
+ *
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
 NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 {
 	id:'kb.arabic.pashto.globalwriter',
