@@ -260,7 +260,8 @@ NFLCIME.dispatchEvent({
 						var entry = mappings[code];
 						if (typeof(entry) == 'object' && !entry.insert) {
 							var character = entry.context;
-							for (var from in this.multikeyCombinations) {
+							var from;
+							for (from in this.multikeyCombinations) {
 								if (from.indexOf(character) === 0) {
 									evt.keyCodes.push(parseInt(code));
 								}
@@ -420,6 +421,7 @@ NFLCIME.dispatchEvent({
 					// fake; charCode isn't set by ui.kb.js however, so we know
 					var fake = (this.browser == 'firefox') ? !evt.charCode : evt.fake;
 					// set what changes will be effected by the key;
+					// this
 					var changes = this.determineChanges(edit, key);
 					// don't handle carriage return or space unless the event is fake
 					if ((key == 0x0d || key == 0x20) && !fake) {
@@ -517,8 +519,9 @@ NFLCIME.dispatchEvent({
 							container = pEl;
 						}
 
-						if (container)
+						if (container) {
 							langAttr = container.getAttribute('lang');
+						}
 
 						// within same language block
 						if (langAttr && lang.code3 == langAttr) {
@@ -845,8 +848,8 @@ NFLCIME.dispatchEvent({
 			};
 			var mappings = this.getKeyMappings();
 
-			var entry;
-			if (mappings && (entry == mappings[key]) !== undefined) {
+			var entry = mappings[key];
+			if (mappings && (entry !== undefined)) {
 				// usually the entry is a Unicode string to be inserted; but sometimes we want to perform a look-up of possible combination
 				// without inserting a character should the look-up fail; in such a case the entry be an object instead of a string (e.g. kb.geez.amharic.powergeez)
 				if (entry instanceof Object) {
