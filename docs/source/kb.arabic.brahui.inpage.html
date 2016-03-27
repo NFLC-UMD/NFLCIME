@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-arabic-brahui-inpage'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.arabic.brahui.inpage
+ * Brahui language keyboard map class.
+ *
+ * @extends NFLCIME.kb.arabic.urdu.inpage
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.arabic.brahui.inpage&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb.arabic.urdu.inpage&#39;],
+<span id='NFLCIME-kb-arabic-brahui-inpage-property-mapShift'>		/**
+</span>		* Replaces Shift-q with U+06B7: Arabic letter with three dots.
+		*/
+		mapShift: {
+			0xc0: &#39;\u064B&#39;, // `
+			0x31: &#39;!&#39;, // 1
+			0x32: &#39;,&#39;, // 2
+			0x33: &#39;/&#39;, // 3
+			0x34: &#39;\u0626&#39;, // 4
+			0x35: &#39;&#39;, // 5
+			0x36: &#39;\u06d6&#39;, // 6
+			0x37: &#39;\u0654&#39;, // 7
+			0x38: &#39;\u064c&#39;, // 8
+			0x39: &#39;)&#39;, // 9
+			0x30: &#39;(&#39;, // 0
+			0xbd: &#39;\u0651&#39;, // -
+			0xbb: &#39;\u0622&#39;, // =
+			0x51: &#39;\u06B7&#39;, // q
+			0x57: &#39;\uFDFA&#39;, // w
+			0x45: &#39;\u06dc&#39;, // e
+			0x52: &#39;\u0691&#39;, // r
+			0x54: &#39;\u0679&#39;, // t
+			0x59: &#39;\u06e6&#39;, // y
+			0x55: &#39;\u0652&#39;, // u
+			0x49: &#39;\u0670&#39;, // i
+			0x4f: &#39;\u0629&#39;, // o
+			0x50: &#39;\u064f&#39;, // p
+			0xdb: &#39;\u2018&#39;, // [
+			0xdd: &#39;\u2019&#39;, // ]
+			0xdc: &#39;\u06d8&#39;, // \
+			0x41: &#39;\u0653&#39;, // a
+			0x53: &#39;\u0635&#39;, // s
+			0x44: &#39;\u0688&#39;, // d
+			0x46: &#39;\u06ed&#39;, // f
+			0x47: &#39;\u063a&#39;, // g
+			0x48: &#39;\u062d&#39;, // h
+			0x4a: &#39;\u0636&#39;, // j
+			0x4b: &#39;\u062e&#39;, // k
+			0x4c: &#39;\u06da&#39;, // l
+			0xba: &#39;:&#39;, // ;
+			0xde: &#39;\u0640&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0630&#39;, // z
+			0x58: &#39;\u0698&#39;, // x
+			0x43: &#39;\u062b&#39;, // c
+			0x56: &#39;\u0638&#39;, // v
+			0x42: &#39;\u06d7&#39;, // b
+			0x4e: &#39;\u06ba&#39;, // n
+			0x4d: &#39;\u0625&#39;, // m
+			0xbc: &#39;\u064e&#39;, // ,
+			0xbe: &#39;\u0650&#39;, // .
+			0xbf: &#39;\u061F&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

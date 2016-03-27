@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-cvt-bengali-bengali-auto'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.cvt.bengali.bengali.auto
+ * @extends NFLCIME.CVT
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;cvt.bengali.bengali.auto&#39;,
+		type: &#39;encoding converter&#39;,
+		dependency: [&#39;cvt.bengali.bengali.amardesh&#39;, &#39;cvt.bengali.bengali.bangla2000&#39;, &#39;cvt.bengali.bengali.bangsee&#39;, &#39;cvt.bengali.bengali.boishakhi&#39;, &#39;cvt.bengali.bengali.prothoma&#39;, &#39;cvt.bengali.bengali.sutonny&#39;],
+		inheritance: [&#39;cvt&#39;],
+		lang: &#39;bn&#39;,
+		convertTextSegment: function(segment) {
+			var converter;
+			var font = segment.style.fontFamily;
+			if (/(^|,)amar desh($|,)/i.test(font)) {
+				converter = this.amardeshConverter;
+			} else if (/(^|,)bangla2000($|,)/i.test(font)) {
+				converter = this.bangla2000Converter;
+			} else if (/(^|,)bangsee($|,)/i.test(font)) {
+				converter = this.bangseeConverter;
+			} else if (/(^|,)boishakhi($|,)/i.test(font)) {
+				converter = this.boishakhiConverter;
+			} else if (/(^|,)prothoma($|,)/i.test(font)) {
+				converter = this.prothomaConverter;
+			} else if (/(^|,)sutonny($|,)/i.test(font)) {
+				converter = this.sutonnyConverter;
+			} else if (/(^|,)sutonnymj($|,)/i.test(font)) {
+				converter = this.sutonnyConverter;
+			}
+			if (converter) {
+				converter.convertTextSegment(segment);
+			}
+		},
+		initialize: function() {
+			var list = [];
+			NFLCIME.dispatchEvent({
+				type: &#39;ModuleGetList&#39;,
+				list: list
+			});
+			for (var i = 0; i &lt; list.length; i++) {
+				var module = list[i];
+				switch (module.id) {
+					case &#39;cvt.bengali.bengali.amardesh&#39;:
+						this.amardeshConverter = module;
+						break;
+					case &#39;cvt.bengali.bengali.bangla2000&#39;:
+						this.bangla2000Converter = module;
+						break;
+					case &#39;cvt.bengali.bengali.bangsee&#39;:
+						this.bangseeConverter = module;
+						break;
+					case &#39;cvt.bengali.bengali.boishakhi&#39;:
+						this.boishakhiConverter = module;
+						break;
+					case &#39;cvt.bengali.bengali.prothoma&#39;:
+						this.prothomaConverter = module;
+						break;
+					case &#39;cvt.bengali.bengali.sutonny&#39;:
+						this.sutonnyConverter = module;
+						break;
+				}
+			}
+		},
+		amardeshConverter: null,
+		bangla2000Converter: null,
+		bangseeConverter: null,
+		boishakhiConverter: null,
+		prothomaConverter: null,
+		sutonnyConverter: null
+	}
+});
+</pre>
+</body>
+</html>

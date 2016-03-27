@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-devanagari-hindi-phonetic'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.devanagari.hindi.phonetic
+ * Hindi Devanagari alphabet phonetic keyboard map class.
+ *
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.devanagari.hindi.phonetic&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb&#39;],
+		mapNormal: {
+			0xc0: &#39;\u093c&#39;, // `
+			0x31: &#39;\u0967&#39;, // 1
+			0x32: &#39;\u0968&#39;, // 2
+			0x33: &#39;\u0969&#39;, // 3
+			0x34: &#39;\u096a&#39;, // 4
+			0x35: &#39;\u096b&#39;, // 5
+			0x36: &#39;\u096c&#39;, // 6
+			0x37: &#39;\u096d&#39;, // 7
+			0x38: &#39;\u096e&#39;, // 8
+			0x39: &#39;\u096f&#39;, // 9
+			0x30: &#39;\u0966&#39;, // 0
+			0xbd: &#39;-&#39;, // -
+			0xbb: &#39;=&#39;, // =
+			0x51: &#39;\u0958&#39;, // q
+			0x57: &#39;\u090f&#39;, // w
+			0x45: &#39;\u0947&#39;, // e
+			0x52: &#39;\u0930&#39;, // r
+			0x54: &#39;\u0924&#39;, // t
+			0x59: &#39;\u092f&#39;, // y
+			0x55: &#39;\u0941&#39;, // u
+			0x49: &#39;\u093f&#39;, // i
+			0x4f: &#39;\u094b&#39;, // o
+			0x50: &#39;\u092a&#39;, // p
+			0xdb: &#39;\u0913&#39;, // [
+			0xdd: &#39;\u090b&#39;, // ]
+			0xdc: &#39;\u0902&#39;, // \
+			0x41: &#39;\u0905&#39;, // a
+			0x53: &#39;\u0938&#39;, // s
+			0x44: &#39;\u0926&#39;, // d
+			0x46: &#39;\u094d&#39;, // f
+			0x47: &#39;\u0917&#39;, // g
+			0x48: &#39;\u0939&#39;, // h
+			0x4a: &#39;\u091c&#39;, // j
+			0x4b: &#39;\u0915&#39;, // k
+			0x4c: &#39;\u0932&#39;, // l
+			0xba: &#39;\u0909&#39;, // ;
+			0xde: &#39;\u0907&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u093e&#39;, // z
+			0x58: &#39;\u091e&#39;, // x
+			0x43: &#39;\u091a&#39;, // c
+			0x56: &#39;\u0935&#39;, // v
+			0x42: &#39;\u092c&#39;, // b
+			0x4e: &#39;\u0928&#39;, // n
+			0x4d: &#39;\u092e&#39;, // m
+			0xbc: &#39;\u0921&#39;, // ,
+			0xbe: &#39;\u0964&#39;, // .
+			0xbf: &#39;.&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		},
+		mapShift: {
+			0xc0: &#39;\u0950&#39;, // `
+			0x31: &#39;!&#39;, // 1
+			0x32: &#39;\u0945&#39;, // 2
+			0x34: &#39;\u0970&#39;, // 4
+			0x35: &#39;\u0903&#39;, // 5
+			0x36: &#39;&#39;, // 6
+			0x37: &#39;\u0959&#39;, // 7
+			0x38: &#39;\u095a&#39;, // 8
+			0x39: &#39;(&#39;, // 9
+			0x30: &#39;)&#39;, // 0
+			0xbd: &#39;&#39;, // -
+			0xbb: &#39;+&#39;, // =
+			0x51: &#39;&#39;, // q
+			0x57: &#39;\u0910&#39;, // w
+			0x45: &#39;\u0948&#39;, // e
+			0x52: &#39;\u0937&#39;, // r
+			0x54: &#39;\u0925&#39;, // t
+			0x59: &#39;&#39;, // y
+			0x55: &#39;\u0942&#39;, // u
+			0x49: &#39;\u0940&#39;, // i
+			0x4f: &#39;\u094c&#39;, // o
+			0x50: &#39;\u092b&#39;, // p
+			0xdb: &#39;\u0914&#39;, // [
+			0xdd: &#39;&#39;, // ]
+			0xdc: &#39;\u095d&#39;, // \
+			0x41: &#39;\u0906&#39;, // a
+			0x53: &#39;\u0936&#39;, // s
+			0x44: &#39;\u0927&#39;, // d
+			0x46: &#39;\u0943&#39;, // f
+			0x47: &#39;\u0918&#39;, // g
+			0x48: &#39;\u095e&#39;, // h
+			0x4a: &#39;\u091d&#39;, // j
+			0x4b: &#39;\u0916&#39;, // k
+			0x4c: &#39;\u095c&#39;, // l
+			0xba: &#39;\u090a&#39;, // ;
+			0xde: &#39;\u0908&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u095b&#39;, // z
+			0x58: &#39;\u0919&#39;, // x
+			0x43: &#39;\u091b&#39;, // c
+			0x56: &#39;\u091F&#39;, // v
+			0x42: &#39;\u092d&#39;, // b
+			0x4e: &#39;\u0923&#39;, // n
+			0x4d: &#39;\u0920&#39;, // m
+			0xbc: &#39;\u0922&#39;, // ,
+			0xbe: &#39;,&#39;, // .
+			0xbf: &#39;?&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

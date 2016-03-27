@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-gujarati-gujarati-remington'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.gujarati.gujarati.remington
+ * @extends NFLCIME.kb.gujarati
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.gujarati.gujarati.remington&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb.gujarati&#39;],
+		mapNormal: {
+			0xc0: &#39;\u0abc&#39;, // `
+			0x31: &#39;\u0a95\u0acd\u0ab7\u0acd&#39;, // 1
+			0x32: &#39;\u0ac5&#39;, // 2
+			0x33: &#39;\u0a98&#39;, // 3
+			0x34: &#39;,&#39;, // 4
+			0x35: &#39;\u0aaa\u0acd&#39;, // 5
+			0x36: &#39;\u0aa3&#39;, // 6
+			0x37: &#39;\u0a9c\u0acd\u0a9e&#39;, // 7
+			0x38: &#39;\u0a9f&#39;, // 8
+			0x39: &#39;\u0aa0&#39;, // 9
+			0x30: &#39;\u0aa1&#39;, // 0
+			0xbd: &#39;\u0aa2&#39;, // -
+			0xbb: &#39;;&#39;, // =
+			0x51: &#39;\u0ab7\u0acd&#39;, // q
+			0x57: &#39;\u0aa7&#39;, // w
+			0x45: &#39;\u0aad&#39;, // e
+			0x52: &#39;\u0a9a&#39;, // r
+			0x54: &#39;\u0aa4&#39;, // t
+			0x59: &#39;\u0aa5&#39;, // y
+			0x55: &#39;\u0a97&#39;, // u
+			0x49: &#39;\u0aaf&#39;, // i
+			0x4f: &#39;\u0aab&#39;, // o
+			0x50: &#39;.&#39;, // p
+			0xdb: &#39;\u0ac7&#39;, // [
+			0xdd: &#39;\u0ac1&#39;, // ]
+			0xdc: &#39;\u0a95\u0acd\u0ab7\u0acd&#39;, // \
+			0x41: &#39;\u0aac&#39;, // a
+			0x53: &#39;\u0a95&#39;, // s
+			0x44: &#39;\u0aae&#39;, // d
+			0x46: &#39;\u0abe&#39;, // f
+			0x47: &#39;\u0aa8&#39;, // g
+			0x48: &#39;\u0a9c&#39;, // h
+			0x4a: &#39;\u0ab5&#39;, // j
+			0x4b: &#39;\u0a9b&#39;, // k
+			0x4c: &#39;\u0ac0&#39;, // l
+			0xba: &#39;\u0ab8&#39;, // ;
+			0xde: &#39;\u0ac3&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0ab0&#39;, // z
+			0x58: &#39;\u0ab6&#39;, // x
+			0x43: &#39;\u0ab9&#39;, // c
+			0x56: &#39;\u0a85&#39;, // v
+			0x42: &#39;\u0a96&#39;, // b
+			0x4e: &#39;\u0aa6&#39;, // n
+			0x4d: &#39;\u0acb&#39;, // m
+			0xbc: &#39;\u0ab2&#39;, // ,
+			0xbe: &#39;\u0a87&#39;, // .
+			0xbf: &#39;\u0ab3&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		},
+		mapShift: {
+			0xc0: &#39;\&#39;&#39;, // `
+			0x31: &#39;\u0ae7&#39;, // 1
+			0x32: &#39;\u0ae8&#39;, // 2
+			0x33: &#39;\u0ae9&#39;, // 3
+			0x34: &#39;\u0aea&#39;, // 4
+			0x35: &#39;\u0aeb&#39;, // 5
+			0x36: &#39;\u0aa3\u0acd&#39;, // 6
+			0x37: &#39;\u0aec&#39;, // 7
+			0x38: &#39;\u0aed&#39;, // 8
+			0x39: &#39;\u0aee&#39;, // 9
+			0x30: &#39;\u0aef&#39;, // 0
+			0xbd: &#39;\u0ae6&#39;, // -
+			0xbb: &#39;\u0a82&#39;, // =
+			0x51: &#39;\u0a8a&#39;, // q
+			0x57: &#39;\u0aa7\u0acd&#39;, // w
+			0x45: &#39;\u0aad\u0acd&#39;, // e
+			0x52: &#39;\u0a9a\u0acd&#39;, // r
+			0x54: &#39;\u0aa4\u0acd&#39;, // t
+			0x59: &#39;\u0aa5\u0acd&#39;, // y
+			0x55: &#39;\u0a97\u0acd&#39;, // u
+			0x49: &#39;\u0aaf\u0acd&#39;, // i
+			0x4f: &#39;\u0a83&#39;, // o
+			0x50: &#39;\u0a89&#39;, // p
+			0xdb: &#39;\u0ac8&#39;, // [
+			0xdd: &#39;\u0ac2&#39;, // ]
+			0xdc: &#39;:&#39;, // \
+			0x41: &#39;\u0aac\u0acd&#39;, // a
+			0x53: &#39;(&#39;, // s
+			0x44: &#39;\u0aae\u0acd&#39;, // d
+			0x46: &#39;)&#39;, // f
+			0x47: &#39;\u0aa8\u0acd&#39;, // g
+			0x48: &#39;\u0a9d&#39;, // h
+			0x4a: &#39;\u0ab5\u0acd&#39;, // j
+			0x4b: &#39;\u0a8b&#39;, // k
+			0x4c: &#39;\ufeff\u0abf&#39;, // l
+			0xba: &#39;\u0ab8\u0acd&#39;, // ;
+			0xde: &#39;\u0ab0\u0acd&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0ab6\u0acd\u0ab0&#39;, // z
+			0x58: &#39;\u0ab6\u0acd&#39;, // x
+			0x43: &#39;!&#39;, // c
+			0x56: &#39;-&#39;, // v
+			0x42: &#39;\u0a96\u0acd&#39;, // b
+			0x4e: &#39;\u0aa6\u0ac3&#39;, // n
+			0x4d: &#39;?&#39;, // m
+			0xbc: &#39;\u0ab2\u0acd&#39;, // ,
+			0xbe: &#39;\u0a88&#39;, // .
+			0xbf: &#39;/&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

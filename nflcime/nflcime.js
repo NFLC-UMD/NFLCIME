@@ -22,7 +22,7 @@ NFLCIME.extend = function(obj, ext) {
 				}
 			}
 		}
-	};
+	}
 
 	return obj;
 };
@@ -321,7 +321,8 @@ NFLCIME.extend(NFLCIME, {
 			"rt.scrube.js",
 			"rt.js",
 			"cursor.js",
-			"lang.js"
+			"lang.js",
+			"languages.json"
 		];
 
 		if (sourcefiles.indexOf(url) === -1) {
@@ -397,8 +398,8 @@ NFLCIME.extend(NFLCIME, {
 			var script = document.createElement('SCRIPT');
 			script.src = full_url;
 			head.appendChild(script);
-			
-			
+
+
 		}
 	},
 	*/

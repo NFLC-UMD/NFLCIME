@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-cvt-devanagari-hindi-auto'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.cvt.devanagari.hindi.auto
+ * @extends NFLCIME.CVT
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;cvt.devanagari.hindi.auto&#39;,
+		type: &#39;encoding converter&#39;,
+		dependency: [&#39;cvt.devanagari.hindi.webdunia&#39;, &#39;cvt.devanagari.hindi.naidunia&#39;, &#39;cvt.devanagari.hindi.kruti&#39;, &#39;cvt.devanagari.hindi.jaipur&#39;],
+		inheritance: [&#39;cvt&#39;],
+		lang: &#39;hi&#39;,
+		convertTextSegment: function(segment) {
+			var converter;
+			var font = segment.style.fontFamily;
+			if (/(^|,)naidunia($|,)/i.test(font)) {
+				converter = this.naiduniaConverter;
+			} else if (/(^|,)webdunia($|,)/i.test(font)) {
+				converter = this.webduniaConverter;
+			} else if (/(^|,)kruti dev/i.test(font)) {
+				converter = this.krutiConverter;
+			} else if (/(^|,)jaipur($|,)/i.test(font)) {
+				converter = this.jaipurConverter;
+			}
+			if (converter) {
+				converter.convertTextSegment(segment);
+			}
+		},
+		initialize: function() {
+			var list = [];
+			NFLCIME.dispatchEvent({
+				type: &#39;ModuleGetList&#39;,
+				list: list
+			});
+			for (var i = 0; i &lt; list.length; i++) {
+				var module = list[i];
+				switch (module.id) {
+					case &#39;cvt.devanagari.hindi.naidunia&#39;:
+						this.naiduniaConverter = module;
+						break;
+					case &#39;cvt.devanagari.hindi.webdunia&#39;:
+						this.webduniaConverter = module;
+						break;
+					case &#39;cvt.devanagari.hindi.kruti&#39;:
+						this.krutiConverter = module;
+						break;
+					case &#39;cvt.devanagari.hindi.jaipur&#39;:
+						this.jaipurConverter = module;
+						break;
+				}
+			}
+		},
+		naiduniaConverter: null,
+		webduniaConverter: null,
+		krutiConverter: null,
+		jaipurConverter: null
+	}
+});
+</pre>
+</body>
+</html>

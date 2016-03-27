@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-cvt-burmese-burmese-bit'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.cvt.burmese.burmese.bit
+ * @extends NFLCIME.CVT
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;cvt.burmese.burmese.bit&#39;,
+		type: &#39;encoding converter&#39;,
+		inheritance: [&#39;cvt&#39;],
+		lang: &#39;my&#39;,
+		mappings: [
+			[/\u1033/g, &#39;\u103c&#39;],
+			[/\u1034/g, &#39;\u103c&#39;],
+			[/\u1035/g, &#39;\u103b&#39;],
+			[/\u1039/g, &#39;\u103a&#39;],
+			[/\u104e/g, &#39;\u104e\u1004\u103a\u1038&#39;],
+			[/\u105d/g, &#39;\u102b&#39;],
+			[/\u105e/g, &#39;\u102b\u103a&#39;],
+			[/\u105f/g, &#39;\u103e&#39;],
+			[/\u1060/g, &#39;\u1039\u1000&#39;],
+			[/\u1061/g, &#39;\u1039\u1001&#39;],
+			[/\u1062/g, &#39;\u1039\u1002&#39;],
+			[/\u1063/g, &#39;\u1039\u1003&#39;],
+			[/\u1064/g, &#39;\u1039\u1005&#39;],
+			[/\u1065/g, &#39;\u1039\u1006&#39;],
+			[/\u1066/g, &#39;\u1039\u1007&#39;],
+			[/\u1067/g, &#39;\u1039\u100f&#39;],
+			[/\u1068/g, &#39;\u1039\u1010&#39;],
+			[/\u1069/g, &#39;\u1039\u1011&#39;],
+			[/\u106a/g, &#39;\u1039\u1011&#39;],
+			[/\u106b/g, &#39;\u1039\u1011&#39;],
+			[/\u106c/g, &#39;\u1039\u1012&#39;],
+			[/\u106d/g, &#39;\u1039\u1013&#39;],
+			[/\u106e/g, &#39;\u1039\u1014&#39;],
+			[/\u106f/g, &#39;\u1039\u1015&#39;],
+			[/\u1070/g, &#39;\u1039\u1016&#39;],
+			[/\u1071/g, &#39;\u1039\u1017&#39;],
+			[/\u1072/g, &#39;\u1039\u1018&#39;],
+			[/\u1073/g, &#39;\u1039\u1019&#39;],
+			[/\u1074/g, &#39;\u1039\u101c&#39;],
+			[/\u1075/g, &#39;\u1039\u100c&#39;],
+			[/\u1076/g, &#39;\u1039\u100b&#39;],
+			[/\u1077/g, &#39;\u1039\u1010\u103d&#39;],
+			[/\u1078/g, &#39;\u100f\u1039\u100d&#39;],
+			[/\u1079/g, &#39;\u100d\u1039\u100e&#39;],
+			[/\u107a/g, &#39;\u1039\u1000&#39;],
+			[/\u107b/g, &#39;\u1039\u1003&#39;],
+			[/\u107c/g, &#39;\u1039\u101e&#39;],
+			[/\u107d/g, &#39;\u1039\u1006&#39;],
+			[/\u107e/g, &#39;\u103d&#39;],
+			[/\u107f/g, &#39;\u103d\u103e&#39;],
+			[/\u1080/g, &#39;\u103e&#39;],
+			[/\u1081/g, &#39;\u103e\u102f&#39;],
+			[/\u1082/g, &#39;\u102f&#39;],
+			[/\u1083/g, &#39;\u1030&#39;],
+			[/\u1084/g, &#39;\u102d\u1036&#39;],
+			[/\u1085/g, &#39;\u1004\u103a\u1039\u200d\u1036&#39;],
+			[/\u1086/g, &#39;\u1004\u103a\u1039\u200d&#39;],
+			[/\u1087/g, &#39;\u1004\u103a\u1039\u200d\u102d&#39;],
+			[/\u1088/g, &#39;\u1004\u103a\u1039\u200d\u102e&#39;],
+			[/\u1089/g, &#39;\u100b\u1039\u100c&#39;],
+			[/\u108a/g, &#39;\u100b\u1039\u100b&#39;],
+			[/\u108b/g, &#39;\u100d\u1039\u100d&#39;],
+			[/\u108c/g, &#39;\u100a&#39;],
+			[/\u108d/g, &#39;\u103f&#39;],
+			[/\u108e/g, &#39;\u1014&#39;],
+			[/\u108f/g, &#39;\u1063&#39;],
+			[/\u1090/g, &#39;\u103c&#39;],
+			[/\u1091/g, &#39;\u103c&#39;],
+			[/\u1092/g, &#39;\u103c&#39;],
+			[/\u1093/g, &#39;\u103c&#39;],
+			[/\u1094/g, &#39;\u103c&#39;],
+			[/\u1095/g, &#39;\u103c\u103d&#39;],
+			[/\u1096/g, &#39;\u103b\u103e&#39;],
+			[/\u1097/g, &#39;\u103b\u103d&#39;],
+			[/\u1098/g, &#39;\u103b\u103d\u103e&#39;],
+			[/\u1099/g, &#39;\u1039\u1008&#39;],
+			[/\u109a/g, &#39;\u1037&#39;],
+			[/\u109b/g, &#39;\u1037&#39;],
+			[/\u109c/g, &#39;\u1039\u100f&#39;],
+			[/\u109d/g, &#39;\u1039\u1018&#39;],
+			[/\u109e/g, &#39;\u1039\u101c&#39;],
+			[/\u109f/g, &#39;\u101b&#39;],
+			//  At this point all characters have been converted to Unicode. The following series
+			//  of rearrangement are applicable to all Burmese converters.
+			// move kinzi to the front of cluster
+			[/([\u1000-\u1021\u103f](\u1039[\u1000-\u1021])*)\u1004\u103a\u1039\u200d/g, &#39;\u1004\u103a\u1039$1&#39;],
+			// move medial ra to back of consonant(s)
+			[/\u103c([\u102f\u103d]?)([\u1000-\u1021\u103f]\u103a?(\u1039[\u1000-\u1021]\u103a?)*[\u103b]*)/g, &#39;$2\u103c$1&#39;],
+			// move e sign to back of consonant(s)
+			[/\u1031([\u1000-\u1021\u103f]\u103a?(\u1039[\u1000-\u1021]\u103a?)*[\u103b-\u103e]*)/g, &#39;$1\u1031&#39;],
+			// move i, ii, or ai sign in front of u or uu (PadaukOT expects this ordering, but it is wrong according to Unicode)
+			[/([\u102f\u1030]+)([\u102d\u102e\u1032]+)/g, &#39;$2$1&#39;],
+			// move medial wa and ha in front of other signs
+			[/([\u1031\u102f\u1030\u102d\u102e\u1032]+)([\u103d\u103e]+)/g, &#39;$2$1&#39;],
+			// move anusvara, atha, and dot below behind other signs
+			[/([\u1036\u1037\u103a]+)([\u102d-\u1030\u1032\u103a\u103d\u103e]+)/g, &#39;$2$1&#39;],
+			// remove double diacritics
+			[/\u102d\u102d/g, &#39;\u102d&#39;],
+			[/\u102e\u102e/g, &#39;\u102e&#39;],
+			[/\u102f\u102f/g, &#39;\u102f&#39;],
+			[/\u1030\u1030/g, &#39;\u1030&#39;],
+			[/\u1032\u1032/g, &#39;\u1032&#39;],
+			[/\u1036\u1036/g, &#39;\u1036&#39;],
+			[/\u1037\u1037/g, &#39;\u1037&#39;],
+			[/\u1039\u1039/g, &#39;\u1039&#39;],
+			[/\u103a\u103a/g, &#39;\u103a&#39;],
+			[/\u103d\u103d/g, &#39;\u103d&#39;],
+			[/\u103e\u103e/g, &#39;\u103e&#39;]
+		]
+	}
+});
+</pre>
+</body>
+</html>

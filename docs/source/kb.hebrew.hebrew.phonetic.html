@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-hebrew-hebrew-phonetic'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.hebrew.hebrew.phonetic
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.hebrew.hebrew.phonetic&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb&#39;],
+		determineChanges: function(edit, key) {
+			var changes = {
+				cursorStart: 0,
+				cursorEnd: 0,
+				insert: &#39;&#39;,
+				context: &#39;&#39;
+			};
+			var mappings = this.getKeyMappings();
+			var entry;
+			if (mappings &amp;&amp; (entry = mappings[key])) {
+				changes.insert = entry;
+				if (/[\u05db\u05de\u05e0\u05e4\u05e6]/.test(this.lastInsertion) &amp;&amp; !/[\u05d0-\u05ea]/.test(entry)) {
+					var final_form = String.fromCharCode(this.lastInsertion.charCodeAt(0) - 1);
+					changes.insert = final_form + changes.insert;
+					changes.cursorStart = -1;
+				}
+			}
+			return changes;
+		},
+		mapNormal: {
+			0xc0: &#39;\u05bc&#39;, // `
+			0x31: &#39;1&#39;, // 1
+			0x32: &#39;2&#39;, // 2
+			0x33: &#39;3&#39;, // 3
+			0x34: &#39;4&#39;, // 4
+			0x35: &#39;5&#39;, // 5
+			0x36: &#39;6&#39;, // 6
+			0x37: &#39;7&#39;, // 7
+			0x38: &#39;8&#39;, // 8
+			0x39: &#39;9&#39;, // 9
+			0x30: &#39;0&#39;, // 0
+			0xbd: &#39;-&#39;, // -
+			0xbb: &#39;=&#39;, // =
+			0x51: &#39;\u05e7&#39;, // q
+			0x57: &#39;\u05e9&#39;, // w
+			0x45: &#39;\u05e2&#39;, // e
+			0x52: &#39;\u05e8&#39;, // r
+			0x54: &#39;\u05ea&#39;, // t
+			0x59: &#39;\u05d8&#39;, // y
+			0x55: &#39;\u05d5&#39;, // u
+			0x49: &#39;\u05d9&#39;, // i
+			0x4f: &#39;\u05d5&#39;, // o
+			0x50: &#39;\u05e4&#39;, // p
+			0xdb: &#39;\u2019&#39;, // [
+			0xdd: &#39;\u05f2\u05be&#39;, // ]
+			0xdc: &#39;\u05c1&#39;, // \
+			0x41: &#39;\u05d0&#39;, // a
+			0x53: &#39;\u05e1&#39;, // s
+			0x44: &#39;\u05d3&#39;, // d
+			0x46: &#39;\u05e4&#39;, // f
+			0x47: &#39;\u05d2&#39;, // g
+			0x48: &#39;\u05d4&#39;, // h
+			0x4a: &#39;\u05d7&#39;, // j
+			0x4b: &#39;\u05db&#39;, // k
+			0x4c: &#39;\u05dc&#39;, // l
+			0xba: &#39;;&#39;, // ;
+			0xde: &#39;\&#39;&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u05d6&#39;, // z
+			0x58: &#39;\u05e6&#39;, // x
+			0x43: &#39;\u05db&#39;, // c
+			0x56: &#39;\u05d5&#39;, // v
+			0x42: &#39;\u05d1&#39;, // b
+			0x4e: &#39;\u05e0&#39;, // n
+			0x4d: &#39;\u05de&#39;, // m
+			0xbc: &#39;,&#39;, // ,
+			0xbe: &#39;.&#39;, // .
+			0xbf: &#39;/&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		},
+		mapShift: {
+			0xc0: &#39;\u05bc&#39;, // `
+			0x31: &#39;!&#39;, // 1
+			0x32: &#39;\u201c&#39;, // 2
+			0x33: &#39;#&#39;, // 3
+			0x34: &#39;$&#39;, // 4
+			0x35: &#39;%&#39;, // 5
+			0x36: &#39;\u201d&#39;, // 6
+			0x37: &#39;\u20aa&#39;, // 7
+			0x38: &#39;*&#39;, // 8
+			0x39: &#39;(&#39;, // 9
+			0x30: &#39;)&#39;, // 0
+			0xbd: &#39;\u2014&#39;, // -
+			0xbb: &#39;+&#39;, // =
+			0x51: &#39;&#39;, // q
+			0x57: &#39;\u05e9&#39;, // w
+			0x45: &#39;\u05b5&#39;, // e
+			0x52: &#39;&#39;, // r
+			0x54: &#39;\u05d8&#39;, // t
+			0x59: &#39;\u05ea&#39;, // y
+			0x55: &#39;\u05d5&#39;, // u
+			0x49: &#39;&#39;, // i
+			0x4f: &#39;\u05d5&#39;, // o
+			0x50: &#39;\u05e3&#39;, // p
+			0xdb: &#39;{&#39;, // [
+			0xdd: &#39;}&#39;, // ]
+			0xdc: &#39;-&#39;, // \
+			0x41: &#39;\u05b6&#39;, // a
+			0x53: &#39;\u05e9&#39;, // s
+			0x44: &#39;\u201e&#39;, // d
+			0x46: &#39;\u05e3&#39;, // f
+			0x47: &#39;&#39;, // g
+			0x48: &#39;\u05ea&#39;, // h
+			0x4a: &#39;&#39;, // j
+			0x4b: &#39;\u05da&#39;, // k
+			0x4c: &#39;\u05dc&#39;, // l
+			0xba: &#39;:&#39;, // ;
+			0xde: &#39;\u2019&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u05da&#39;, // z
+			0x58: &#39;\u05e5&#39;, // x
+			0x43: &#39;\u05db&#39;, // c
+			0x56: &#39;\u05d1&#39;, // v
+			0x42: &#39;\u05bc&#39;, // b
+			0x4e: &#39;\u05df&#39;, // n
+			0x4d: &#39;\u05dd&#39;, // m
+			0xbc: &#39;&lt;&#39;, // ,
+			0xbe: &#39;&gt;&#39;, // .
+			0xbf: &#39;?&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

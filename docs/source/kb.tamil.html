@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-tamil'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.tamil
+ * @extends NFLCIME.kb.brahmi
+ *
+ */
+
+// subclass from the kb.brahmi module, which handles all scripts derived from that script (Devanagari, Bengali, Burmese, etc)
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.tamil&#39;,
+		type: &#39;contextual input&#39;,
+		inheritance: [&#39;kb.brahmi&#39;],
+		componentUnicodeGroups: [
+			// from specific to general
+			{
+				type: &#39;consonantAppearingAsSignPre&#39;,
+				pattern: &#39;\u0bb0\u0bcd&#39;
+			}, // halant RA
+			{
+				type: &#39;consonantAppearingAsSignPost&#39;,
+				pattern: &#39;\u0bcd\u0bb0&#39;
+			}, // RA halant
+			{
+				type: &#39;consonantHalfForms&#39;,
+				pattern: &#39;[\u0b95-\u0bb9]\u0bcd&#39;
+			}, {
+				type: &#39;consonant&#39;,
+				pattern: &#39;[\u0b95-\u0bb9]&#39;
+			}, {
+				type: &#39;consonantModifiers&#39;,
+				pattern: &#39;[\u0bcd]&#39;
+			}, {
+				type: &#39;vowelSign&#39;,
+				pattern: &#39;[\u0bc0\u0bc1\u0bc2]&#39;
+			}, {
+				type: &#39;vowelAppearingOnLeft&#39;,
+				pattern: &#39;[\u0bc6-\u0bc8\u0bca-\u0bcc]&#39;
+			}, {
+				type: &#39;vowelAppearingOnRight&#39;,
+				pattern: &#39;[\u0bbe\u0bbf\u0bd7]&#39;
+			}, {
+				type: &#39;syllableModifiers&#39;,
+				pattern: &#39;[\u0b82\u0b83]&#39;
+			}, {
+				type: &#39;vowelIndependent&#39;,
+				pattern: &#39;[\u0b85-\u0b94]&#39;
+			}
+		],
+		decomposition: [{
+			from: &#39;\u0b89&#39;,
+			to: &#39;\u0b89\u0bd7&#39;
+		}, {
+			from: &#39;\u0b94&#39;,
+			to: &#39;\u0b92\u0bd7&#39;
+		}, {
+			from: &#39;\u0bca&#39;,
+			to: &#39;\u0bc6\u0bbe&#39;
+		}, {
+			from: &#39;\u0bcb&#39;,
+			to: &#39;\u0bc7\u0bbe&#39;
+		}, {
+			from: &#39;\u0bcc&#39;,
+			to: &#39;\u0bc6\u0bd7&#39;
+		}]
+	}
+});
+</pre>
+</body>
+</html>

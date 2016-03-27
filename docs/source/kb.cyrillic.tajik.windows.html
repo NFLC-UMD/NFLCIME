@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-cyrillic-tajik-windows'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.cyrillic.tajik.windows
+ * Tajik or Tajiki language windows keyboard map class.
+ *
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.cyrillic.tajik.windows&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb&#39;],
+
+		mapNormal: {
+			0xc0: &#39;\u0451&#39;, // `
+			0x31: &#39;1&#39;, // 1
+			0x32: &#39;2&#39;, // 2
+			0x33: &#39;3&#39;, // 3
+			0x34: &#39;4&#39;, // 4
+			0x35: &#39;5&#39;, // 5
+			0x36: &#39;6&#39;, // 6
+			0x37: &#39;7&#39;, // 7
+			0x38: &#39;8&#39;, // 8
+			0x39: &#39;9&#39;, // 9
+			0x30: &#39;0&#39;, // 0
+			0xbd: &#39;\u0493&#39;, // -
+			0xbb: &#39;\u04ef&#39;, // =
+
+			0x51: &#39;\u0439&#39;, // q
+			0x57: &#39;\u049b&#39;, // w
+			0x45: &#39;\u0443&#39;, // e
+			0x52: &#39;\u043a&#39;, // r
+			0x54: &#39;\u0435&#39;, // t
+			0x59: &#39;\u043d&#39;, // y
+			0x55: &#39;\u0433&#39;, // u
+			0x49: &#39;\u0448&#39;, // i
+			0x4f: &#39;\u04b3&#39;, // o
+			0x50: &#39;\u0437&#39;, // p
+			0xdb: &#39;\u0445&#39;, // [
+			0xdd: &#39;\u044a&#39;, // ]
+			0xdc: &#39;\\&#39;, // \
+
+			0x41: &#39;\u0444&#39;, // a
+			0x53: &#39;\u04b7&#39;, // s
+			0x44: &#39;\u0432&#39;, // d
+			0x46: &#39;\u0430&#39;, // f
+			0x47: &#39;\u043f&#39;, // g
+			0x48: &#39;\u0440&#39;, // h
+			0x4a: &#39;\u043e&#39;, // j
+			0x4b: &#39;\u043b&#39;, // k
+			0x4c: &#39;\u0434&#39;, // l
+			0xba: &#39;\u0436&#39;, // ;
+			0xde: &#39;\u044d&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+
+			0x5a: &#39;\u044f&#39;, // z
+			0x58: &#39;\u0447&#39;, // x
+			0x43: &#39;\u0441&#39;, // c
+			0x56: &#39;\u043c&#39;, // v
+			0x42: &#39;\u0438&#39;, // b
+			0x4e: &#39;\u0442&#39;, // n
+			0x4d: &#39;\u04e3&#39;, // m
+			0xbc: &#39;\u0431&#39;, // ,
+			0xbe: &#39;\u044e&#39;, // .
+			0xbf: &#39;.&#39;, // /
+
+			0x20: &#39;\u0020&#39; // [space]
+		},
+
+		mapShift: {
+			0xc0: &#39;\u0401&#39;, // `
+			0x31: &#39;!&#39;, // 1
+			0x32: &#39;&quot;&#39;, // 2
+			0x33: &#39;\u2116&#39;, // 3
+			0x34: &#39;;&#39;, // 4
+			0x35: &#39;%&#39;, // 5
+			0x36: &#39;:&#39;, // 6
+			0x37: &#39;?&#39;, // 7
+			0x38: &#39;*&#39;, // 8
+			0x39: &#39;(&#39;, // 9
+			0x30: &#39;)&#39;, // 0
+			0xbd: &#39;\u0492&#39;, // -
+			0xbb: &#39;\u04ee&#39;, // =
+
+			0x51: &#39;\u0419&#39;, // q
+			0x57: &#39;\u049a&#39;, // w
+			0x45: &#39;\u0423&#39;, // e
+			0x52: &#39;\u041a&#39;, // r
+			0x54: &#39;\u0415&#39;, // t
+			0x59: &#39;\u041d&#39;, // y
+			0x55: &#39;\u0413&#39;, // u
+			0x49: &#39;\u0428&#39;, // i
+			0x4f: &#39;\u04b2&#39;, // o
+			0x50: &#39;\u0417&#39;, // p
+			0xdb: &#39;\u0425&#39;, // [
+			0xdd: &#39;\u042a&#39;, // ]
+			0xdc: &#39;/&#39;, // \
+
+			0x41: &#39;\u0424&#39;, // a
+			0x53: &#39;\u04b6&#39;, // s
+			0x44: &#39;\u0412&#39;, // d
+			0x46: &#39;\u0410&#39;, // f
+			0x47: &#39;\u041f&#39;, // g
+			0x48: &#39;\u0420&#39;, // h
+			0x4a: &#39;\u041e&#39;, // j
+			0x4b: &#39;\u041b&#39;, // k
+			0x4c: &#39;\u0414&#39;, // l
+			0xba: &#39;\u0416&#39;, // ;
+			0xde: &#39;\u042d&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+
+			0x5a: &#39;\u042f&#39;, // z
+			0x58: &#39;\u0427&#39;, // x
+			0x43: &#39;\u0421&#39;, // c
+			0x56: &#39;\u041c&#39;, // v
+			0x42: &#39;\u0418&#39;, // b
+			0x4e: &#39;\u0422&#39;, // n
+			0x4d: &#39;\u04e2&#39;, // m
+			0xbc: &#39;\u0411&#39;, // ,
+			0xbe: &#39;\u042e&#39;, // .
+			0xbf: &#39;,&#39;, // /
+
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

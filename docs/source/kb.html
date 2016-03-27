@@ -15,10 +15,10 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Keyboard'>/**
+  <pre class="prettyprint lang-js"><span id='NFLCIME-Keyboard'>/**
 </span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com&gt;
  *
- * @class Keyboard
+ * @class NFLCIME.Keyboard
  *
  * Keyboard listener functions
  * The {@link #onKeyPress} handler contains critical functionality for adding
@@ -38,7 +38,7 @@ NFLCIME.dispatchEvent({
 		//--- Event handlers
 		// Start handling DOM event when module is activated
 
-<span id='Keyboard-method-onModuleActivate'>		/**
+<span id='NFLCIME-Keyboard-method-onModuleActivate'>		/**
 </span>		 * Get list of windows for which IME is already activated and attach DOM handlers to them.
 		 * It also sets {@link #active} to true and adds the custom event listeners and dispatches the KeyboardStatesChanged event
 		 *
@@ -63,43 +63,43 @@ NFLCIME.dispatchEvent({
 						this.attachDOMHandlers(win);
 					}
 
-<span id='Keyboard-event-WindowListen'>					/**
+<span id='NFLCIME-Keyboard-event-WindowListen'>					/**
 </span>					 * @event WindowListen
 					 */
 					NFLCIME.addEventListener(&#39;WindowListen&#39;, this);
 
-<span id='Keyboard-event-WindowIgnore'>					/**
+<span id='NFLCIME-Keyboard-event-WindowIgnore'>					/**
 </span>					 * @event WindowIgnore
 					 */
 					NFLCIME.addEventListener(&#39;WindowIgnore&#39;, this);
 
-<span id='Keyboard-event-KeyboardGetStates'>					/**
+<span id='NFLCIME-Keyboard-event-KeyboardGetStates'>					/**
 </span>					 * @event KeyboardGetStates
 					 */
 					NFLCIME.addEventListener(&#39;KeyboardGetStates&#39;, this);
 
-<span id='Keyboard-event-KeyboardSetStates'>					/**
+<span id='NFLCIME-Keyboard-event-KeyboardSetStates'>					/**
 </span>					 * @event KeyboardSetStates
 					 */
 
 					NFLCIME.addEventListener(&#39;KeyboardSetStates&#39;, this);
 
-<span id='Keyboard-event-KeyboardGetPossibleKeys'>					/**
+<span id='NFLCIME-Keyboard-event-KeyboardGetPossibleKeys'>					/**
 </span>					 * @event KeyboardGetPossibleKeys
 					 */
 					NFLCIME.addEventListener(&#39;KeyboardGetPossibleKeys&#39;, this);
 
-<span id='Keyboard-event-KeyboardGetDeadKeys'>					/**
+<span id='NFLCIME-Keyboard-event-KeyboardGetDeadKeys'>					/**
 </span>					 * @event KeyboardGetDeadKeys
 					 */
 					NFLCIME.addEventListener(&#39;KeyboardGetDeadKeys&#39;, this);
 
-<span id='Keyboard-event-CursorMoved'>					/**
+<span id='NFLCIME-Keyboard-event-CursorMoved'>					/**
 </span>					 * @event CursorMoved
 					 */
 					NFLCIME.addEventListener(&#39;CursorMoved&#39;, this);
 
-<span id='Keyboard-event-KeyboardStatesChanged'>					/**
+<span id='NFLCIME-Keyboard-event-KeyboardStatesChanged'>					/**
 </span>					 * @event KeyboardStatesChanged
 					 */
 
@@ -118,7 +118,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 
-<span id='Keyboard-method-onModuleDeactivate'>		/**
+<span id='NFLCIME-Keyboard-method-onModuleDeactivate'>		/**
 </span>		 * Stop handling DOM event when module is deactivated
 		 *
 		 * The following events are detached:
@@ -168,7 +168,7 @@ NFLCIME.dispatchEvent({
 		},
 
 
-<span id='Keyboard-method-onWindowListen'>		/**
+<span id='NFLCIME-Keyboard-method-onWindowListen'>		/**
 </span>		 * Add DOM handlers
 		 * Add DOM handlers by invoking the {@link #attachDOMHandlers} method.
 		 *
@@ -180,7 +180,7 @@ NFLCIME.dispatchEvent({
 			this.attachDOMHandlers(win);
 		},
 
-<span id='Keyboard-method-onWindowIgnore'>		/**
+<span id='NFLCIME-Keyboard-method-onWindowIgnore'>		/**
 </span>		 * Removes DOM handlers
 		 * Invokes the {@link #detachDOMHandlers} method.
 		 *
@@ -193,7 +193,7 @@ NFLCIME.dispatchEvent({
 			this.detachDOMHandlers(win);
 		},
 
-<span id='Keyboard-method-onKeyboardGetStates'>		/**
+<span id='NFLCIME-Keyboard-method-onKeyboardGetStates'>		/**
 </span>		 *
 		 * Sets current keyboard state for an event by copying the contents of {@link #combinedKeyboardStates}
 		 *
@@ -215,22 +215,22 @@ NFLCIME.dispatchEvent({
 			evt.states.plane = this.combinedKeyboardStates.plane;
 		},
 
-<span id='Keyboard-method-onKeyboardSetStates'>		/**
+<span id='NFLCIME-Keyboard-method-onKeyboardSetStates'>		/**
 </span>		 * Sets {@link #virtualKeyboardStates} properties by inspecting {@link #physicalKeyboardStates}
 		 *
 		 * @param {Object} [evt] Event
 		 */
 
 		onKeyboardSetStates: function(evt) {
-			if (evt.states.altKey != undefined) this.virtualKeyboardStates.altKey = !this.physicalKeyboardStates.altKey &amp;&amp; evt.states.altKey;
-			if (evt.states.ctrlKey != undefined) this.virtualKeyboardStates.ctrlKey = !this.physicalKeyboardStates.ctrlKey &amp;&amp; evt.states.ctrlKey;
-			if (evt.states.shiftKey != undefined) this.virtualKeyboardStates.shiftKey = !this.physicalKeyboardStates.shiftKey &amp;&amp; evt.states.shiftKey;
-			if (evt.states.capsLock != undefined) this.virtualKeyboardStates.capsLock = !this.physicalKeyboardStates.capsLock &amp;&amp; evt.states.capsLock;
+			if (evt.states.altKey !== undefined) this.virtualKeyboardStates.altKey = !this.physicalKeyboardStates.altKey &amp;&amp; evt.states.altKey;
+			if (evt.states.ctrlKey !== undefined) this.virtualKeyboardStates.ctrlKey = !this.physicalKeyboardStates.ctrlKey &amp;&amp; evt.states.ctrlKey;
+			if (evt.states.shiftKey !== undefined) this.virtualKeyboardStates.shiftKey = !this.physicalKeyboardStates.shiftKey &amp;&amp; evt.states.shiftKey;
+			if (evt.states.capsLock !== undefined) this.virtualKeyboardStates.capsLock = !this.physicalKeyboardStates.capsLock &amp;&amp; evt.states.capsLock;
 			this.dispatchKeyboardStateChangeEvent();
 		},
 
 
-<span id='Keyboard-method-onKeyboardGetPossibleKeys'>		/**
+<span id='NFLCIME-Keyboard-method-onKeyboardGetPossibleKeys'>		/**
 </span>		 * Maps multi-key combinations to characters
 		 *
 		 * @param {Object} [evt] Event
@@ -241,9 +241,9 @@ NFLCIME.dispatchEvent({
 				var from;
 				var mappings = this.getKeyMappings();
 				if (mappings) {
-					var prefix = this.currentContext
+					var prefix = this.currentContext;
 					for (from in this.multikeyCombinations) {
-						if (from.indexOf(prefix) == 0 &amp;&amp; prefix.length &lt; from.length) {
+						if (from.indexOf(prefix) === 0 &amp;&amp; prefix.length &lt; from.length) {
 							var next = from.substr(prefix.length);
 							var code;
 							for (code in mappings) {
@@ -262,7 +262,7 @@ NFLCIME.dispatchEvent({
 		},
 
 
-<span id='Keyboard-method-onKeyboardGetDeadKeys'>		/**
+<span id='NFLCIME-Keyboard-method-onKeyboardGetDeadKeys'>		/**
 </span>		 * If multi-key combinations are supported by the language, get the key mappings and push the appropriate key codes onto the stack
 		 *
 		 * @param {Object} [evt] Event
@@ -277,9 +277,10 @@ NFLCIME.dispatchEvent({
 						var entry = mappings[code];
 						if (typeof(entry) == &#39;object&#39; &amp;&amp; !entry.insert) {
 							var character = entry.context;
+							var from;
 							for (from in this.multikeyCombinations) {
-								if (from.indexOf(character) == 0) {
-									evt.keyCodes.push(parseInt(code))
+								if (from.indexOf(character) === 0) {
+									evt.keyCodes.push(parseInt(code));
 								}
 							}
 						}
@@ -288,7 +289,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 
-<span id='Keyboard-method-onCursorMoved'>		/**
+<span id='NFLCIME-Keyboard-method-onCursorMoved'>		/**
 </span>		 * If the user moves the cursor, clear the context by invoking the {@link #clearContext method}
 		 *
 		 * @param {Object} [evt] Event
@@ -298,7 +299,7 @@ NFLCIME.dispatchEvent({
 		},
 
 
-<span id='Keyboard-method-onKeyDown'>		/**
+<span id='NFLCIME-Keyboard-method-onKeyDown'>		/**
 </span>		 * Translates keycodes to characters
 		 *
 		 * On physical keyboard alt/ctrl/shift/capslock, sets {@link #physicalKeyboardStates} properties.
@@ -365,7 +366,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 
-<span id='Keyboard-method-onKeyUp'>		/**
+<span id='NFLCIME-Keyboard-method-onKeyUp'>		/**
 </span>		 * Clear shift, alt, and ctrl states when key is released
 		 *
 		 * On physical keyboard alt/ctrl/shift/capslock, sets {@link #physicalKeyboardStates} properties.
@@ -404,16 +405,16 @@ NFLCIME.dispatchEvent({
 						type: &#39;KeyboardReleased&#39;,
 						target: edit,
 						keyCode: key
-					})
+					});
 					this.clearVirtualKeys();
 				}
-			};
+			}
 
 		},
 
 
 
-<span id='Keyboard-method-onKeyPress'>		/**
+<span id='NFLCIME-Keyboard-method-onKeyPress'>		/**
 </span>		 * Critical handler - intercepts user keyboard input and either adds language attribute
 		 * to html block element on an as-needed basis or injects a &amp;lt;span&amp;gt; tag with a lang
 		 * attribute
@@ -437,7 +438,7 @@ NFLCIME.dispatchEvent({
 					// fake; charCode isn&#39;t set by ui.kb.js however, so we know
 					var fake = (this.browser == &#39;firefox&#39;) ? !evt.charCode : evt.fake;
 					// set what changes will be effected by the key;
-					// this 
+					// this
 					var changes = this.determineChanges(edit, key);
 					// don&#39;t handle carriage return or space unless the event is fake
 					if ((key == 0x0d || key == 0x20) &amp;&amp; !fake) {
@@ -448,7 +449,7 @@ NFLCIME.dispatchEvent({
 					}
 					// see if there&#39;s text selected and let default action go forward if so (unless the event is fake)
 					if ((key == 0x08 || key == 0x24) &amp;&amp; (!fake || this.browser == &#39;firefox&#39;)) {
-						var evt = {
+						evt = {
 							type: &#39;CursorGetSelectedText&#39;,
 							target: edit,
 							text: &#39;&#39;
@@ -460,11 +461,11 @@ NFLCIME.dispatchEvent({
 					}
 					if (key == 0x08 &amp;&amp; (fake &amp;&amp; this.browser != &#39;firefox&#39;)) {
 						// we typically leave it to the browser to handle backspace;
-						// when the event is fake, however, we need to do so in IE 
+						// when the event is fake, however, we need to do so in IE
 						// and Safari since they don&#39;t react to the event
 						if (!changes) {
 							// make sure there&#39;s text behind the cursor
-							var evt = {
+							evt = {
 								type: &#39;CursorGetContext&#39;,
 								target: edit,
 								textAhead: &#39;&#39;,
@@ -510,11 +511,13 @@ NFLCIME.dispatchEvent({
 						var win = doc.defaultView;
 						var selection = win.getSelection();
 						var range = selection.getRangeAt(0);
+						var container = null;
+						var langAttr = null;
 
 						if (range.startContainer.nodeName == &#39;P&#39; &amp;&amp; range.startContainer.lang) {
-							var container = range.startContainer;
+							container = range.startContainer;
 						} else {
-							var container = range.commonAncestorContainer.parentNode;
+							container = range.commonAncestorContainer.parentNode;
 						}
 
 						var origContainer = container;
@@ -533,8 +536,9 @@ NFLCIME.dispatchEvent({
 							container = pEl;
 						}
 
-						if (container)
-							var langAttr = container.getAttribute(&#39;lang&#39;);
+						if (container) {
+							langAttr = container.getAttribute(&#39;lang&#39;);
+						}
 
 						// within same language block
 						if (langAttr &amp;&amp; lang.code3 == langAttr) {
@@ -569,7 +573,7 @@ NFLCIME.dispatchEvent({
 
 							} else {
 
-								// add span element - 
+								// add span element -
 								// we have a language within a language
 
 								var html = &#39;&lt;span &#39;;
@@ -586,7 +590,7 @@ NFLCIME.dispatchEvent({
 									text: changes.insert,
 									html: html
 								});
-							};
+							}
 
 
 						}
@@ -599,7 +603,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 
-<span id='Keyboard-method-attachDOMHandlers'>		/**
+<span id='NFLCIME-Keyboard-method-attachDOMHandlers'>		/**
 </span>		 * @private
 		 * Attach keyup, keydown, and keypress DOM Handlers to Window,
 		 * invoking the {@link #onKeyUp}, {@link #onKeyDown}, and {@link #onKeyPress} methods by
@@ -614,7 +618,7 @@ NFLCIME.dispatchEvent({
 			this.attachDOMHandler(win.document, &#39;keypress&#39;, &#39;onKeyPress&#39;);
 		},
 
-<span id='Keyboard-method-detachDOMHandlers'>		/**
+<span id='NFLCIME-Keyboard-method-detachDOMHandlers'>		/**
 </span>		 * @private
 		 * Detach keyup, keydown, and keypress DOM Handlers to Window,
 		 * Detaches the {@link #onKeyUp}, {@link #onKeyDown}, and {@link #onKeyPress} methods
@@ -628,7 +632,7 @@ NFLCIME.dispatchEvent({
 			this.detachDOMHandler(win.document, &#39;keypress&#39;, &#39;onKeyPress&#39;);
 		},
 
-<span id='Keyboard-method-attachDOMHandler'>		/**
+<span id='NFLCIME-Keyboard-method-attachDOMHandler'>		/**
 </span>		 *  @private
 		 *  Attach a closure to a DOM element that sends the events to the named handler
 		 *
@@ -651,16 +655,16 @@ NFLCIME.dispatchEvent({
 								evt.target = evt.srcElement;
 							}
 							evt.returnValue = handler.call(self, evt);
-						}
+						};
 						break;
 					case &#39;firefox&#39;:
 					case &#39;safari&#39;:
 						closure = function(evt) {
 							var result = handler.call(self, evt);
-							if (result != undefined &amp;&amp; result == false) {
+							if (result !== undefined &amp;&amp; result === false) {
 								evt.preventDefault();
 							}
-						}
+						};
 				}
 				this.closures[handlerName] = closure;
 			}
@@ -675,7 +679,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 
-<span id='Keyboard-method-detachDOMHandler'>		/**
+<span id='NFLCIME-Keyboard-method-detachDOMHandler'>		/**
 </span>		 *  @private
 		 *  Detach a closure
 		 *
@@ -700,7 +704,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 
-<span id='Keyboard-method-getFocusedEdit'>		/**
+<span id='NFLCIME-Keyboard-method-getFocusedEdit'>		/**
 </span>		 *  @private
 		 *  Fires a &#39;CursorGetFocusedEdit&#39; event
 		 */
@@ -714,7 +718,7 @@ NFLCIME.dispatchEvent({
 			return evt.target;
 		},
 
-<span id='Keyboard-method-isServiceApplicable'>		/**
+<span id='NFLCIME-Keyboard-method-isServiceApplicable'>		/**
 </span>		 *  @private
 		 *  Fires the ServiceApplicable event to see if the kb service is active
 		 *  @param {Object} [edit] Event target
@@ -734,7 +738,7 @@ NFLCIME.dispatchEvent({
 		},
 
 
-<span id='Keyboard-method-clearVirtualKeys'>		/**
+<span id='NFLCIME-Keyboard-method-clearVirtualKeys'>		/**
 </span>		 *  @private
 		 *  Clear virtual alt/ctrl/shift keys, invokes the {@link #dispatchKeyboardStateChangeEvent} method
 		 *  @param {Boolean} [clearCapsLock] If true, set {@link #VirtualKeyboardStates}.capsLock=false
@@ -751,7 +755,7 @@ NFLCIME.dispatchEvent({
 		},
 
 
-<span id='Keyboard-method-dispatchKeyboardStateChangeEvent'>		/**
+<span id='NFLCIME-Keyboard-method-dispatchKeyboardStateChangeEvent'>		/**
 </span>		 *  @private
 		 *  Sets the {@link #combinedKeyboardStates} property and then dispatches the {@link #KeyboardStatesChanged} event
 		 */
@@ -793,7 +797,7 @@ NFLCIME.dispatchEvent({
 							plane = plane.replace(&#39;Capslock&#39;, &#39;&#39;) + &#39;Shift&#39;;
 						}
 					}
-					if (plane == &#39;&#39;) {
+					if (plane === &#39;&#39;) {
 						plane = &#39;Normal&#39;;
 					}
 				}
@@ -805,7 +809,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 
-<span id='Keyboard-method-translateKey'>		/**
+<span id='NFLCIME-Keyboard-method-translateKey'>		/**
 </span>		 *  @private
 		 *  Translates keycodes for Firefox
 		 *  &lt;ul&gt;
@@ -834,7 +838,7 @@ NFLCIME.dispatchEvent({
 			return key;
 		},
 
-<span id='Keyboard-method-getKeyMappings'>		/**
+<span id='NFLCIME-Keyboard-method-getKeyMappings'>		/**
 </span>		 *  @private
 		 *
 		 *  @return {Object} Returns &#39;map&#39; + this.combinedKeyboardStates.plane
@@ -846,7 +850,7 @@ NFLCIME.dispatchEvent({
 		},
 
 
-<span id='Keyboard-method-lookUpKey'>		/**
+<span id='NFLCIME-Keyboard-method-lookUpKey'>		/**
 </span>		 *  @private
 		 *  @param {Number} [key] The key code in hex
 		 *  @param {String} [context] The key code in hex
@@ -861,8 +865,8 @@ NFLCIME.dispatchEvent({
 			};
 			var mappings = this.getKeyMappings();
 
-			var entry;
-			if (mappings &amp;&amp; (entry = mappings[key]) != undefined) {
+			var entry = mappings[key];
+			if (mappings &amp;&amp; (entry !== undefined)) {
 				// usually the entry is a Unicode string to be inserted; but sometimes we want to perform a look-up of possible combination
 				// without inserting a character should the look-up fail; in such a case the entry be an object instead of a string (e.g. kb.geez.amharic.powergeez)
 				if (entry instanceof Object) {
@@ -874,9 +878,9 @@ NFLCIME.dispatchEvent({
 					result.context = entry;
 				}
 				if (this.multikeyCombinations) {
-					// this keyboard has multi-key sequences (e.g. A + &#39; =&gt; �)
+					// this keyboard has multi-key sequences
 					entry = this.multikeyCombinations[context + result.context];
-					if (entry != undefined) {
+					if (entry !== undefined) {
 						result.isMultikey = true;
 						// do this again in case the multikey combination leave behind a context that isn&#39;t what will be inserted
 						if (entry instanceof Object) {
@@ -889,7 +893,7 @@ NFLCIME.dispatchEvent({
 					} else {
 						if (this.multikeyNoMatch) {
 							entry = this.multikeyNoMatch[result.context];
-							if (entry != undefined) {
+							if (entry !== undefined) {
 								result.isMultikey = true;
 								if (entry instanceof Object) {
 									result.insert = entry.insert;
@@ -907,7 +911,7 @@ NFLCIME.dispatchEvent({
 
 		},
 
-<span id='Keyboard-method-determineChanges'>		/**
+<span id='NFLCIME-Keyboard-method-determineChanges'>		/**
 </span>		 *  Determine what changes the key would cause
 		 *  @private
 		 *  @param {Object} [edit] The key code in hex
@@ -934,7 +938,7 @@ NFLCIME.dispatchEvent({
 				} else {
 					if (!this.lastInsertion &amp;&amp; this.currentContext) {
 						// the previous key was a dead-key; as we can&#39;t find any combination, just
-						// insert the character it stands for along with the new character--unless 
+						// insert the character it stands for along with the new character--unless
 						// it&#39;s a space, in which case we&#39;ll insert only the dead-key character
 						if (keyinfo.insert == &#39; &#39;) {
 							changes.insert = this.currentContext;
@@ -948,7 +952,7 @@ NFLCIME.dispatchEvent({
 			}
 
 		},
-<span id='Keyboard-method-rememberChanges'>		/**
+<span id='NFLCIME-Keyboard-method-rememberChanges'>		/**
 </span>		 *  Stores last change in class properties {@link #lastInsertion} and {@link #currentContext}
 		 *  @private
 		 *  @param {Object} [changes]
@@ -964,7 +968,7 @@ NFLCIME.dispatchEvent({
 		},
 		*/
 
-<span id='Keyboard-method-clearContext'>		/**
+<span id='NFLCIME-Keyboard-method-clearContext'>		/**
 </span>		 *  Clears the {@link #lastInsertion} and {@link #currentContext} properties
 		 *  @private
 		 */
@@ -973,7 +977,7 @@ NFLCIME.dispatchEvent({
 			this.lastInsertion = &#39;&#39;;
 		},
 
-<span id='Keyboard-method-initialize'>		/**
+<span id='NFLCIME-Keyboard-method-initialize'>		/**
 </span>		 *  Initialize the module.
 		 *  Sets the {@link #browser} property and initializes {@link #closures} and sets {@link #active} to false
 		 *  @param {Object} [env] The browser environment
@@ -989,7 +993,7 @@ NFLCIME.dispatchEvent({
 			// only keyboard layouts can be activated
 			if (this.type == &#39;keyboard layout&#39;) {
 				NFLCIME.addEventListener(&#39;ModuleActivate&#39;, this);
-				NFLCIME.addEventListener(&#39;ModuleDeactivate&#39;, this)
+				NFLCIME.addEventListener(&#39;ModuleDeactivate&#39;, this);
 			}
 
 			// keep an eye on focus change so the keyboard states can be updated when the browser lose or gain focus
@@ -1000,21 +1004,21 @@ NFLCIME.dispatchEvent({
 		},
 		//--- Private variables
 
-<span id='Keyboard-property-active'>		/**
+<span id='NFLCIME-Keyboard-property-active'>		/**
 </span>		 * @property {Boolean}
 		 * @private
 		 * Sets the module to be active/inactive (boolean)
 		 */
 		active: false,
 
-<span id='Keyboard-property-browser'>		/**
+<span id='NFLCIME-Keyboard-property-browser'>		/**
 </span>		 * @property {String}
 		 * @private
 		 * The current browser type (e.g. firefox, safari, ie)
 		 */
 		browser: &#39;&#39;,
 
-<span id='Keyboard-property-physicalKeyboardStates'>		/**
+<span id='NFLCIME-Keyboard-property-physicalKeyboardStates'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * Used to track physical keyboard status
@@ -1027,7 +1031,7 @@ NFLCIME.dispatchEvent({
 			ctrlKey: false
 		},
 
-<span id='Keyboard-property-virtualKeyboardStates'>		/**
+<span id='NFLCIME-Keyboard-property-virtualKeyboardStates'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * Used to track virtual keyboard status
@@ -1040,7 +1044,7 @@ NFLCIME.dispatchEvent({
 			ctrlKey: false
 		},
 
-<span id='Keyboard-property-combinedKeyboardStates'>		/**
+<span id='NFLCIME-Keyboard-property-combinedKeyboardStates'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * Used to track keyboard status of physical and virtual keyboards
@@ -1054,41 +1058,42 @@ NFLCIME.dispatchEvent({
 			plane: &#39;Normal&#39;
 		},
 
-<span id='Keyboard-property-closures'>		/**
+<span id='NFLCIME-Keyboard-property-closures'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * Closures for method execution
 		 */
 		closures: null,
 
-<span id='Keyboard-property-lastInsertion'>		/**
+<span id='NFLCIME-Keyboard-property-lastInsertion'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * The last character that was inserted
 		 */
 		lastInsertion: &#39;&#39;,
 
-<span id='Keyboard-property-keyCode'>		/**
+<span id='NFLCIME-Keyboard-property-keyCode'>		/**
 </span>		 * @property {Number}
 		 * @private
 		 * The most recent keyCode that was entered
 		 */
 		keyCode: 0,
 
-<span id='Keyboard-property-capsLockPressed'>		/**
+<span id='NFLCIME-Keyboard-property-capsLockPressed'>		/**
 </span>		 * @property {Boolean}
 		 * @private
 		 * Indicates if the caps-lock key is pressed
 		 */
 		capsLockPressed: false,
 
-<span id='Keyboard-property-currentContext'>		/**
+<span id='NFLCIME-Keyboard-property-currentContext'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * The current context in which the last character was inserted
 		 */
 		currentContext: &#39;&#39;
 	}
-});</pre>
+});
+</pre>
 </body>
 </html>

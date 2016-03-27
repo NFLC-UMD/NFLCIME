@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-gurmukhi-epunjabi-phonetic'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.gurmukhi.epunjabi.phonetic
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.gurmukhi.epunjabi.phonetic&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb&#39;],
+
+		initialize: function() {
+			// build the multikeyCombinations table dynamically
+			var consonants = [];
+			for (var c = 0x0a15; c &lt;= 0x0a39; c++) consonants.push(String.fromCharCode(c));
+			for (var c = 0x0a59; c &lt;= 0x0a5e; c++) consonants.push(String.fromCharCode(c));
+
+			// unaspirated consonant + HA = aspirated consonant
+			var unaspirated;
+			for (unaspirated in this.consonantToAspiratedConsonant) {
+				var aspirated = this.consonantToAspiratedConsonant[unaspirated];
+				this.multikeyCombinations[unaspirated + &#39;\u0a39&#39;] = aspirated;
+			}
+
+			// consonant + independent vowel = consonant + vowel sign
+			var independent_vowel;
+			for (independent_vowel in this.independentVowelToVowelSign) {
+				var vowel_sign = this.independentVowelToVowelSign[independent_vowel];
+				for (var i = 0; i &lt; consonants.length; i++) {
+					var consonant = consonants[i];
+					this.multikeyCombinations[consonant + independent_vowel] = consonant + vowel_sign;
+				}
+			}
+
+			// vowel sign + independent vowel = consonant + long/short vowel sign
+			for (independent_vowel in this.independentVowelToVowelSign) {
+				var vowel_sign_short = this.independentVowelToVowelSign[independent_vowel];
+				var vowel_sign_long = this.shortVowelSignToLongVowelSign[vowel_sign_short];
+				if (vowel_sign_long) {
+					for (var i = 0; i &lt; consonants.length; i++) {
+						var consonant = consonants[i];
+						this.multikeyCombinations[consonant + vowel_sign_short + independent_vowel] = consonant + vowel_sign_long;
+						this.multikeyCombinations[consonant + vowel_sign_long + independent_vowel] = consonant + vowel_sign_short;
+					}
+				}
+			}
+
+			// independent vowel + independent vowel = long/short independent vowel
+			var independent_vowel_short;
+			for (independent_vowel_short in this.shortVowelToLongVowel) {
+				var independent_vowel_long = this.shortVowelToLongVowel[independent_vowel_short];
+				this.multikeyCombinations[independent_vowel_short + independent_vowel_short] = independent_vowel_long;
+				this.multikeyCombinations[independent_vowel_long + independent_vowel_short] = independent_vowel_short;
+			}
+		},
+
+		consonantToAspiratedConsonant: {
+			&#39;\u0a15&#39;: &#39;\u0a16&#39;,
+			&#39;\u0a17&#39;: &#39;\u0a18&#39;,
+			&#39;\u0a1a&#39;: &#39;\u0a1b&#39;,
+			&#39;\u0a1c&#39;: &#39;\u0a1d&#39;,
+			&#39;\u0a1f&#39;: &#39;\u0a20&#39;,
+			&#39;\u0a21&#39;: &#39;\u0a22&#39;,
+			&#39;\u0a24&#39;: &#39;\u0a25&#39;,
+			&#39;\u0a26&#39;: &#39;\u0a27&#39;,
+			&#39;\u0a2a&#39;: &#39;\u0a2b&#39;,
+			&#39;\u0a2c&#39;: &#39;\u0a2d&#39;
+		},
+
+		independentVowelToVowelSign: {
+			&#39;\u0a05&#39;: &#39;\u0a3e&#39;,
+			&#39;\u0a06&#39;: &#39;\u0a3e&#39;,
+			&#39;\u0a07&#39;: &#39;\u0a3f&#39;,
+			&#39;\u0a08&#39;: &#39;\u0a40&#39;,
+			&#39;\u0a09&#39;: &#39;\u0a41&#39;,
+			&#39;\u0a0a&#39;: &#39;\u0a42&#39;,
+			&#39;\u0a0f&#39;: &#39;\u0a47&#39;,
+			&#39;\u0a10&#39;: &#39;\u0a48&#39;,
+			&#39;\u0a13&#39;: &#39;\u0a4b&#39;,
+			&#39;\u0a14&#39;: &#39;\u0a4c&#39;
+		},
+
+		shortVowelToLongVowel: {
+			&#39;\u0a05&#39;: &#39;\u0a06&#39;,
+			&#39;\u0a07&#39;: &#39;\u0a08&#39;,
+			&#39;\u0a09&#39;: &#39;\u0a0a&#39;,
+			&#39;\u0a0f&#39;: &#39;\u0a10&#39;,
+			&#39;\u0a13&#39;: &#39;\u0a14&#39;
+		},
+
+		shortVowelSignToLongVowelSign: {
+			&#39;\u0a3f&#39;: &#39;\u0a40&#39;,
+			&#39;\u0a41&#39;: &#39;\u0a42&#39;,
+			&#39;\u0a47&#39;: &#39;\u0a48&#39;,
+			&#39;\u0a4b&#39;: &#39;\u0a4c&#39;
+		},
+
+		mapNormal: {
+			0xc0: &#39;\u0a02&#39;, // `
+			0x31: &#39;\u0a67&#39;, // 1
+			0x32: &#39;\u0a68&#39;, // 2
+			0x33: &#39;\u0a69&#39;, // 3
+			0x34: &#39;\u0a6a&#39;, // 4
+			0x35: &#39;\u0a6b&#39;, // 5
+			0x36: &#39;\u0a6c&#39;, // 6
+			0x37: &#39;\u0a6d&#39;, // 7
+			0x38: &#39;\u0a6e&#39;, // 8
+			0x39: &#39;\u0a6f&#39;, // 9
+			0x30: &#39;\u0a66&#39;, // 0
+			0xbd: &#39;-&#39;, // -
+			0xbb: &#39;=&#39;, // =
+
+			0x51: &#39;\u0a15\u0a3c&#39;, // q
+			0x57: &#39;&#39;, // w
+			0x45: &#39;\u0a0f&#39;, // e
+			0x52: &#39;\u0a30&#39;, // r
+			0x54: &#39;\u0a24&#39;, // t
+			0x59: &#39;\u0a2f&#39;, // y
+			0x55: &#39;\u0a09&#39;, // u
+			0x49: &#39;\u0a07&#39;, // i
+			0x4f: &#39;\u0a13&#39;, // o
+			0x50: &#39;\u0a2a&#39;, // p
+			0xdb: &#39;[&#39;, // [
+			0xdd: &#39;]&#39;, // ]
+			0xdc: &#39;\u0a4d&#39;, // \
+
+			0x41: &#39;\u0a05&#39;, // a
+			0x53: &#39;\u0a38&#39;, // s
+			0x44: &#39;\u0a26&#39;, // d
+			0x46: &#39;\u0a5e&#39;, // f
+			0x47: &#39;\u0a17&#39;, // g
+			0x48: &#39;\u0a39&#39;, // h
+			0x4a: &#39;\u0a1c&#39;, // j
+			0x4b: &#39;\u0a15&#39;, // k
+			0x4c: &#39;\u0a32&#39;, // l
+			0xba: &#39;;&#39;, // ;
+			0xde: &#39;\u0a71&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+
+			0x5a: &#39;\u0a5b&#39;, // z
+			0x58: &#39;&#39;, // x
+			0x43: &#39;\u0a1a&#39;, // c
+			0x56: &#39;\u0a35&#39;, // v
+			0x42: &#39;\u0a2c&#39;, // b
+			0x4e: &#39;\u0a28&#39;, // n
+			0x4d: &#39;\u0a2e&#39;, // m
+			0xbc: &#39;,&#39;, // ,
+			0xbe: &#39;.&#39;, // .
+			0xbf: &#39;/&#39;, // /
+
+			0x20: &#39;\u0020&#39; // [space]
+		},
+
+		mapShift: {
+			0xc0: &#39;\u0a01&#39;, // `
+			0x31: &#39;!&#39;, // 1
+			0x32: &#39;@&#39;, // 2
+			0x33: &#39;#&#39;, // 3
+			0x34: &#39;$&#39;, // 4
+			0x35: &#39;%&#39;, // 5
+			0x36: &#39;^&#39;, // 6
+			0x37: &#39;&amp;&#39;, // 7
+			0x38: &#39;*&#39;, // 8
+			0x39: &#39;(&#39;, // 9
+			0x30: &#39;)&#39;, // 0
+			0xbd: &#39;_&#39;, // -
+			0xbb: &#39;+&#39;, // =
+
+			0x51: &#39;&#39;, // q
+			0x57: &#39;&#39;, // w
+			0x45: &#39;\u0a10&#39;, // e
+			0x52: &#39;\u0a5c&#39;, // r
+			0x54: &#39;\u0a1f&#39;, // t
+			0x59: &#39;&#39;, // y
+			0x55: &#39;\u0a73&#39;, // u
+			0x49: &#39;\u0a72&#39;, // i
+			0x4f: &#39;\u0a14&#39;, // o
+			0x50: &#39;&#39;, // p
+			0xdb: &#39;&#39;, // [
+			0xdd: &#39;&#39;, // ]
+			0xdc: &#39;\u0964&#39;, // \
+
+			0x41: &#39;\u0a06&#39;, // a
+			0x53: &#39;&#39;, // s
+			0x44: &#39;\u0a21&#39;, // d
+			0x46: &#39;&#39;, // f
+			0x47: &#39;\u0a5a&#39;, // g
+			0x48: &#39;\u0a03&#39;, // h
+			0x4a: &#39;&#39;, // j
+			0x4b: &#39;\u0a59&#39;, // k
+			0x4c: &#39;\u0a33&#39;, // l
+			0xba: &#39;:&#39;, // ;
+			0xde: &#39;&quot;&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+
+			0x5a: &#39;&#39;, // z
+			0x58: &#39;&#39;, // x
+			0x43: &#39;&#39;, // c
+			0x56: &#39;&#39;, // v
+			0x42: &#39;&#39;, // b
+			0x4e: &#39;\u0a23&#39;, // n
+			0x4d: &#39;\u0a74&#39;, // m
+			0xbc: &#39;&lt;&#39;, // ,
+			0xbe: &#39;&gt;&#39;, // .
+			0xbf: &#39;?&#39;, // /
+
+			0x20: &#39;\u0020&#39; // [space]
+		},
+
+		multikeyCombinations: {}
+	}
+});
+</pre>
+</body>
+</html>

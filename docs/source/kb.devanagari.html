@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-devanagari'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.devanagari
+ * Base keyboard class for Devangari alphabet.
+ *
+ * Overwrites modifySyllable, componentUnicodeGroups and decomposition provided
+ * by .
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.devanagari&#39;,
+		type: &#39;contextual input&#39;,
+		inheritance: [&#39;kb.brahmi&#39;],
+<span id='NFLCIME-kb-devanagari-method-modifySyllable'>		/**
+</span>		* If there&#39;s a half form but no full form consonant and an AA sign (which
+		* can look like the right-side stem of a consonant), change the half form
+		* into full form and remove the sign. While no one would really type like
+		* this, it is implemented for completeness sake.
+		*
+		* *Overwrites {@link NFLCIME.kb.brahmi#modifySyllable}*
+		*/
+		modifySyllable: function(syllable) {
+			if (syllable.components.consonantHalfForms &amp;&amp; !syllable.components.consonant &amp;&amp; syllable.components.vowelAppearingOnRight == &#39;\u093e&#39;) {
+				// second to last character is the consonant
+				var s = syllable.components.consonantHalfForms;
+				syllable.components.consonant = s.substr(s.length - 2, 1);
+				syllable.components.consonantHalfForms = s.substr(0, s.length - 2);
+				syllable.components.vowelAppearingOnRight = &#39;&#39;;
+			}
+		},
+<span id='NFLCIME-kb-devanagari-property-componentUnicodeGroups'>		/**
+</span>		* @property componentUnicodeGroups Overwrites
+		* {@link NFLCIME.kb.brahmi#componentUnicodeGroups}
+		*/
+		componentUnicodeGroups: [
+			// from specific to general
+			{
+				type: &#39;consonantAppearingAsSignPre&#39;,
+				pattern: &#39;\u0930\u094d&#39;
+			}, // halant RA
+			{
+				type: &#39;consonantAppearingAsSignPost&#39;,
+				pattern: &#39;\u094d\u0930&#39;
+			}, // RA halant
+			{
+				type: &#39;consonantHalfForms&#39;,
+				pattern: &#39;[\u0915-\u0939\u0958-\u095f]\u094d&#39;
+			}, {
+				type: &#39;consonant&#39;,
+				pattern: &#39;[\u0915-\u0939\u0958-\u095f]&#39;
+			}, {
+				type: &#39;consonantModifiers&#39;,
+				pattern: &#39;[\u093C\u094d]&#39;
+			}, {
+				type: &#39;vowelSign&#39;,
+				pattern: &#39;[\u0941-\u0948]&#39;
+			}, {
+				type: &#39;vowelAppearingOnLeft&#39;,
+				pattern: &#39;[\u093f\u094e]&#39;
+			}, {
+				type: &#39;vowelAppearingOnRight&#39;,
+				pattern: &#39;[\u093E\u0940\u0949-\u094C]&#39;
+			}, {
+				type: &#39;syllableModifiers&#39;,
+				pattern: &#39;[\u0900-\u0903]&#39;
+			}, {
+				type: &#39;vowelIndependent&#39;,
+				pattern: &#39;[\u0904-\u0914\u0960\u0961\u0972]&#39;
+			}
+		],
+<span id='NFLCIME-kb-devanagari-property-decomposition'>		/**
+</span>		* @property decomposition Overwrites {@link NFLCIME.kb.brahmi#decomposition}
+		*/
+		decomposition: [{
+			from: &#39;\u0904&#39;,
+			to: &#39;\u0905\u0946&#39;
+		}, {
+			from: &#39;\u0906&#39;,
+			to: &#39;\u0905\u093e&#39;
+		}, {
+			from: &#39;\u090d&#39;,
+			to: &#39;\u090f\u0945&#39;
+		}, {
+			from: &#39;\u090e&#39;,
+			to: &#39;\u090f\u0946&#39;
+		}, {
+			from: &#39;\u0910&#39;,
+			to: &#39;\u090f\u0947&#39;
+		}, {
+			from: &#39;\u0911&#39;,
+			to: &#39;\u0905\u093e\u0945&#39;
+		}, {
+			from: &#39;\u0912&#39;,
+			to: &#39;\u0905\u093e\u0946&#39;
+		}, {
+			from: &#39;\u0913&#39;,
+			to: &#39;\u0905\u093e\u0947&#39;
+		}, {
+			from: &#39;\u0914&#39;,
+			to: &#39;\u0905\u093e\u0948&#39;
+		}, {
+			from: &#39;\u0929&#39;,
+			to: &#39;\u0928\u093c&#39;
+		}, {
+			from: &#39;\u0949&#39;,
+			to: &#39;\u093e\u0945&#39;
+		}, {
+			from: &#39;\u094a&#39;,
+			to: &#39;\u093e\u0946&#39;
+		}, {
+			from: &#39;\u094b&#39;,
+			to: &#39;\u093e\u0947&#39;
+		}, {
+			from: &#39;\u094c&#39;,
+			to: &#39;\u093e\u0948&#39;
+		}, {
+			from: &#39;\u0958&#39;,
+			to: &#39;\u0915\u093c&#39;
+		}, {
+			from: &#39;\u0959&#39;,
+			to: &#39;\u0916\u093c&#39;
+		}, {
+			from: &#39;\u095a&#39;,
+			to: &#39;\u0917\u093c&#39;
+		}, {
+			from: &#39;\u095b&#39;,
+			to: &#39;\u091C\u093c&#39;
+		}, {
+			from: &#39;\u095c&#39;,
+			to: &#39;\u0921\u093c&#39;
+		}, {
+			from: &#39;\u095d&#39;,
+			to: &#39;\u0922\u093c&#39;
+		}, {
+			from: &#39;\u095e&#39;,
+			to: &#39;\u092b\u093c&#39;
+		}, {
+			from: &#39;\u095f&#39;,
+			to: &#39;\u092f\u093c&#39;
+		}, {
+			from: &#39;\u0960&#39;,
+			to: &#39;\u090b\u0943&#39;
+		}, {
+			from: &#39;\u0961&#39;,
+			to: &#39;\u090c\u0943&#39;
+		}, {
+			from: &#39;\u0972&#39;,
+			to: &#39;\u0905\u0945&#39;
+		}]
+	}
+});
+</pre>
+</body>
+</html>

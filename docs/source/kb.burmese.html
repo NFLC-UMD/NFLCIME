@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-burmese'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.burmese
+ * Base keyboard class for Burmese language.
+ *
+ * Mostly overrides syllabic structure provided by the parent
+ * {@link NFLCIME.kb.brahmi} class.
+ *
+ * @extends NFLCIME.kb.brahmi
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.burmese&#39;,
+		type: &#39;contextual input&#39;,
+		inheritance: [&#39;kb.brahmi&#39;],
+		// The Burmese script differ rather significantly from scripts of the Indian subcontinent.
+		// The description of the syllabic structure needs to be completely overridden
+		componentTypes: [
+			&#39;kinzi&#39;,
+			&#39;consonant&#39;,
+			&#39;specialLigature&#39;,
+			&#39;subscriptConsonant&#39;,
+			&#39;medialYa&#39;,
+			&#39;medialRa&#39;,
+			&#39;medialWa&#39;,
+			&#39;medialHa&#39;,
+			&#39;vowelSignE&#39;,
+			&#39;vowelSignU&#39;,
+			&#39;vowelSignI&#39;,
+			&#39;vowelSignA&#39;,
+			&#39;anusvara&#39;,
+			&#39;atha&#39;,
+			&#39;dotBelow&#39;,
+			&#39;visarga&#39;
+		],
+		componentTypesRemovalOrder: [
+			&#39;vowelSignE&#39;,
+			&#39;medialRa&#39;,
+			&#39;consonant&#39;,
+			&#39;specialLigature&#39;,
+			&#39;subscriptConsonant&#39;,
+			&#39;medialYa&#39;,
+			&#39;kinzi&#39;,
+			&#39;vowelSignI&#39;,
+			&#39;anusvara&#39;,
+			&#39;atha&#39;,
+			&#39;medialWa&#39;,
+			&#39;medialHa&#39;,
+			&#39;vowelSignU&#39;,
+			&#39;dotBelow&#39;,
+			&#39;vowelSignA&#39;,
+			&#39;visarga&#39;
+		],
+		logicalOrder: {
+			kinzi: 1,
+			consonant: 2,
+			specialLigature: 3,
+			subscriptConsonant: 4,
+			medialYa: 5,
+			medialRa: 6,
+			medialWa: 7,
+			medialHa: 8,
+			vowelSignE: 9,
+			vowelSignU: 10, // vowel sign I comes before U according to Unicode specs, but PadaukOT expect this order
+			vowelSignI: 11,
+			vowelSignA: 12,
+			anusvara: 13,
+			atha: 14,
+			dotBelow: 15,
+			visarga: 16
+		},
+		visualOrder: {
+			vowelSignE: 1,
+			medialRa: 2,
+			consonant: 3,
+			specialLigature: 3,
+			subscriptConsonant: 4,
+			medialYa: 4,
+			kinzi: 4,
+			vowelSignI: 4,
+			anusvara: 4,
+			atha: 4,
+			medialWa: 4,
+			medialHa: 4,
+			vowelSignU: 4,
+			dotBelow: 4,
+			vowelSignA: 5,
+			visarga: 6
+		},
+		multipleComponentsInOneSyllable: {},
+		allowComponentReplacement: {
+			subscriptConsonant: true,
+			vowelSignU: true,
+			vowelSignI: true,
+			vowelSignA: true
+		},
+		isZeroWidth: {
+			kinzi: 1,
+			subscriptConsonant: 4,
+			medialWa: 7,
+			medialHa: 8,
+			vowelSignU: 10,
+			vowelSignI: 11,
+			anusvara: 13,
+			atha: 14,
+			dotBelow: 15
+		},
+		placeholderPolicies: {
+			&#39;medialRa&#39;: {
+				inTheAbsenceOf: [&#39;consonant&#39;],
+				place: &#39;behind&#39;,
+				placeholder: &#39;\u200d&#39;,
+				standingInFor: &#39;consonant&#39;
+			},
+			&#39;vowelSignE&#39;: {
+				inTheAbsenceOf: [&#39;consonant&#39;],
+				place: &#39;behind&#39;,
+				placeholder: &#39;\u200d&#39;,
+				standingInFor: &#39;consonant&#39;
+			}
+		},
+		mutualExclusion: {},
+		componentUnicodeGroups: [{
+			type: &#39;kinzi&#39;,
+			pattern: &#39;\u1004\u103a\u1039&#39;
+		}, {
+			type: &#39;specialLigature&#39;,
+			pattern: &#39;\u1000\u103b\u1015\u103a&#39;
+		}, {
+			type: &#39;consonant&#39;,
+			pattern: &#39;[\u1000-\u1021\u103f\u1050-\u1055]&#39;
+		}, {
+			type: &#39;subscriptConsonant&#39;,
+			pattern: &#39;\u1039[\u1000-\u1021\u103f\u1050-\u1055]&#39;
+		}, {
+			type: &#39;medialYa&#39;,
+			pattern: &#39;\u103b&#39;
+		}, {
+			type: &#39;medialRa&#39;,
+			pattern: &#39;\u103c&#39;
+		}, {
+			type: &#39;medialWa&#39;,
+			pattern: &#39;\u103d&#39;
+		}, {
+			type: &#39;medialHa&#39;,
+			pattern: &#39;\u103e&#39;
+		}, {
+			type: &#39;vowelSignE&#39;,
+			pattern: &#39;\u1031&#39;
+		}, {
+			type: &#39;vowelSignU&#39;,
+			pattern: &#39;[\u102f\u1030]&#39;
+		}, {
+			type: &#39;vowelSignI&#39;,
+			pattern: &#39;[\u102d\u102e\u1032]&#39;
+		}, {
+			type: &#39;vowelSignA&#39;,
+			pattern: &#39;[\u102c\u102b]&#39;
+		}, {
+			type: &#39;anusvara&#39;,
+			pattern: &#39;\u1036&#39;
+		}, {
+			type: &#39;atha&#39;,
+			pattern: &#39;\u103a&#39;
+		}, {
+			type: &#39;dotBelow&#39;,
+			pattern: &#39;\u1037&#39;
+		}, {
+			type: &#39;visarga&#39;,
+			pattern: &#39;\u1038&#39;
+		}],
+		decomposition: [
+			//		{ from:&#39;\u0a86&#39;, to:&#39;\u0a85\u0abe&#39; },
+		],
+		modifyUnicodeBeforeScan: function(unicode) {
+			return unicode.replace(/\u200d\u1031\u200d\u103c/g, &#39;\u200d\u103c\u1031&#39;);
+		},
+		modifyUnicodeAfterMerge: function(unicode) {
+			return unicode.replace(/\u200d\u103c\u200d\u1031/g, &#39;\u200d\u1031\u200d\u103c&#39;);
+		}
+	}
+});
+</pre>
+</body>
+</html>

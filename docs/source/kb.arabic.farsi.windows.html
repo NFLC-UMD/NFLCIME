@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-arabic-farsi-windows'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.arabic.farsi.windows
+ * Farsi language windows keyboard map class.
+ *
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.arabic.farsi.windows&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb&#39;],
+<span id='NFLCIME-kb-arabic-farsi-windows-property-mapNormal'>		/**
+</span>		* Lower case key mappings
+		* @readonly
+		*/
+		mapNormal: {
+			0xc0: &#39;\u00f7&#39;, // `
+			0x31: &#39;\u06f1&#39;, // 1
+			0x32: &#39;\u06f2&#39;, // 2
+			0x33: &#39;\u06f3&#39;, // 3
+			0x34: &#39;\u06f4&#39;, // 4
+			0x35: &#39;\u06f5&#39;, // 5
+			0x36: &#39;\u06f6&#39;, // 6
+			0x37: &#39;\u06f7&#39;, // 7
+			0x38: &#39;\u06f8&#39;, // 8
+			0x39: &#39;\u06f9&#39;, // 9
+			0x30: &#39;\u06f0&#39;, // 0
+			0xbd: &#39;-&#39;, // -
+			0xbb: &#39;=&#39;, // =
+			0x51: &#39;\u0636&#39;, // q
+			0x57: &#39;\u0635&#39;, // w
+			0x45: &#39;\u062b&#39;, // e
+			0x52: &#39;\u0642&#39;, // r
+			0x54: &#39;\u0641&#39;, // t
+			0x59: &#39;\u063a&#39;, // y
+			0x55: &#39;\u0639&#39;, // u
+			0x49: &#39;\u0647&#39;, // i
+			0x4f: &#39;\u062e&#39;, // o
+			0x50: &#39;\u062d&#39;, // p
+			0xdb: &#39;\u062c&#39;, // [
+			0xdd: &#39;\u0686&#39;, // ]
+			0xdc: &#39;\u067e&#39;, // \
+			0x41: &#39;\u0634&#39;, // a
+			0x53: &#39;\u0633&#39;, // s
+			0x44: &#39;\u06cc&#39;, // d
+			0x46: &#39;\u0628&#39;, // f
+			0x47: &#39;\u0644&#39;, // g
+			0x48: &#39;\u0627&#39;, // h
+			0x4a: &#39;\u062a&#39;, // j
+			0x4b: &#39;\u0646&#39;, // k
+			0x4c: &#39;\u0645&#39;, // l
+			0xba: &#39;\u06a9&#39;, // ;
+			0xde: &#39;\u06af&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0638&#39;, // z
+			0x58: &#39;\u0637&#39;, // x
+			0x43: &#39;\u0632&#39;, // c
+			0x56: &#39;\u0631&#39;, // v
+			0x42: &#39;\u0630&#39;, // b
+			0x4e: &#39;\u062f&#39;, // n
+			0x4d: &#39;\u0626&#39;, // m
+			0xbc: &#39;\u0648&#39;, // ,
+			0xbe: &#39;.&#39;, // .
+			0xbf: &#39;/&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		},
+<span id='NFLCIME-kb-arabic-farsi-windows-property-mapShift'>		/**
+</span>		* Shifted key mappings
+		* @readonly
+		*/
+		mapShift: {
+			0xc0: &#39;\u00d7&#39;, // `
+			0x31: &#39;!&#39;, // 1
+			0x32: &#39;@&#39;, // 2
+			0x33: &#39;#&#39;, // 3
+			0x34: &#39;$&#39;, // 4
+			0x35: &#39;%&#39;, // 5
+			0x36: &#39;^&#39;, // 6
+			0x37: &#39;&amp;&#39;, // 7
+			0x38: &#39;*&#39;, // 8
+			0x39: &#39;(&#39;, // 9
+			0x30: &#39;)&#39;, // 0
+			0xbd: &#39;_&#39;, // -
+			0xbb: &#39;+&#39;, // =
+			0x51: &#39;\u064B&#39;, // q
+			0x57: &#39;\u064c&#39;, // w
+			0x45: &#39;\u064d&#39;, // e
+			0x52: &#39;\u0631\u064a\u0627\u0644&#39;, // r
+			0x54: &#39;\u060c&#39;, // t
+			0x59: &#39;\u061b&#39;, // y
+			0x55: &#39;,&#39;, // u
+			0x49: &#39;[&#39;, // i
+			0x4f: &#39;]&#39;, // o
+			0x50: &#39;\\&#39;, // p
+			0xdb: &#39;{&#39;, // [
+			0xdd: &#39;}&#39;, // ]
+			0xdc: &#39;|&#39;, // \
+			0x41: &#39;\u064e&#39;, // a
+			0x53: &#39;\u064f&#39;, // s
+			0x44: &#39;\u0650&#39;, // d
+			0x46: &#39;\u0651&#39;, // f
+			0x47: &#39;\u06c0&#39;, // g
+			0x48: &#39;\u0622&#39;, // h
+			0x4a: &#39;\u0640&#39;, // j
+			0x4b: &#39;\u00bb&#39;, // k
+			0x4c: &#39;\u00ab&#39;, // l
+			0xba: &#39;:&#39;, // ;
+			0xde: &#39;&quot;&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0629&#39;, // z
+			0x58: &#39;\u064a&#39;, // x
+			0x43: &#39;\u0698&#39;, // c
+			0x56: &#39;\u0624&#39;, // v
+			0x42: &#39;\u0625&#39;, // b
+			0x4e: &#39;\u0623&#39;, // n
+			0x4d: &#39;\u0621&#39;, // m
+			0xbc: &#39;&lt;&#39;, // ,
+			0xbe: &#39;&gt;&#39;, // .
+			0xbf: &#39;\u061f&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

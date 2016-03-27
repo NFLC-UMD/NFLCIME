@@ -16,901 +16,1098 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='RichTextEditor'>/**
-</span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com&gt;
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
  *
  * @class RichTextEditor
  *
  */
 
-NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
-{
-	id:&#39;rt&#39;,
-	type:&#39;core&#39;,
-	dependency:[&#39;cursor&#39;],
-	//--- Event handlers
-	onModuleActivate:function(evt) {
-		var module = evt.module;
-		if(module == this &amp;&amp; !this.active) {
-			this.active = true;
-			NFLCIME.addEventListener(&#39;FocusChanged&#39;, this);
-			NFLCIME.addEventListener(&#39;RichTextRetrieve&#39;, this);
-			NFLCIME.addEventListener(&#39;RichTextTransfer&#39;, this);
-			NFLCIME.addEventListener(&#39;RichTextRetrieveHTML&#39;, this);
-			NFLCIME.addEventListener(&#39;CursorMoved&#39;, this, true);
-			var evt = { type:&#39;CursorGetFocusedEdit&#39;, target:null };
-			NFLCIME.dispatchEvent(evt);
-			if(evt.target) {
-				this.attachDOMHandler(evt.target, &#39;paste&#39;, &#39;onPaste&#39;);
-			}
-		}
-	},
-	onModuleDeactivate:function(evt) {
-		var module = evt.module;
-		if(module == this &amp;&amp; this.active) {
-			NFLCIME.removeEventListener(&#39;FocusChanged&#39;, this);
-			NFLCIME.removeEventListener(&#39;RichTextRetrieve&#39;, this);
-			NFLCIME.removeEventListener(&#39;RichTextRetrieveHTML&#39;, this);
-			NFLCIME.removeEventListener(&#39;CursorMoved&#39;, this, true);
-			var evt = { type:&#39;CursorGetFocusedEdit&#39;, target:null };
-			NFLCIME.dispatchEvent(evt);
-			if(evt.target) {
-				this.detachDOMHandler(evt.target, &#39;paste&#39;, &#39;onPaste&#39;);
-			}
-		}
-	},
-	onRichTextRetrieve:function(evt) {
-		var element = evt.target;
-		var segments = this.retrieveTextAndStyle(element);
-		evt.textSegments.push.apply(evt.textSegments, segments);
-		return true;
-	},
-	onRichTextRetrieveHTML:function(evt) {
-		var element = evt.target;
-		var segments = this.retrieveTextAndStyle(element);
-		if(evt.forPaste) {
-			// give other modules the opportunity to alter the text
-			NFLCIME.dispatchEvent( { type:&#39;RichTextPaste&#39;, target:evt.pasteDestination, textSegments:segments } );
-		}
-		evt.html = this.getHTMLFromTextSegments(segments);
-		return true;
-	},
-	onCursorMoved:function(evt) {
-		// swallow the event when it occurs in the middle of the paste operation
-		if(this.isPasting) {
-			return false;
-		}
-	},
-	onPaste:function(evt) {
-		// find the actual edit
-		var edit = this.getFocusedEdit();
-		if(edit) {
-			if(this.isServiceApplicable(edit)) {
-				this.isPasting = true;
-				switch(this.browser) {
-					case &#39;ie&#39;:
-						// attach paste destination
-						var doc = edit.ownerDocument;
-						var div = this.createPasteDestination(doc);
-						document.body.appendChild(div);
-						// select it and paste the text into it
-						var rng = document.body.createTextRange();
-						rng.moveToElementText(div);
-						rng.execCommand(&#39;paste&#39;);
-						// this should stop images in the HTML from loading
-						div.contentEditable = false;
-						div.style.display = &#39;none&#39;;
-						this.pasteTrueTarget = edit;
-						this.pasteDesination = div;
-						this.onPasteComplete();
-						return false;
-						break;
-					case &#39;firefox&#39;:
-						if(edit.tagName == &#39;TEXTAREA&#39; || edit.tagName == &#39;INPUT&#39;) {
-							this.selectionBeforePaste = { fromBeginning:edit.selectionStart, fromEnd:edit.value.length - edit.selectionEnd };
-							this.pasteTrueTarget = edit;
-							this.pasteDesination = edit;
-							this.onPasteComplete(true);
-						} else {
-							var doc = edit.ownerDocument;
-							var win = doc.defaultView;
-							var selection = win.getSelection();
-							var range = selection.getRangeAt(0);
-							// delete what&#39;s selected first
-							range.deleteContents();
-							// insert a hidden DIV into the element and select it
-							var div = this.createPasteDestination(doc);
-							range.insertNode(div);
-							range.selectNodeContents(div);
-							// grab the contents once Firefox has pasted them into the span
-							this.pasteTrueTarget = edit;
-							this.pasteDesination = div;
-							this.onPasteComplete(true);
-						}
-						break;
-					case &#39;safari&#39;:
-						if(edit.tagName == &#39;TEXTAREA&#39; || edit.tagName == &#39;INPUT&#39;) {
-							this.selectionBeforePaste = { fromBeginning:edit.selectionStart, fromEnd:edit.value.length - edit.selectionEnd };
-							this.pasteTrueTarget = edit;
-							this.pasteDesination = edit;
-							this.onPasteComplete(true);
-						} else {
-							var doc = edit.ownerDocument;
-							var win = doc.defaultView;
-							var selection = win.getSelection();
-							var range = selection.getRangeAt(0);
-							// extract the content behind and ahead of cursor
-							var range_behind = doc.createRange();
-							range_behind.setStart(edit, 0);
-							range_behind.setEnd(range.startContainer, range.startOffset);
-							this.fragmentBehindCursor = range_behind.extractContents();
-							var range_ahead = doc.createRange();
-							range_ahead.setStart(range.endContainer, range.endOffset);
-							range_ahead.setEnd(edit, edit.childNodes.length);
-							this.fragmentAheadOfCursor = range_ahead.extractContents();
-							// select the edit (this works, but for some reason it isn&#39;t possible to select individual elements inside the edit)
-							range.selectNodeContents(edit);
-							selection.addRange(range);
-							// grab the contents once Safari has pasted them
-							this.pasteTrueTarget = edit;
-							this.pasteDesination = edit;
-							this.onPasteComplete(true);
-						}
-						break;
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;rt&#39;,
+		type: &#39;core&#39;,
+		dependency: [&#39;cursor&#39;],
+		//--- Event handlers
+		onModuleActivate: function(evt) {
+			var module = evt.module;
+			if (module == this &amp;&amp; !this.active) {
+				this.active = true;
+				NFLCIME.addEventListener(&#39;FocusChanged&#39;, this);
+				NFLCIME.addEventListener(&#39;RichTextRetrieve&#39;, this);
+				NFLCIME.addEventListener(&#39;RichTextTransfer&#39;, this);
+				NFLCIME.addEventListener(&#39;RichTextRetrieveHTML&#39;, this);
+				NFLCIME.addEventListener(&#39;CursorMoved&#39;, this, true);
+				evt = {
+					type: &#39;CursorGetFocusedEdit&#39;,
+					target: null
+				};
+				NFLCIME.dispatchEvent(evt);
+				if (evt.target) {
+					this.attachDOMHandler(evt.target, &#39;paste&#39;, &#39;onPaste&#39;);
 				}
 			}
-		}
-	},
-	onPasteComplete:function(defer) {
-		if(defer) {
-			var closure = this.closures[&#39;onPasteComplete&#39;];
-			if(!closure) {
-				var self = this;
-				closure = function() { self.onPasteComplete(); };
-				this.closures[&#39;onPasteComplete&#39;] = closure;
+		},
+		onModuleDeactivate: function(evt) {
+			var module = evt.module;
+			if (module == this &amp;&amp; this.active) {
+				NFLCIME.removeEventListener(&#39;FocusChanged&#39;, this);
+				NFLCIME.removeEventListener(&#39;RichTextRetrieve&#39;, this);
+				NFLCIME.removeEventListener(&#39;RichTextRetrieveHTML&#39;, this);
+				NFLCIME.removeEventListener(&#39;CursorMoved&#39;, this, true);
+				evt = {
+					type: &#39;CursorGetFocusedEdit&#39;,
+					target: null
+				};
+				NFLCIME.dispatchEvent(evt);
+				if (evt.target) {
+					this.detachDOMHandler(evt.target, &#39;paste&#39;, &#39;onPaste&#39;);
+				}
 			}
-			setTimeout(closure, 0);
-			return;
-		}
-		var edit = this.pasteTrueTarget;
-		var dest = this.pasteDesination;
-		var doc = edit.ownerDocument;
-		var segments;
-		if(dest.tagName == &#39;TEXTAREA&#39; || dest.tagName == &#39;INPUT&#39;) {
-			// plain-text for firefox and safari
-			var sel = this.selectionBeforePaste;
-			var text = edit.value;
-			var addition = text.substring(sel.fromBeginning, text.length - sel.fromEnd);
-			edit.value = text.substr(0, sel.fromBeginning) + text.substr(text.length - sel.fromEnd);
-			edit.setSelectionRange(sel.fromBeginning, sel.fromBeginning);
-			segments = [ { lang:&#39;&#39;, text:addition, style:{ fontFamily:&#39;&#39;, fontSize:&#39;12pt&#39;, fontWeight:400, fontStyle:&#39;normal&#39;, color:&#39;#000000&#39;, backgroundColor:null, textDecoration:&#39;none&#39; } } ];
-		} else {
-			switch(this.browser) {
-				case &#39;ie&#39;:
-				case &#39;firefox&#39;:
-					if(dest.parentElement != doc.body) {
-						// remove the hidden div from the edit and place it into the document
-						doc.body.appendChild(dest);
-					}
-					segments = this.retrieveTextAndStyle(dest);
-					// clear it and remove it from document
-					doc.body.removeChild(dest);
-					dest.innerHTML = &#39;&#39;;
-					break;
-				case &#39;safari&#39;:
-					var win = doc.defaultView;
-					var selection = win.getSelection();
-					var segments = this.retrieveTextAndStyle(edit);
-					// clear the contents
-					var range = doc.createRange();
-					range.setStart(edit, 0);
-					range.setEnd(edit, edit.childNodes.length);
-					range.deleteContents();
-					range.setStart(edit, 0);
-					range.setEnd(edit, 0);
-					var cursor_node = this.fragmentBehindCursor.lastChild;
-					var cursor_offset = 1;
-					if(!cursor_node) {
-						cursor_node = this.fragmentAheadOfCursor.firstChild;
-						cursor_offset = 0;
-					}
-					range.insertNode(this.fragmentAheadOfCursor);
-					range.insertNode(this.fragmentBehindCursor);
-					selection.collapse(cursor_node, (cursor_node.nodeType == 3) ? cursor_node.nodeValue.length : 1);
-					break;
-			}
-		}
-		// give other modules the opportunity to alter the text
-		NFLCIME.dispatchEvent( { type:&#39;RichTextPaste&#39;, target:edit, textSegments:segments } );
-		// insert the HTML
-		var html = this.getHTMLFromTextSegments(segments);
-		var plain_text = this.getPlainTextFromTextSegments(segments);
-		NFLCIME.dispatchEvent( { type:&#39;CursorInsertHTML&#39;, target:edit, text:plain_text, html:html } );
-		this.isPasting = false;
-	},
-	// Attach onpaste handler to active element
-	onFocusChanged:function(evt) {
-		var edit = evt.target;
-		var prev = evt.previousTarget;
-		if(prev) {
-			this.detachDOMHandler(prev, &#39;paste&#39;, &#39;onPaste&#39;);
-		}
-		if(edit) {
-			// onpaste doesn&#39;t bubble up, so we need to attach the handler to the element directly
-			this.attachDOMHandler(edit, &#39;paste&#39;, &#39;onPaste&#39;);
-		}
-	},
-	//--- Private functions
-	// Attach a closure to a DOM element that sends the events to the named handler
-	attachDOMHandler:function(element, eventName, handlerName, capturing) {
-		var handler = this[handlerName];
-		var closure = this.closures[handlerName];
-		if(!closure) {
-			var self = this;
-			switch(this.browser) {
-				case &#39;ie&#39;:
-					closure = function(evt) {
-						if(!evt.target) {
-							evt.target = evt.srcElement;
-						}
-						evt.returnValue = handler.call(self, evt);
-					}
-					break;
-				case &#39;firefox&#39;:
-				case &#39;safari&#39;:
-					closure = function(evt) {
-						var result = handler.call(self, evt);
-						if(result != undefined &amp;&amp; result == false) {
-							evt.preventDefault();
-						}
-					}
-			}
-			this.closures[handlerName] = closure;
-		}
-		switch(this.browser) {
-			case &#39;ie&#39;:
-				element.attachEvent(&#39;on&#39; + eventName, closure);
-				break;
-			case &#39;firefox&#39;:
-			case &#39;safari&#39;:
-				element.addEventListener(eventName, closure, capturing ? true : false);
-				break;
-		}
-	},
-	// Detach an earlier attached closure
-	detachDOMHandler:function(element, eventName, handlerName, capturing) {
-		var closure = this.closures[handlerName];
-		if(closure) {
-			switch(this.browser) {
-				case &#39;ie&#39;:
-					element.detachEvent(&#39;on&#39; + eventName, closure);
-					break;
-				case &#39;firefox&#39;:
-				case &#39;safari&#39;:
-					element.removeEventListener(eventName, closure, capturing ? true : false);
-					break;
-			}
-		}
-	},
-	// See if the rt service is active on for edit
-	isServiceApplicable:function(edit) {
-		var evt = { type:&#39;ServiceApplicable&#39;, target:edit, service:&#39;rt&#39;, applicable:false };
-		NFLCIME.dispatchEvent(evt);
-		return evt.applicable;
-	},
-	isSameStyle:function(s1, s2) {
-		var style_properties = [&#39;fontFamily&#39;, &#39;fontSize&#39;, &#39;fontWeight&#39;, &#39;fontStyle&#39;, &#39;textDecoration&#39;, &#39;color&#39;, &#39;backgroundColor&#39;, &#39;direction&#39;, &#39;verticalAlign&#39;];
-		if(!s2 || !s1) {
-			return false;
-		}
-		if(s1 == s2) {
+		},
+		onRichTextRetrieve: function(evt) {
+			var element = evt.target;
+			var segments = this.retrieveTextAndStyle(element);
+			evt.textSegments.push.apply(evt.textSegments, segments);
 			return true;
-		}
-		for(var i = 0; i &lt; style_properties.length; i++) {
-			var prop = style_properties[i];
-			if(s1[prop] != s2[prop]) {
+		},
+		onRichTextRetrieveHTML: function(evt) {
+			var element = evt.target;
+			var segments = this.retrieveTextAndStyle(element);
+			if (evt.forPaste) {
+				// give other modules the opportunity to alter the text
+				NFLCIME.dispatchEvent({
+					type: &#39;RichTextPaste&#39;,
+					target: evt.pasteDestination,
+					textSegments: segments
+				});
+			}
+			evt.html = this.getHTMLFromTextSegments(segments);
+			return true;
+		},
+		onCursorMoved: function(evt) {
+			// swallow the event when it occurs in the middle of the paste operation
+			if (this.isPasting) {
 				return false;
 			}
-		}
-		return true;
-	},
-	getLegacySizeHash:function(font_name) {
-		var legacy_sizes = this.legacyPointSizesHash[font_name];
-		if(!legacy_sizes) {
-			var legacy_pixel_height = new Array;
-			for(var i = 1; i &lt;= 7; i++) {
-				var font = document.createElement(&quot;FONT&quot;);
-				font.innerHTML = &#39;HELLO&#39;;
-				font.face = font;
-				font.size = i;
-				font.style.visibility = &#39;hidden&#39;;
-				font.style.position = &#39;absolute&#39;;
-				document.body.appendChild(font);
-				legacy_pixel_height[i] = font.offsetHeight;
-				document.body.removeChild(font);
-			}
-			var css_pixel_height = new Array;
-			for(var i = 1; i &lt;= 128; i++) {
-				var font = document.createElement(&quot;FONT&quot;);
-				font.innerHTML = &#39;HELLO&#39;;
-				font.style.fontFamily = font;
-				font.style.fontSize = i + &#39;pt&#39;;
-				font.style.visibility = &#39;hidden&#39;;
-				font.style.position = &#39;absolute&#39;;
-				document.body.appendChild(font);
-				css_pixel_height[i] = font.offsetHeight;
-				document.body.removeChild(font);
-				if(css_pixel_height[i] &gt; legacy_pixel_height[7]) {
-					break;
+		},
+		onPaste: function(evt) {
+			// find the actual edit
+			var edit = this.getFocusedEdit();
+
+			if (edit) {
+
+				if (edit.className.indexOf(&#39;mce-content-body&#39;) &gt;= 0) {
+					// pasting into a tinymce field
+					// therefore let tinymce paste handlers do
+					// the work
+					return true;
 				}
-			}
-			legacy_sizes = new Array;
-			for(var i = 1; i &lt;= 7; i++) {
-				var a = legacy_pixel_height[i];
-				var p = 8000;
-				for(var j = 1; j &lt;= css_pixel_height.length - 1; j++) {
-					var b = css_pixel_height[j];
-					if(b == a) {
-						legacy_sizes[i] = j;
-					} else if(b &gt; a) {
-						// too large, see if the previous size is closer
-						if(Math.abs(a - p) &lt; Math.abs(a - b)) {
-							legacy_sizes[i] = j - 1;
-							break;
-						} else {
-							legacy_sizes[i] = j;
-							break;
-						}
-					}
-					p = b;
-				}
-			}
-			this.legacyPointSizesHash[font_name] = legacy_sizes;
-		}
-		return legacy_sizes;
-	},
-	findLegacySize:function(font, pt_size) {
-		var legacy_sizes = this.getLegacySizeHash(font);
-		pt_size = parseInt(pt_size);
-		for(var i = 1; i &lt;= 7; i++) {
-			var a = legacy_sizes[i];
-			if(a == pt_size) {
-				return i;
-			} else if(a &gt; pt_size &amp;&amp; i &gt; 1) {
-				// no exact match, use something smaller
-				return i - 1;
-			}
-		}
-		return 7;
-	},
-	getLegacyPointSize:function(font, size) {
-		var legacy_sizes = this.getLegacySizeHash(font);
-		if(size &lt; 1 || size &gt; 7) {
-			size = 3;
-		}
-		return legacy_sizes[size];
-	},
-	getComputedStyle:function(element) {
-		var style = element.currentStyle;
-		if(!style) {
-			style = getComputedStyle(element, &#39;&#39;);
-		}
-		return style;
-	},
-	parseFontFamily:function(fontFamily) {
-		list = fontFamily.split(/\s*,\s*/);
-		var first = list[0];
-		return first.replace(/\s*[&quot;&#39;]\s*(.*)\s*[&quot;&#39;]\s*/, &#39;$1&#39;);
-	},
-	// Return the closest point size
-	parseFontSize:function(size, fontFamily, parentSize) {
-		if(/^\d+\s*pt$/.test(size)) {			// point size
-			return size;
-		}
-		if(/^\+?\d+$/.test(size)) {		// old style font size
-			return this.getLegacyPointSize(fontFamily, parseInt(size)) + &#39;pt&#39;;
-		}
-		if(/^\d+\s*%$/.test(size)) {		// percent
-			return Math.round(parseFloat(size) / 100 * parseFloat(parentSize), 1) + &#39;pt&#39;;
-		}
-		if(/^[\d\.]+\s*px$/.test(size)) {		// pixel
-			return Math.round(parseFloat(size) * 72 / 96, 1) + &#39;pt&#39;;	// assume 96dpi
-		}
-		if(/^[\d\.]+\s*em$/.test(size)) {		// em
-			return Math.round(parseFloat(size) * 11, 1) + &#39;pt&#39;;
-		}
-		if(/^[a-z-]+$/.test(size)) {		// a word
-			if(size == &#39;inherit&#39;) {
-				return parentSize;
-			} else {
-				var legacy_size;
-				switch(size) {
-					case &#39;xx-small&#39;: legacy_size = 1; break;
-					case &#39;x-small&#39;:legacy_size = 2; break;
-					case &#39;small&#39;: legacy_size = 3; break;
-					case &#39;medium&#39;:	legacy_size = 4; break;
-					case &#39;large&#39;: legacy_size = 5; break;
-					case &#39;x-large&#39;: legacy_size = 6; break;
-					case &#39;xx-large&#39;: legacy_size = 7; break;
-					case &#39;larger&#39;: legacy_size = Math.min(7, this.findLegacySize(parseInt(parentSize)) + 1); break;
-					case &#39;smaller&#39;: legacy_size = Math.max(1, this.findLegacySize(parseInt(parentSize)) - 1); break;
-				}
-				if(legacy_size) {
-					this.getLegacyPointSize(fontFamily, legacy_size) + &#39;pt&#39;;
-				}
-			}
-		}
-		return parentSize;
-	},
-	parseColor:function(color, parentColor) {
-		if(color.charAt(0) == &#39;#&#39;) {
-			return color.toUpperCase();
-		}
-		if(color == &#39;inherited&#39;) {
-			return parentColor;
-		}
-		var match;
-		if((match = /RGB\((.+)\)/i.exec(color)) || (match = /RGBA\((.+)\)/i.exec(color))) {
-			var list = match[1].split(/\s*,\s*/);
-			var r = &#39;#&#39;;
-			var alpha = parseFloat(list[3]);
-			if(isNaN(alpha)) {
-				alpha = 1;
-			}
-			if(alpha == 0) {
-				return null;
-			}
-			for(var i = 0; i &lt; 3; i++) {
-				var num;
-				if(/^\d+\s*%/.test(list[i])) {
-					num = Math.round(parseInt(list[i]) * 255 / 100);
-				} else if(/^[\d\.]+$/.test(list[i])) {
-					num = Math.min(parseInt(list[i]), 255);
-				} else {
-					num = 0;
-				}
-				var hex = num.toString(16);
-				while(hex.length &lt; 2) hex = &#39;0&#39; + hex;
-				r += hex;
-			}
-			return r.toUpperCase();
-		}
-		var predefined = this.htmlColors[color];
-		if(predefined) {
-			return predefined;
-		}
-		return null;
-	},
-	// Take a style object and convert the info into a simplier, more predictable format
-	convertStyle:function(element, computedStyle, parentStyle) {
-		var style = {};
-		style.fontFamily = this.parseFontFamily(computedStyle.fontFamily);
-		style.fontSize = this.parseFontSize(computedStyle.fontSize, style.fontFamily, (parentStyle) ? parentStyle.fontSize : &#39;12pt&#39;);
-		style.fontWeight = (computedStyle.fontWeight == &#39;bold&#39; || computedStyle.fontWeight &gt; 400) ? 700 : 400;	// firefox gives 401 for bolded text for some reason
-		style.fontStyle = computedStyle.fontStyle;
-		// don&#39;t use the color of an anchor tag, since we&#39;re stripping the hyperlink
-		if(element.tagName == &#39;A&#39; &amp;&amp; element.href) {
-			style.color = parentStyle.color;
-		} else {
-			style.color = this.parseColor(computedStyle.color);
-		}
-		if(style.color == &#39;#000000&#39;) {
-			style.color = null;
-		}
-		style.backgroundColor = this.parseColor(computedStyle.backgroundColor);
-		// if background color is white then assume a transparent background is intended
-		if(style.backgroundColor == &#39;#FFFFFF&#39;) {
-			style.backgroundColor = null;
-		}
-		style.textDecoration = computedStyle.textDecoration;
-		if(style.textDecoration == &#39;none&#39; &amp;&amp; parentStyle) {
-			// if the parent is has a decoration, it obviously would appear on the child nodes too
-			style.textDecoration = parentStyle.textDecoration;
-		}
-		style.direction = computedStyle.direction;
-		style.verticalAlign = computedStyle.verticalAlign;
-		return style;
-	},
-	retrieveTextAndStyle:function(div) {
-		var computed_style = this.getComputedStyle(div);
-		var default_style = this.convertStyle(div, computed_style);
-		var default_lang = &#39;&#39;;
-		var segments = this.retrieveTextAndStyleRecursive(div, default_style, default_lang);
-		// merge adjacent segments with the style
-		var result = [];
-		var current_style = null;
-		var current_segment = null;
-		var current_lang = null;
-		for(var i = 0, l = segments.length; i &lt; l; i++) {
-			var segment = segments[i];
-			if(!this.isSameStyle(segment.style, current_style) || segment.lang != current_lang) {
-				if(current_segment) {
-					result.push({style:current_style, text:current_segment, lang:current_lang});
-				}
-				current_style = segment.style;
-				current_segment = segment.text;
-				current_lang = segment.lang;
-			}
-			else {
-				current_segment += segment.text;
-			}
-		}
-		if(current_segment) {
-			result.push({style:current_style, text:current_segment, lang:current_lang});
-		}
-		return result;
-	},
-	retrieveTextAndStyleRecursive:function(element, elementStyle, elementLang, acceptLeadingWS) {
-		var segments = [];
-		// deal with special tags
-		switch(element.tagName) {
-			case &#39;BR&#39;:
-				segments.push({style:elementStyle, text:&#39;\n&#39;, lang:elementLang});
-				break;
-		}
-		switch(this.browser) {
-			case &#39;ie&#39;:
-				if(element.canHaveChildren) {
-					var children = element.children;
-					var children_count = children.length;
-					// process text ahead of first element
-					var text = element.getAdjacentText(&#39;afterBegin&#39;);
-					if(text) segments.push({style:elementStyle, text:text, lang:elementLang});
-					var prev_is_blocking = false;
-					for(var i = 0; i &lt; children_count; i++) {
-						// process element
-						var child = children[i];
-						var computed_style = this.getComputedStyle(child);
-						if(computed_style.display != &#39;none&#39;) {
-							var child_style = this.convertStyle(child, computed_style, elementStyle);
-							var child_is_blocking = (computed_style.display == &#39;block&#39;);
-							var child_lang = child.lang;
-							if(!child_lang) {
-								child_lang = child.getAttribute(&#39;mso-ansi-language&#39;);
-							}
-							if(child_lang) {
-								child_lang = child_lang.toLowerCase();
-							} else {
-							 	child_lang = elementLang;
-							}
-							var child_segments = this.retrieveTextAndStyleRecursive(child, child_style, child_lang);
-							if(child_segments.length &gt; 0) {
-								if(prev_is_blocking || child_is_blocking) {
-									segments.push({style:child_style, text:&#39;\n&#39;, lang:child_lang});
-								}
-								segments = segments.concat(child_segments);
-							}
-							prev_is_blocking = child_is_blocking;
-						}
-						// process text following element
-						var text = child.getAdjacentText(&#39;afterEnd&#39;);
-						if(text) segments.push({style:elementStyle, text:text, lang:elementLang});
-					}
-				}
-				break;
-			case &#39;firefox&#39;:
-			case &#39;safari&#39;:
-				var prev_is_blocking = false;
-				for(var child = element.firstChild; child; child = child.nextSibling) {
-					if(child.nodeType == 1) {
-						var computed_style = this.getComputedStyle(child);
-						if(computed_style.display != &#39;none&#39;) {
-							var child_style = this.convertStyle(child, computed_style, elementStyle);
-							var child_is_blocking = (computed_style.display == &#39;block&#39;);
-							var child_lang = (child.lang) ? child.lang.toLowerCase() : elementLang;
-							var child_segments = this.retrieveTextAndStyleRecursive(child, child_style, child_lang, !child_is_blocking);
-							if(child_segments.length &gt; 0) {
-								if(prev_is_blocking || (child_is_blocking &amp;&amp; segments.length &gt; 0)) {
-									segments.push({style:child_style, text:&#39;\n&#39;, lang:child_lang});
-								}
-								segments.push.apply(segments, child_segments);
-							}
-							prev_is_blocking = child_is_blocking;
-						}
-					} else if(child.nodeType == 3) {
-						var text = child.nodeValue;
-						if(!acceptLeadingWS &amp;&amp; segments.length == 0) {
-							// trim leading white spaces
-							text = text.replace(/^\s+/, &#39;&#39;);
-						}
-						text = text.replace(/[\r\n\s]+/g, &#39; &#39;);
-						if(text) segments.push({style:elementStyle, text:text, lang:elementLang});
-						prev_is_blocking = false;
-					}
-				}
-				break;
-		}
-		return segments;
-	},
-	addTextSegments:function(container, segments) {
-		var p_tag = null;
-		for(var i = 0; i &lt; segments.length; i++) {
-			var seg = segments[i];
-			var paragraphs = seg.text.split(&#39;\n&#39;);
-			for(var j = 0; j &lt; paragraphs.length; j++) {
-				var text = paragraphs[j];
-				if(!p_tag || j &gt; 0) {
-					p_tag = document.createElement(&quot;P&quot;);
-					if(seg.style.direction) {
-						p_tag.style.direction = seg.style.direction;
-					}
-					container.appendChild(p_tag);
-				}
-				if(text.length &gt; 0) {
-					var chain = [];
-					var tag = document.createElement(&quot;SPAN&quot;);
-					if(seg.style) {
-						if(seg.style.textDecoration == &#39;underline&#39;) {
-							chain.push(document.createElement(&quot;U&quot;));
-						} else if(seg.style.textDecoration == &#39;line-through&#39;) {
-							chain.push(document.createElement(&quot;S&quot;));
-						}
-						if(seg.style.fontStyle == &#39;italic&#39;) {
-							chain.push(document.createElement(&quot;EM&quot;));
-						}
-						if(seg.style.fontWeight &gt;= 700) {
-							chain.push(document.createElement(&quot;STRONG&quot;));
-						}
-						if(seg.style.verticalAlign == &#39;super&#39;) {
-							chain.push(document.createElement(&quot;SUP&quot;));							
-						} else if(seg.style.verticalAlign == &#39;sub&#39;) {
-							chain.push(document.createElement(&quot;SUB&quot;));							
-						}
-					}
-					var tag = document.createElement(&quot;SPAN&quot;);
-					if(seg.style) {
-						if(seg.style.fontFamily) {
-							tag.style.fontFamily = seg.style.fontFamily;
-						}
-						if(seg.style.fontSize) {
-							tag.style.fontSize = seg.style.fontSize;
-						}
-						if(seg.style.color) {
-							tag.style.color = seg.style.color;
-						}
-						if(seg.style.backgroundColor) {
-							tag.style.backgroundColor = seg.style.backgroundColor;
-						}
-					}
-					if(seg.className) {
-						tag.className = seg.className;
-					}
-					if(seg.lang) {
-						tag.lang = seg.lang;
-					}
-					chain.push(tag);
-					var last = chain[chain.length - 1];
-					switch(this.browser) {
+
+
+				if (this.isServiceApplicable(edit)) {
+					this.isPasting = true;
+					switch (this.browser) {
 						case &#39;ie&#39;:
-							last.innerText = text;
+							// attach paste destination
+							var doc = edit.ownerDocument;
+							var div = this.createPasteDestination(doc);
+							document.body.appendChild(div);
+							// select it and paste the text into it
+							var rng = document.body.createTextRange();
+							rng.moveToElementText(div);
+							rng.execCommand(&#39;paste&#39;);
+							// this should stop images in the HTML from loading
+							div.contentEditable = false;
+							div.style.display = &#39;none&#39;;
+							this.pasteTrueTarget = edit;
+							this.pasteDestination = div;
+							this.onPasteComplete();
 							break;
 						case &#39;firefox&#39;:
+							if (edit.tagName == &#39;TEXTAREA&#39; || edit.tagName == &#39;INPUT&#39;) {
+								this.selectionBeforePaste = {
+									fromBeginning: edit.selectionStart,
+									fromEnd: edit.value.length - edit.selectionEnd
+								};
+								this.pasteTrueTarget = edit;
+								this.pasteDestination = edit;
+								this.onPasteComplete(true);
+							} else {
+								var doc = edit.ownerDocument;
+								var win = doc.defaultView;
+								var selection = win.getSelection();
+								var range = selection.getRangeAt(0);
+								// delete what&#39;s selected first
+								range.deleteContents();
+								// insert a hidden DIV into the element and select it
+								var div = this.createPasteDestination(doc);
+								range.insertNode(div);
+								range.selectNodeContents(div);
+								// grab the contents once Firefox has pasted them into the span
+								this.pasteTrueTarget = edit;
+								this.pasteDestination = div;
+								this.onPasteComplete(true);
+							}
+							break;
 						case &#39;safari&#39;:
-							last.textContent = text;
+							if (edit.tagName == &#39;TEXTAREA&#39; || edit.tagName == &#39;INPUT&#39;) {
+								this.selectionBeforePaste = {
+									fromBeginning: edit.selectionStart,
+									fromEnd: edit.value.length - edit.selectionEnd
+								};
+								this.pasteTrueTarget = edit;
+								this.pasteDestination = edit;
+								this.onPasteComplete(true);
+							} else {
+
+								var clipData = evt.clipboardData.getData(&#39;text/plain&#39;);
+								var doc = edit.ownerDocument;
+								var win = doc.defaultView;
+								var selection = win.getSelection();
+								var range = selection.getRangeAt(0);
+								var parNode = range.startContainer.parentNode;
+
+								var selectedLang = &quot;&quot;;
+								if (tinyMCE &amp;&amp; tinyMCE.activeEditor.language) {
+									selectedLang = tinyMCE.activeEditor.language;
+								}
+
+								if (parNode.getAttribute(&#39;lang&#39;) &amp;&amp; parNode.getAttribute(&#39;lang&#39;) == selectedLang) {
+									// already in language block
+									// therefore simply paste unformatted
+									var txtNode = document.createTextNode(clipData);
+									range.deleteContents();
+									range.insertNode(txtNode);
+									// stop default paste behavior
+									return false;
+								} else {
+									// discard default behavior
+									// and transfer control to cursor insert behavior
+									NFLCIME.dispatchEvent({
+										type: &#39;CursorInsertHTML&#39;,
+										target: edit,
+										text: clipData,
+										html: clipData
+									});
+									return false;
+								}
+								/*
+								var doc = edit.ownerDocument;
+								var win = doc.defaultView;
+								var selection = win.getSelection();
+								var range = selection.getRangeAt(0);
+								var clipData = evt.clipboardData.getData(&#39;text/plain&#39;);
+								// extract the content behind and ahead of cursor
+								var range_behind = doc.createRange();
+								range_behind.setStart(edit, 0);
+								range_behind.setEnd(range.startContainer, range.startOffset);
+								// this.fragmentBehindCursor = range_behind.extractContents();
+								var range_ahead = doc.createRange();
+								range_ahead.setStart(range.endContainer, range.endOffset);
+								range_ahead.setEnd(edit, edit.childNodes.length);
+								// this.fragmentAheadOfCursor = range_ahead.extractContents();
+								// select the edit (this works, but for some reason it isn&#39;t possible to select individual elements inside the edit)
+								range.selectNodeContents(edit);
+								selection.addRange(range);
+								// grab the contents once Safari has pasted them
+								this.pasteTrueTarget = edit;
+								this.pasteDesination = edit;
+								// this.onPasteComplete(true);
+								*/
+							}
 							break;
 					}
-					for(var m = chain.length - 1, n = m - 1; n &gt;= 0; m--, n--) {
-						chain[n].appendChild(chain[m]);
-					}
-					p_tag.appendChild(chain[0]);
 				}
 			}
+		},
+		onPasteComplete: function(defer) {
+			if (defer) {
+				var closure = this.closures.onPasteComplete;
+				if (!closure) {
+					var self = this;
+					closure = function() {
+						self.onPasteComplete();
+					};
+					this.closures.onPasteComplete = closure;
+				}
+				setTimeout(closure, 0);
+				return;
+			}
+			var edit = this.pasteTrueTarget;
+			var dest = this.pasteDestination;
+			var doc = edit.ownerDocument;
+			var segments;
+			if (dest.tagName == &#39;TEXTAREA&#39; || dest.tagName == &#39;INPUT&#39;) {
+				// plain-text for firefox and safari
+				var sel = this.selectionBeforePaste;
+				var text = edit.value;
+				var addition = text.substring(sel.fromBeginning, text.length - sel.fromEnd);
+				edit.value = text.substr(0, sel.fromBeginning) + text.substr(text.length - sel.fromEnd);
+				edit.setSelectionRange(sel.fromBeginning, sel.fromBeginning);
+				segments = [{
+					lang: &#39;&#39;,
+					text: addition,
+					style: {
+						fontFamily: &#39;&#39;,
+						fontSize: &#39;12pt&#39;,
+						fontWeight: 400,
+						fontStyle: &#39;normal&#39;,
+						color: &#39;#000000&#39;,
+						backgroundColor: null,
+						textDecoration: &#39;none&#39;
+					}
+				}];
+			} else {
+				switch (this.browser) {
+					case &#39;ie&#39;:
+					case &#39;firefox&#39;:
+						if (dest.parentElement != doc.body) {
+							// remove the hidden div from the edit and place it into the document
+							doc.body.appendChild(dest);
+						}
+						segments = this.retrieveTextAndStyle(dest);
+						// clear it and remove it from document
+						doc.body.removeChild(dest);
+						dest.innerHTML = &#39;&#39;;
+						break;
+					case &#39;safari&#39;:
+						var win = doc.defaultView;
+						var selection = win.getSelection();
+						segments = this.retrieveTextAndStyle(edit);
+						// clear the contents
+						var range = doc.createRange();
+						range.setStart(edit, 0);
+						range.setEnd(edit, edit.childNodes.length);
+						range.deleteContents();
+						range.setStart(edit, 0);
+						range.setEnd(edit, 0);
+						var cursor_node = this.fragmentBehindCursor.lastChild;
+						var cursor_offset = 1;
+						if (!cursor_node) {
+							cursor_node = this.fragmentAheadOfCursor.firstChild;
+							cursor_offset = 0;
+						}
+						range.insertNode(this.fragmentAheadOfCursor);
+						range.insertNode(this.fragmentBehindCursor);
+						selection.collapse(cursor_node, (cursor_node.nodeType == 3) ? cursor_node.nodeValue.length : 1);
+						break;
+				}
+			}
+			// give other modules the opportunity to alter the text
+			NFLCIME.dispatchEvent({
+				type: &#39;RichTextPaste&#39;,
+				target: edit,
+				textSegments: segments
+			});
+			// insert the HTML
+			var html = this.getHTMLFromTextSegments(segments);
+			var plain_text = this.getPlainTextFromTextSegments(segments);
+			NFLCIME.dispatchEvent({
+				type: &#39;CursorInsertHTML&#39;,
+				target: edit,
+				text: plain_text,
+				html: html
+			});
+			this.isPasting = false;
+		},
+		// Attach onpaste handler to active element
+		onFocusChanged: function(evt) {
+			var edit = evt.target;
+			var prev = evt.previousTarget;
+			if (prev) {
+				this.detachDOMHandler(prev, &#39;paste&#39;, &#39;onPaste&#39;);
+			}
+			if (edit) {
+				// onpaste doesn&#39;t bubble up, so we need to attach the handler to the element directly
+				this.attachDOMHandler(edit, &#39;paste&#39;, &#39;onPaste&#39;);
+			}
+		},
+		//--- Private functions
+		// Attach a closure to a DOM element that sends the events to the named handler
+		attachDOMHandler: function(element, eventName, handlerName, capturing) {
+			var handler = this[handlerName];
+			var closure = this.closures[handlerName];
+			if (!closure) {
+				var self = this;
+				switch (this.browser) {
+					case &#39;ie&#39;:
+						closure = function(evt) {
+							if (!evt.target) {
+								evt.target = evt.srcElement;
+							}
+							evt.returnValue = handler.call(self, evt);
+						};
+						break;
+					case &#39;firefox&#39;:
+					case &#39;safari&#39;:
+						closure = function(evt) {
+							var result = handler.call(self, evt);
+							if (result !== undefined &amp;&amp; result === false) {
+								evt.preventDefault();
+							}
+						};
+				}
+				this.closures[handlerName] = closure;
+			}
+			switch (this.browser) {
+				case &#39;ie&#39;:
+					element.attachEvent(&#39;on&#39; + eventName, closure);
+					break;
+				case &#39;firefox&#39;:
+				case &#39;safari&#39;:
+					element.addEventListener(eventName, closure, capturing ? true : false);
+					break;
+			}
+		},
+		// Detach an earlier attached closure
+		detachDOMHandler: function(element, eventName, handlerName, capturing) {
+			var closure = this.closures[handlerName];
+			if (closure) {
+				switch (this.browser) {
+					case &#39;ie&#39;:
+						element.detachEvent(&#39;on&#39; + eventName, closure);
+						break;
+					case &#39;firefox&#39;:
+					case &#39;safari&#39;:
+						element.removeEventListener(eventName, closure, capturing ? true : false);
+						break;
+				}
+			}
+		},
+		// See if the rt service is active on for edit
+		isServiceApplicable: function(edit) {
+			var evt = {
+				type: &#39;ServiceApplicable&#39;,
+				target: edit,
+				service: &#39;rt&#39;,
+				applicable: false
+			};
+			NFLCIME.dispatchEvent(evt);
+			return evt.applicable;
+		},
+		isSameStyle: function(s1, s2) {
+			var style_properties = [&#39;fontFamily&#39;, &#39;fontSize&#39;, &#39;fontWeight&#39;, &#39;fontStyle&#39;, &#39;textDecoration&#39;, &#39;color&#39;, &#39;backgroundColor&#39;, &#39;direction&#39;, &#39;verticalAlign&#39;];
+			if (!s2 || !s1) {
+				return false;
+			}
+			if (s1 == s2) {
+				return true;
+			}
+			for (var i = 0; i &lt; style_properties.length; i++) {
+				var prop = style_properties[i];
+				if (s1[prop] != s2[prop]) {
+					return false;
+				}
+			}
+			return true;
+		},
+		getLegacySizeHash: function(font_name) {
+			var legacy_sizes = this.legacyPointSizesHash[font_name];
+			if (!legacy_sizes) {
+				var legacy_pixel_height = [];
+				for (var i = 1; i &lt;= 7; i++) {
+					var font = document.createElement(&quot;FONT&quot;);
+					font.innerHTML = &#39;HELLO&#39;;
+					font.face = font;
+					font.size = i;
+					font.style.visibility = &#39;hidden&#39;;
+					font.style.position = &#39;absolute&#39;;
+					document.body.appendChild(font);
+					legacy_pixel_height[i] = font.offsetHeight;
+					document.body.removeChild(font);
+				}
+				var css_pixel_height = [];
+				for (var i = 1; i &lt;= 128; i++) {
+					var font = document.createElement(&quot;FONT&quot;);
+					font.innerHTML = &#39;HELLO&#39;;
+					font.style.fontFamily = font;
+					font.style.fontSize = i + &#39;pt&#39;;
+					font.style.visibility = &#39;hidden&#39;;
+					font.style.position = &#39;absolute&#39;;
+					document.body.appendChild(font);
+					css_pixel_height[i] = font.offsetHeight;
+					document.body.removeChild(font);
+					if (css_pixel_height[i] &gt; legacy_pixel_height[7]) {
+						break;
+					}
+				}
+				legacy_sizes = [];
+				for (var i = 1; i &lt;= 7; i++) {
+					var a = legacy_pixel_height[i];
+					var p = 8000;
+					for (var j = 1; j &lt;= css_pixel_height.length - 1; j++) {
+						var b = css_pixel_height[j];
+						if (b == a) {
+							legacy_sizes[i] = j;
+						} else if (b &gt; a) {
+							// too large, see if the previous size is closer
+							if (Math.abs(a - p) &lt; Math.abs(a - b)) {
+								legacy_sizes[i] = j - 1;
+								break;
+							} else {
+								legacy_sizes[i] = j;
+								break;
+							}
+						}
+						p = b;
+					}
+				}
+				this.legacyPointSizesHash[font_name] = legacy_sizes;
+			}
+			return legacy_sizes;
+		},
+		findLegacySize: function(font, pt_size) {
+			var legacy_sizes = this.getLegacySizeHash(font);
+			pt_size = parseInt(pt_size);
+			for (var i = 1; i &lt;= 7; i++) {
+				var a = legacy_sizes[i];
+				if (a == pt_size) {
+					return i;
+				} else if (a &gt; pt_size &amp;&amp; i &gt; 1) {
+					// no exact match, use something smaller
+					return i - 1;
+				}
+			}
+			return 7;
+		},
+		getLegacyPointSize: function(font, size) {
+			var legacy_sizes = this.getLegacySizeHash(font);
+			if (size &lt; 1 || size &gt; 7) {
+				size = 3;
+			}
+			return legacy_sizes[size];
+		},
+		getComputedStyle: function(element) {
+			var style = element.currentStyle;
+			if (!style) {
+				style = getComputedStyle(element, &#39;&#39;);
+			}
+			return style;
+		},
+		parseFontFamily: function(fontFamily) {
+			list = fontFamily.split(/\s*,\s*/);
+			var first = list[0];
+			return first.replace(/\s*[&quot;&#39;]\s*(.*)\s*[&quot;&#39;]\s*/, &#39;$1&#39;);
+		},
+		// Return the closest point size
+		parseFontSize: function(size, fontFamily, parentSize) {
+			if (/^\d+\s*pt$/.test(size)) { // point size
+				return size;
+			}
+			if (/^\+?\d+$/.test(size)) { // old style font size
+				return this.getLegacyPointSize(fontFamily, parseInt(size)) + &#39;pt&#39;;
+			}
+			if (/^\d+\s*%$/.test(size)) { // percent
+				return Math.round(parseFloat(size) / 100 * parseFloat(parentSize), 1) + &#39;pt&#39;;
+			}
+			if (/^[\d\.]+\s*px$/.test(size)) { // pixel
+				return Math.round(parseFloat(size) * 72 / 96, 1) + &#39;pt&#39;; // assume 96dpi
+			}
+			if (/^[\d\.]+\s*em$/.test(size)) { // em
+				return Math.round(parseFloat(size) * 11, 1) + &#39;pt&#39;;
+			}
+			if (/^[a-z-]+$/.test(size)) { // a word
+				if (size == &#39;inherit&#39;) {
+					return parentSize;
+				} else {
+					var legacy_size;
+					switch (size) {
+						case &#39;xx-small&#39;:
+							legacy_size = 1;
+							break;
+						case &#39;x-small&#39;:
+							legacy_size = 2;
+							break;
+						case &#39;small&#39;:
+							legacy_size = 3;
+							break;
+						case &#39;medium&#39;:
+							legacy_size = 4;
+							break;
+						case &#39;large&#39;:
+							legacy_size = 5;
+							break;
+						case &#39;x-large&#39;:
+							legacy_size = 6;
+							break;
+						case &#39;xx-large&#39;:
+							legacy_size = 7;
+							break;
+						case &#39;larger&#39;:
+							legacy_size = Math.min(7, this.findLegacySize(parseInt(parentSize)) + 1);
+							break;
+						case &#39;smaller&#39;:
+							legacy_size = Math.max(1, this.findLegacySize(parseInt(parentSize)) - 1);
+							break;
+					}
+					if (legacy_size) {
+						parentSize = this.getLegacyPointSize(fontFamily, legacy_size) + &#39;pt&#39;;
+					}
+				}
+			}
+			return parentSize;
+		},
+		parseColor: function(color, parentColor) {
+			if (color.charAt(0) == &#39;#&#39;) {
+				return color.toUpperCase();
+			}
+			if (color == &#39;inherited&#39;) {
+				return parentColor;
+			}
+			var match;
+			if ((match = /RGB\((.+)\)/i.exec(color)) || (match = /RGBA\((.+)\)/i.exec(color))) {
+				var list = match[1].split(/\s*,\s*/);
+				var r = &#39;#&#39;;
+				var alpha = parseFloat(list[3]);
+				if (isNaN(alpha)) {
+					alpha = 1;
+				}
+				if (alpha === 0) {
+					return null;
+				}
+				for (var i = 0; i &lt; 3; i++) {
+					var num;
+					if (/^\d+\s*%/.test(list[i])) {
+						num = Math.round(parseInt(list[i]) * 255 / 100);
+					} else if (/^[\d\.]+$/.test(list[i])) {
+						num = Math.min(parseInt(list[i]), 255);
+					} else {
+						num = 0;
+					}
+					var hex = num.toString(16);
+					while (hex.length &lt; 2) hex = &#39;0&#39; + hex;
+					r += hex;
+				}
+				return r.toUpperCase();
+			}
+			var predefined = this.htmlColors[color];
+			if (predefined) {
+				return predefined;
+			}
+			return null;
+		},
+		// Take a style object and convert the info into a simplier, more predictable format
+		convertStyle: function(element, computedStyle, parentStyle) {
+			var style = {};
+			style.fontFamily = this.parseFontFamily(computedStyle.fontFamily);
+			style.fontSize = this.parseFontSize(computedStyle.fontSize, style.fontFamily, (parentStyle) ? parentStyle.fontSize : &#39;12pt&#39;);
+			style.fontWeight = (computedStyle.fontWeight == &#39;bold&#39; || computedStyle.fontWeight &gt; 400) ? 700 : 400; // firefox gives 401 for bolded text for some reason
+			style.fontStyle = computedStyle.fontStyle;
+			// don&#39;t use the color of an anchor tag, since we&#39;re stripping the hyperlink
+			if (element.tagName == &#39;A&#39; &amp;&amp; element.href) {
+				style.color = parentStyle.color;
+			} else {
+				style.color = this.parseColor(computedStyle.color);
+			}
+			if (style.color == &#39;#000000&#39;) {
+				style.color = null;
+			}
+			style.backgroundColor = this.parseColor(computedStyle.backgroundColor);
+			// if background color is white then assume a transparent background is intended
+			if (style.backgroundColor == &#39;#FFFFFF&#39;) {
+				style.backgroundColor = null;
+			}
+			style.textDecoration = computedStyle.textDecoration;
+			if (style.textDecoration == &#39;none&#39; &amp;&amp; parentStyle) {
+				// if the parent is has a decoration, it obviously would appear on the child nodes too
+				style.textDecoration = parentStyle.textDecoration;
+			}
+			style.direction = computedStyle.direction;
+			style.verticalAlign = computedStyle.verticalAlign;
+			return style;
+		},
+		retrieveTextAndStyle: function(div) {
+			var computed_style = this.getComputedStyle(div);
+			var default_style = this.convertStyle(div, computed_style);
+			var default_lang = &#39;&#39;;
+			var segments = this.retrieveTextAndStyleRecursive(div, default_style, default_lang);
+			// merge adjacent segments with the style
+			var result = [];
+			var current_style = null;
+			var current_segment = null;
+			var current_lang = null;
+			for (var i = 0, l = segments.length; i &lt; l; i++) {
+				var segment = segments[i];
+				if (!this.isSameStyle(segment.style, current_style) || segment.lang != current_lang) {
+					if (current_segment) {
+						result.push({
+							style: current_style,
+							text: current_segment,
+							lang: current_lang
+						});
+					}
+					current_style = segment.style;
+					current_segment = segment.text;
+					current_lang = segment.lang;
+				} else {
+					current_segment += segment.text;
+				}
+			}
+			if (current_segment) {
+				result.push({
+					style: current_style,
+					text: current_segment,
+					lang: current_lang
+				});
+			}
+			return result;
+		},
+		retrieveTextAndStyleRecursive: function(element, elementStyle, elementLang, acceptLeadingWS) {
+			var segments = [];
+			// deal with special tags
+			switch (element.tagName) {
+				case &#39;BR&#39;:
+					segments.push({
+						style: elementStyle,
+						text: &#39;\n&#39;,
+						lang: elementLang
+					});
+					break;
+			}
+			switch (this.browser) {
+				case &#39;ie&#39;:
+					if (element.canHaveChildren) {
+						var children = element.children;
+						var children_count = children.length;
+						// process text ahead of first element
+						var text = element.getAdjacentText(&#39;afterBegin&#39;);
+						if (text) segments.push({
+							style: elementStyle,
+							text: text,
+							lang: elementLang
+						});
+						var prev_is_blocking = false;
+						for (var i = 0; i &lt; children_count; i++) {
+							// process element
+							var child = children[i];
+							var computed_style = this.getComputedStyle(child);
+							if (computed_style.display != &#39;none&#39;) {
+								var child_style = this.convertStyle(child, computed_style, elementStyle);
+								var child_is_blocking = (computed_style.display == &#39;block&#39;);
+								var child_lang = child.lang;
+								if (!child_lang) {
+									child_lang = child.getAttribute(&#39;mso-ansi-language&#39;);
+								}
+								if (child_lang) {
+									child_lang = child_lang.toLowerCase();
+								} else {
+									child_lang = elementLang;
+								}
+								var child_segments = this.retrieveTextAndStyleRecursive(child, child_style, child_lang);
+								if (child_segments.length &gt; 0) {
+									if (prev_is_blocking || child_is_blocking) {
+										segments.push({
+											style: child_style,
+											text: &#39;\n&#39;,
+											lang: child_lang
+										});
+									}
+									segments = segments.concat(child_segments);
+								}
+								prev_is_blocking = child_is_blocking;
+							}
+							// process text following element
+							text = child.getAdjacentText(&#39;afterEnd&#39;);
+							if (text) segments.push({
+								style: elementStyle,
+								text: text,
+								lang: elementLang
+							});
+						}
+					}
+					break;
+				case &#39;firefox&#39;:
+				case &#39;safari&#39;:
+					var prev_is_blocking = false;
+					for (var child = element.firstChild; child; child = child.nextSibling) {
+						if (child.nodeType == 1) {
+							var computed_style = this.getComputedStyle(child);
+							if (computed_style.display != &#39;none&#39;) {
+								var child_style = this.convertStyle(child, computed_style, elementStyle);
+								var child_is_blocking = (computed_style.display == &#39;block&#39;);
+								var child_lang = (child.lang) ? child.lang.toLowerCase() : elementLang;
+								var child_segments = this.retrieveTextAndStyleRecursive(child, child_style, child_lang, !child_is_blocking);
+								if (child_segments.length &gt; 0) {
+									if (prev_is_blocking || (child_is_blocking &amp;&amp; segments.length &gt; 0)) {
+										segments.push({
+											style: child_style,
+											text: &#39;\n&#39;,
+											lang: child_lang
+										});
+									}
+									segments.push.apply(segments, child_segments);
+								}
+								prev_is_blocking = child_is_blocking;
+							}
+						} else if (child.nodeType == 3) {
+							var text = child.nodeValue;
+							if (!acceptLeadingWS &amp;&amp; segments.length === 0) {
+								// trim leading white spaces
+								text = text.replace(/^\s+/, &#39;&#39;);
+							}
+							text = text.replace(/[\r\n\s]+/g, &#39; &#39;);
+							if (text) segments.push({
+								style: elementStyle,
+								text: text,
+								lang: elementLang
+							});
+							prev_is_blocking = false;
+						}
+					}
+					break;
+			}
+			return segments;
+		},
+		addTextSegments: function(container, segments) {
+			var p_tag = null;
+			for (var i = 0; i &lt; segments.length; i++) {
+				var seg = segments[i];
+				var paragraphs = seg.text.split(&#39;\n&#39;);
+				for (var j = 0; j &lt; paragraphs.length; j++) {
+					var text = paragraphs[j];
+					if (!p_tag || j &gt; 0) {
+						p_tag = document.createElement(&quot;P&quot;);
+						if (seg.style.direction) {
+							p_tag.style.direction = seg.style.direction;
+						}
+						container.appendChild(p_tag);
+					}
+					if (text.length &gt; 0) {
+						var chain = [];
+						var tag = document.createElement(&quot;SPAN&quot;);
+						if (seg.style) {
+							if (seg.style.textDecoration == &#39;underline&#39;) {
+								chain.push(document.createElement(&quot;U&quot;));
+							} else if (seg.style.textDecoration == &#39;line-through&#39;) {
+								chain.push(document.createElement(&quot;S&quot;));
+							}
+							if (seg.style.fontStyle == &#39;italic&#39;) {
+								chain.push(document.createElement(&quot;EM&quot;));
+							}
+							if (seg.style.fontWeight &gt;= 700) {
+								chain.push(document.createElement(&quot;STRONG&quot;));
+							}
+							if (seg.style.verticalAlign == &#39;super&#39;) {
+								chain.push(document.createElement(&quot;SUP&quot;));
+							} else if (seg.style.verticalAlign == &#39;sub&#39;) {
+								chain.push(document.createElement(&quot;SUB&quot;));
+							}
+						}
+						var tag = document.createElement(&quot;SPAN&quot;);
+						if (seg.style) {
+							if (seg.style.fontFamily) {
+								tag.style.fontFamily = seg.style.fontFamily;
+							}
+							if (seg.style.fontSize) {
+								tag.style.fontSize = seg.style.fontSize;
+							}
+							if (seg.style.color) {
+								tag.style.color = seg.style.color;
+							}
+							if (seg.style.backgroundColor) {
+								tag.style.backgroundColor = seg.style.backgroundColor;
+							}
+						}
+						if (seg.className) {
+							tag.className = seg.className;
+						}
+						if (seg.lang) {
+							tag.lang = seg.lang;
+						}
+						chain.push(tag);
+						var last = chain[chain.length - 1];
+						switch (this.browser) {
+							case &#39;ie&#39;:
+								last.innerText = text;
+								break;
+							case &#39;firefox&#39;:
+							case &#39;safari&#39;:
+								last.textContent = text;
+								break;
+						}
+						for (var m = chain.length - 1, n = m - 1; n &gt;= 0; m--, n--) {
+							chain[n].appendChild(chain[m]);
+						}
+						p_tag.appendChild(chain[0]);
+					}
+				}
+			}
+		},
+		getHTMLFromTextSegments: function(segments) {
+			var container = document.createElement(&quot;DIV&quot;);
+			this.addTextSegments(container, segments)
+			return container.innerHTML;
+		},
+		getPlainTextFromTextSegments: function(segments) {
+			var strings = [];
+			for (var i = 0; i &lt; segments.length; i++) {
+				var segment = segments[i];
+				strings.push(segment.text);
+			}
+			return strings.join(&#39;&#39;);
+		},
+		getFocusedEdit: function() {
+			var evt = {
+				type: &#39;CursorGetFocusedEdit&#39;,
+				target: null
+			};
+			NFLCIME.dispatchEvent(evt);
+			return evt.target;
+		},
+		createPasteDestination: function(doc) {
+			var div = null;
+			switch (this.browser) {
+				case &#39;ie&#39;:
+					var div = doc.createElement(&#39;DIV&#39;);
+					div.contentEditable = true;
+					div.style.position = &#39;absolute&#39;;
+					div.style.height = &#39;1px&#39;;
+					div.style.width = &#39;1px&#39;;
+					div.style.right = &#39;0px&#39;;
+					div.style.top = &#39;0px&#39;;
+					div.style.border = &#39;0px&#39;
+					div.style.overflow = &#39;scroll&#39;;
+					div.style.whiteSpace = &#39;nowrap&#39;;
+					return div;
+					break;
+				case &#39;firefox&#39;:
+					div = doc.createElement(&#39;DIV&#39;);
+					div.style.display = &#39;none&#39;;
+					div.style.height = &#39;1em&#39;;
+					return div;
+					break;
+			}
+			return div;
+		},
+		removePasteDestination: function() {
+			if (this.pasteDestination) {
+				document.body.removeChild(this.pasteDestination);
+				this.pasteDestination = null;
+			}
+		},
+<span id='RichTextEditor-method-initialize'>		/**
+</span>		 *  Initialize the module.
+		 *  Sets the {@link #browser} property and initializes {@link #closures} and sets {@link #active} to false
+		 *  @param {Object} env The browser environment
+		 *  @return {Object}
+		 */
+		initialize: function(env) {
+			this.browser = env.browser;
+			this.closures = {};
+			NFLCIME.addEventListener(&#39;ModuleActivate&#39;, this);
+			NFLCIME.addEventListener(&#39;ModuleDeactivate&#39;, this);
+		},
+		//--- Private variables
+
+<span id='RichTextEditor-property-active'>		/**
+</span>		 * @property {Boolean}
+		 * @private
+		 * Sets the module to be active/inactive
+		 */
+		active: false,
+
+<span id='RichTextEditor-property-browser'>		/**
+</span>		 * @property {String}
+		 * @private
+		 * Sets to the browser detected (ie/firefox/safari)
+		 */
+		browser: &#39;&#39;,
+<span id='RichTextEditor-property-pasteDestination'>		/**
+</span>		 * @property {HTMLElement}
+		 * @private
+		 * Used to track DOM node created for pasting via browser detection when NOT
+		 * used with TinyMCE. May be the same or different from {@link
+		 * RichTextEditor#pasteTrueTarget}.
+		 */
+		pasteDestination: null,
+<span id='RichTextEditor-property-pasteTrueTarget'>		/**
+</span>		 * @property {HTMLElement}
+		 * @private
+		 * Used to track the active textarea DOM node for the editor when NOT
+		 * used with TinyMCE.
+		 */
+		pasteTrueTarget: null,
+<span id='RichTextEditor-property-selectionBeforePaste'>		/**
+</span>		 * @property {Object}
+		 * @private
+		 * Used to track the start and end selection text when NOT used with
+		 * TinyMCE.
+		 */
+		selectionBeforePaste: null,
+
+		// Not currently set
+		fragmentBehindCursor: null,
+		// Not currently set
+		fragmentAheadOfCursor: null,
+
+<span id='RichTextEditor-property-isPasting'>		/**
+</span>		 * @property {Boolean}
+		 * @private
+		 * Sets the pasting mode of the editor when NOT used with TinyMCE.
+		 */
+		isPasting: false,
+<span id='RichTextEditor-property-legacyPointSizesHash'>		/**
+</span>		 * @property {Object}
+		 * @private
+		 * Sets the available font sizes for the editor when NOT used with TinyMCE.
+		 */
+		legacyPointSizesHash: {},
+<span id='RichTextEditor-property-htmlColors'>		/**
+</span>		 * @property {Object}
+		 * Available font colors for the editor when NOT used with TinyMCE.
+		 */
+		htmlColors: {
+			aliceblue: &#39;#f0f8ff&#39;,
+			antiquewhite: &#39;#faebd7&#39;,
+			aqua: &#39;#00ffff&#39;,
+			aquamarine: &#39;#7fffd4&#39;,
+			azure: &#39;#f0ffff&#39;,
+			beige: &#39;#f5f5dc&#39;,
+			bisque: &#39;#ffe4c4&#39;,
+			black: &#39;#000000&#39;,
+			blanchedalmond: &#39;#ffebcd&#39;,
+			blue: &#39;#0000ff&#39;,
+			blueviolet: &#39;#8a2be2&#39;,
+			brown: &#39;#a52a2a&#39;,
+			burlywood: &#39;#deb887&#39;,
+			cadetblue: &#39;#5f9ea0&#39;,
+			chartreuse: &#39;#7fff00&#39;,
+			chocolate: &#39;#d2691e&#39;,
+			coral: &#39;#ff7f50&#39;,
+			cornflowerblue: &#39;#6495ed&#39;,
+			cornsilk: &#39;#fff8dc&#39;,
+			crimson: &#39;#dc143c&#39;,
+			cyan: &#39;#00ffff&#39;,
+			darkblue: &#39;#00008b&#39;,
+			darkcyan: &#39;#008b8b&#39;,
+			darkgoldenrod: &#39;#b8860b&#39;,
+			darkgray: &#39;#a9a9a9&#39;,
+			darkgrey: &#39;#a9a9a9&#39;,
+			darkgreen: &#39;#006400&#39;,
+			darkkhaki: &#39;#bdb76b&#39;,
+			darkmagenta: &#39;#8b008b&#39;,
+			darkolivegreen: &#39;#556b2f&#39;,
+			darkorange: &#39;#ff8c00&#39;,
+			darkorchid: &#39;#9932cc&#39;,
+			darkred: &#39;#8b0000&#39;,
+			darksalmon: &#39;#e9967a&#39;,
+			darkseagreen: &#39;#8fbc8f&#39;,
+			darkslateblue: &#39;#483d8b&#39;,
+			darkslategray: &#39;#2f4f4f&#39;,
+			darkslategrey: &#39;#2f4f4f&#39;,
+			darkturquoise: &#39;#00ced1&#39;,
+			darkviolet: &#39;#9400d3&#39;,
+			deeppink: &#39;#ff1493&#39;,
+			deepskyblue: &#39;#00bfff&#39;,
+			dimgray: &#39;#696969&#39;,
+			dimgrey: &#39;#696969&#39;,
+			dodgerblue: &#39;#1e90ff&#39;,
+			firebrick: &#39;#b22222&#39;,
+			floralwhite: &#39;#fffaf0&#39;,
+			forestgreen: &#39;#228b22&#39;,
+			fuchsia: &#39;#ff00ff&#39;,
+			gainsboro: &#39;#dcdcdc&#39;,
+			ghostwhite: &#39;#f8f8ff&#39;,
+			gold: &#39;#ffd700&#39;,
+			goldenrod: &#39;#daa520&#39;,
+			gray: &#39;#808080&#39;,
+			grey: &#39;#808080&#39;,
+			green: &#39;#008000&#39;,
+			greenyellow: &#39;#adff2f&#39;,
+			honeydew: &#39;#f0fff0&#39;,
+			hotpink: &#39;#ff69b4&#39;,
+			indianred: &#39;#cd5c5c&#39;,
+			indigo: &#39;#4b0082&#39;,
+			ivory: &#39;#fffff0&#39;,
+			khaki: &#39;#f0e68c&#39;,
+			lavender: &#39;#e6e6fa&#39;,
+			lavenderblush: &#39;#fff0f5&#39;,
+			lawngreen: &#39;#7cfc00&#39;,
+			lemonchiffon: &#39;#fffacd&#39;,
+			lightblue: &#39;#add8e6&#39;,
+			lightcoral: &#39;#f08080&#39;,
+			lightcyan: &#39;#e0ffff&#39;,
+			lightgoldenrodyellow: &#39;#fafad2&#39;,
+			lightgray: &#39;#d3d3d3&#39;,
+			lightgrey: &#39;#d3d3d3&#39;,
+			lightgreen: &#39;#90ee90&#39;,
+			lightpink: &#39;#ffb6c1&#39;,
+			lightsalmon: &#39;#ffa07a&#39;,
+			lightseagreen: &#39;#20b2aa&#39;,
+			lightskyblue: &#39;#87cefa&#39;,
+			lightslategray: &#39;#778899&#39;,
+			lightslategrey: &#39;#778899&#39;,
+			lightsteelblue: &#39;#b0c4de&#39;,
+			lightyellow: &#39;#ffffe0&#39;,
+			lime: &#39;#00ff00&#39;,
+			limegreen: &#39;#32cd32&#39;,
+			linen: &#39;#faf0e6&#39;,
+			magenta: &#39;#ff00ff&#39;,
+			maroon: &#39;#800000&#39;,
+			mediumaquamarine: &#39;#66cdaa&#39;,
+			mediumblue: &#39;#0000cd&#39;,
+			mediumorchid: &#39;#ba55d3&#39;,
+			mediumpurple: &#39;#9370d8&#39;,
+			mediumseagreen: &#39;#3cb371&#39;,
+			mediumslateblue: &#39;#7b68ee&#39;,
+			mediumspringgreen: &#39;#00fa9a&#39;,
+			mediumturquoise: &#39;#48d1cc&#39;,
+			mediumvioletred: &#39;#c71585&#39;,
+			midnightblue: &#39;#191970&#39;,
+			mintcream: &#39;#f5fffa&#39;,
+			mistyrose: &#39;#ffe4e1&#39;,
+			moccasin: &#39;#ffe4b5&#39;,
+			navajowhite: &#39;#ffdead&#39;,
+			navy: &#39;#000080&#39;,
+			oldlace: &#39;#fdf5e6&#39;,
+			olive: &#39;#808000&#39;,
+			olivedrab: &#39;#6b8e23&#39;,
+			orange: &#39;#ffa500&#39;,
+			orangered: &#39;#ff4500&#39;,
+			orchid: &#39;#da70d6&#39;,
+			palegoldenrod: &#39;#eee8aa&#39;,
+			palegreen: &#39;#98fb98&#39;,
+			paleturquoise: &#39;#afeeee&#39;,
+			palevioletred: &#39;#d87093&#39;,
+			papayawhip: &#39;#ffefd5&#39;,
+			peachpuff: &#39;#ffdab9&#39;,
+			peru: &#39;#cd853f&#39;,
+			pink: &#39;#ffc0cb&#39;,
+			plum: &#39;#dda0dd&#39;,
+			powderblue: &#39;#b0e0e6&#39;,
+			purple: &#39;#800080&#39;,
+			red: &#39;#ff0000&#39;,
+			rosybrown: &#39;#bc8f8f&#39;,
+			royalblue: &#39;#4169e1&#39;,
+			saddlebrown: &#39;#8b4513&#39;,
+			salmon: &#39;#fa8072&#39;,
+			sandybrown: &#39;#f4a460&#39;,
+			seagreen: &#39;#2e8b57&#39;,
+			seashell: &#39;#fff5ee&#39;,
+			sienna: &#39;#a0522d&#39;,
+			silver: &#39;#c0c0c0&#39;,
+			skyblue: &#39;#87ceeb&#39;,
+			slateblue: &#39;#6a5acd&#39;,
+			slategray: &#39;#708090&#39;,
+			slategrey: &#39;#708090&#39;,
+			snow: &#39;#fffafa&#39;,
+			springgreen: &#39;#00ff7f&#39;,
+			steelblue: &#39;#4682b4&#39;,
+			tan: &#39;#d2b48c&#39;,
+			teal: &#39;#008080&#39;,
+			thistle: &#39;#d8bfd8&#39;,
+			tomato: &#39;#ff6347&#39;,
+			turquoise: &#39;#40e0d0&#39;,
+			violet: &#39;#ee82ee&#39;,
+			wheat: &#39;#f5deb3&#39;,
+			white: &#39;#ffffff&#39;,
+			whitesmoke: &#39;#f5f5f5&#39;,
+			yellow: &#39;#ffff00&#39;,
+			yellowgreen: &#39;#9acd32&#39;
 		}
-	},
-	getHTMLFromTextSegments:function(segments) {
-		var container = document.createElement(&quot;DIV&quot;);
-		this.addTextSegments(container, segments)
-		return container.innerHTML;
-	},
-	getPlainTextFromTextSegments:function(segments) {
-		var strings = [];
-		for(var i = 0; i &lt; segments.length; i++) {
-			var segment = segments[i];
-			strings.push(segment.text);
-		}
-		return strings.join(&#39;&#39;);
-	},
-	getFocusedEdit:function() {
-		var evt = { type:&#39;CursorGetFocusedEdit&#39;, target:null };
-		NFLCIME.dispatchEvent(evt);
-		return evt.target;
-	},
-	createPasteDestination:function(doc) {
-		var div = null;
-		switch(this.browser) {
-			case &#39;ie&#39;:
-				var div = doc.createElement(&#39;DIV&#39;);
-				div.contentEditable = true;
-				div.style.position = &#39;absolute&#39;;
-				div.style.height = &#39;1px&#39;;
-				div.style.width = &#39;1px&#39;;
-				div.style.right = &#39;0px&#39;;
-				div.style.top = &#39;0px&#39;;
-				div.style.border = &#39;0px&#39;
-				div.style.overflow = &#39;scroll&#39;;
-				div.style.whiteSpace = &#39;nowrap&#39;;
-				return div;
-				break;
-			case &#39;firefox&#39;:
-				div = doc.createElement(&#39;DIV&#39;);
-				div.style.display = &#39;none&#39;;
-				div.style.height = &#39;1em&#39;;
-				return div;
-				break;
-		}
-		return div;
-	},
-	removePasteDestination:function() {
-		if(this.pasteDestination) {
-			document.body.removeChild(this.pasteDestination);
-			this.pasteDestination = null;
-		}
-	},
-	initialize:function(env) {
-		this.browser = env.browser;
-		this.closures = {};
-		NFLCIME.addEventListener(&#39;ModuleActivate&#39;, this);
-		NFLCIME.addEventListener(&#39;ModuleDeactivate&#39;, this);
-	},
-	//--- Private variables
-	active:false,
-	browser:&#39;&#39;,
-	pasteDestination:null,
-	pasteTrueTarget:null,
-	selectionBeforePaste:null,
-	fragmentBehindCursor:null,
-	fragmentAheadOfCursor:null,
-	isPasting:false,
-	legacyPointSizesHash:{},
-	htmlColors:{
-		aliceblue:&#39;#f0f8ff&#39;,
-		antiquewhite:&#39;#faebd7&#39;,
-		aqua:&#39;#00ffff&#39;,
-		aquamarine:&#39;#7fffd4&#39;,
-		azure:&#39;#f0ffff&#39;,
-		beige:&#39;#f5f5dc&#39;,
-		bisque:&#39;#ffe4c4&#39;,
-		black:&#39;#000000&#39;,
-		blanchedalmond:&#39;#ffebcd&#39;,
-		blue:&#39;#0000ff&#39;,
-		blueviolet:&#39;#8a2be2&#39;,
-		brown:&#39;#a52a2a&#39;,
-		burlywood:&#39;#deb887&#39;,
-		cadetblue:&#39;#5f9ea0&#39;,
-		chartreuse:&#39;#7fff00&#39;,
-		chocolate:&#39;#d2691e&#39;,
-		coral:&#39;#ff7f50&#39;,
-		cornflowerblue:&#39;#6495ed&#39;,
-		cornsilk:&#39;#fff8dc&#39;,
-		crimson:&#39;#dc143c&#39;,
-		cyan:&#39;#00ffff&#39;,
-		darkblue:&#39;#00008b&#39;,
-		darkcyan:&#39;#008b8b&#39;,
-		darkgoldenrod:&#39;#b8860b&#39;,
-		darkgray:&#39;#a9a9a9&#39;,
-		darkgrey:&#39;#a9a9a9&#39;,
-		darkgreen:&#39;#006400&#39;,
-		darkkhaki:&#39;#bdb76b&#39;,
-		darkmagenta:&#39;#8b008b&#39;,
-		darkolivegreen:&#39;#556b2f&#39;,
-		darkorange:&#39;#ff8c00&#39;,
-		darkorchid:&#39;#9932cc&#39;,
-		darkred:&#39;#8b0000&#39;,
-		darksalmon:&#39;#e9967a&#39;,
-		darkseagreen:&#39;#8fbc8f&#39;,
-		darkslateblue:&#39;#483d8b&#39;,
-		darkslategray:&#39;#2f4f4f&#39;,
-		darkslategrey:&#39;#2f4f4f&#39;,
-		darkturquoise:&#39;#00ced1&#39;,
-		darkviolet:&#39;#9400d3&#39;,
-		deeppink:&#39;#ff1493&#39;,
-		deepskyblue:&#39;#00bfff&#39;,
-		dimgray:&#39;#696969&#39;,
-		dimgrey:&#39;#696969&#39;,
-		dodgerblue:&#39;#1e90ff&#39;,
-		firebrick:&#39;#b22222&#39;,
-		floralwhite:&#39;#fffaf0&#39;,
-		forestgreen:&#39;#228b22&#39;,
-		fuchsia:&#39;#ff00ff&#39;,
-		gainsboro:&#39;#dcdcdc&#39;,
-		ghostwhite:&#39;#f8f8ff&#39;,
-		gold:&#39;#ffd700&#39;,
-		goldenrod:&#39;#daa520&#39;,
-		gray:&#39;#808080&#39;,
-		grey:&#39;#808080&#39;,
-		green:&#39;#008000&#39;,
-		greenyellow:&#39;#adff2f&#39;,
-		honeydew:&#39;#f0fff0&#39;,
-		hotpink:&#39;#ff69b4&#39;,
-		indianred:&#39;#cd5c5c&#39;,
-		indigo:&#39;#4b0082&#39;,
-		ivory:&#39;#fffff0&#39;,
-		khaki:&#39;#f0e68c&#39;,
-		lavender:&#39;#e6e6fa&#39;,
-		lavenderblush:&#39;#fff0f5&#39;,
-		lawngreen:&#39;#7cfc00&#39;,
-		lemonchiffon:&#39;#fffacd&#39;,
-		lightblue:&#39;#add8e6&#39;,
-		lightcoral:&#39;#f08080&#39;,
-		lightcyan:&#39;#e0ffff&#39;,
-		lightgoldenrodyellow:&#39;#fafad2&#39;,
-		lightgray:&#39;#d3d3d3&#39;,
-		lightgrey:&#39;#d3d3d3&#39;,
-		lightgreen:&#39;#90ee90&#39;,
-		lightpink:&#39;#ffb6c1&#39;,
-		lightsalmon:&#39;#ffa07a&#39;,
-		lightseagreen:&#39;#20b2aa&#39;,
-		lightskyblue:&#39;#87cefa&#39;,
-		lightslategray:&#39;#778899&#39;,
-		lightslategrey:&#39;#778899&#39;,
-		lightsteelblue:&#39;#b0c4de&#39;,
-		lightyellow:&#39;#ffffe0&#39;,
-		lime:&#39;#00ff00&#39;,
-		limegreen:&#39;#32cd32&#39;,
-		linen:&#39;#faf0e6&#39;,
-		magenta:&#39;#ff00ff&#39;,
-		maroon:&#39;#800000&#39;,
-		mediumaquamarine:&#39;#66cdaa&#39;,
-		mediumblue:&#39;#0000cd&#39;,
-		mediumorchid:&#39;#ba55d3&#39;,
-		mediumpurple:&#39;#9370d8&#39;,
-		mediumseagreen:&#39;#3cb371&#39;,
-		mediumslateblue:&#39;#7b68ee&#39;,
-		mediumspringgreen:&#39;#00fa9a&#39;,
-		mediumturquoise:&#39;#48d1cc&#39;,
-		mediumvioletred:&#39;#c71585&#39;,
-		midnightblue:&#39;#191970&#39;,
-		mintcream:&#39;#f5fffa&#39;,
-		mistyrose:&#39;#ffe4e1&#39;,
-		moccasin:&#39;#ffe4b5&#39;,
-		navajowhite:&#39;#ffdead&#39;,
-		navy:&#39;#000080&#39;,
-		oldlace:&#39;#fdf5e6&#39;,
-		olive:&#39;#808000&#39;,
-		olivedrab:&#39;#6b8e23&#39;,
-		orange:&#39;#ffa500&#39;,
-		orangered:&#39;#ff4500&#39;,
-		orchid:&#39;#da70d6&#39;,
-		palegoldenrod:&#39;#eee8aa&#39;,
-		palegreen:&#39;#98fb98&#39;,
-		paleturquoise:&#39;#afeeee&#39;,
-		palevioletred:&#39;#d87093&#39;,
-		papayawhip:&#39;#ffefd5&#39;,
-		peachpuff:&#39;#ffdab9&#39;,
-		peru:&#39;#cd853f&#39;,
-		pink:&#39;#ffc0cb&#39;,
-		plum:&#39;#dda0dd&#39;,
-		powderblue:&#39;#b0e0e6&#39;,
-		purple:&#39;#800080&#39;,
-		red:&#39;#ff0000&#39;,
-		rosybrown:&#39;#bc8f8f&#39;,
-		royalblue:&#39;#4169e1&#39;,
-		saddlebrown:&#39;#8b4513&#39;,
-		salmon:&#39;#fa8072&#39;,
-		sandybrown:&#39;#f4a460&#39;,
-		seagreen:&#39;#2e8b57&#39;,
-		seashell:&#39;#fff5ee&#39;,
-		sienna:&#39;#a0522d&#39;,
-		silver:&#39;#c0c0c0&#39;,
-		skyblue:&#39;#87ceeb&#39;,
-		slateblue:&#39;#6a5acd&#39;,
-		slategray:&#39;#708090&#39;,
-		slategrey:&#39;#708090&#39;,
-		snow:&#39;#fffafa&#39;,
-		springgreen:&#39;#00ff7f&#39;,
-		steelblue:&#39;#4682b4&#39;,
-		tan:&#39;#d2b48c&#39;,
-		teal:&#39;#008080&#39;,
-		thistle:&#39;#d8bfd8&#39;,
-		tomato:&#39;#ff6347&#39;,
-		turquoise:&#39;#40e0d0&#39;,
-		violet:&#39;#ee82ee&#39;,
-		wheat:&#39;#f5deb3&#39;,
-		white:&#39;#ffffff&#39;,
-		whitesmoke:&#39;#f5f5f5&#39;,
-		yellow:&#39;#ffff00&#39;,
-		yellowgreen:&#39;#9acd32&#39;
 	}
-}
-} );</pre>
+});
+</pre>
 </body>
 </html>

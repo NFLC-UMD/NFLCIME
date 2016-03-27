@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-cvt-gujarati-gujarati-auto'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.cvt.gujarati.gujarati.auto
+ * @extends NFLCIME.CVT
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;cvt.gujarati.gujarati.auto&#39;,
+		type: &#39;encoding converter&#39;,
+		dependency: [&#39;cvt.gujarati.gujarati.gopika&#39;,
+			&#39;cvt.gujarati.gujarati.krishnaweb&#39;,
+			&#39;cvt.gujarati.gujarati.surya&#39;
+		],
+		inheritance: [&#39;cvt&#39;],
+		lang: &#39;gu&#39;,
+		convertTextSegment: function(segment) {
+			var converter;
+			var font = segment.style.fontFamily;
+			if (/(^|,)gopika($|,)/i.test(font)) {
+				converter = this.gopikaConverter;
+			} else if (/(^|,)krishnaweb($|,)/i.test(font)) {
+				converter = this.krishnawebConverter;
+			} else if (/(^|,)govinda($|,)/i.test(font)) {
+				converter = this.krishnawebConverter;
+			} else if (/(^|,)divya($|,)/i.test(font)) {
+				converter = this.suryaConverter;
+			} else if (/(^|,)surya($|,)/i.test(font)) {
+				converter = this.suryaConverter;
+			}
+			if (converter) {
+				converter.convertTextSegment(segment);
+			}
+		},
+		initialize: function() {
+			var list = [];
+			NFLCIME.dispatchEvent({
+				type: &#39;ModuleGetList&#39;,
+				list: list
+			});
+			for (var i = 0; i &lt; list.length; i++) {
+				var module = list[i];
+				switch (module.id) {
+					case &#39;cvt.gujarati.gujarati.gopika&#39;:
+						this.gopikaConverter = module;
+						break;
+					case &#39;cvt.gujarati.gujarati.krishnaweb&#39;:
+						this.krishnawebConverter = module;
+						break;
+					case &#39;cvt.gujarati.gujarati.surya&#39;:
+						this.suryaConverter = module;
+						break;
+				}
+			}
+		},
+		gopikaConverter: null,
+		krishnawebConverter: null,
+		suryaConverter: null
+	}
+});
+</pre>
+</body>
+</html>

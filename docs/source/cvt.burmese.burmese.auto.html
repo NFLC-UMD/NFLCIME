@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-cvt-burmese-burmese-auto'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.cvt.burmese.burmese.auto
+ * @extends NFLCIME.CVT
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;cvt.burmese.burmese.auto&#39;,
+		type: &#39;encoding converter&#39;,
+		dependency: [&#39;cvt.burmese.burmese.bit&#39;, &#39;cvt.burmese.burmese.myan&#39;, &#39;cvt.burmese.burmese.wininnwa&#39;, &#39;cvt.burmese.burmese.winmyanmar&#39;, &#39;cvt.burmese.burmese.zawgyi&#39;],
+		inheritance: [&#39;cvt&#39;],
+		lang: &#39;my&#39;,
+		convertTextSegment: function(segment) {
+			var converter;
+			var font = segment.style.fontFamily;
+			if (/(^|,)bit($|,)/i.test(font)) {
+				converter = this.bitConverter;
+			} else if (/(^|,)myanttf($|,)/i.test(font)) {
+				converter = this.myanConverter;
+			} else if (/(^|,)wininnwa($|,)/i.test(font)) {
+				converter = this.wininnwaConverter;
+			} else if (/(^|,)winmyanmar($|,)/i.test(font)) {
+				converter = this.winmyanmarConverter;
+			} else if (/(^|,)zawgyi-one($|,)/i.test(font)) {
+				converter = this.zawgyiConverter;
+			}
+			if (converter) {
+				converter.convertTextSegment(segment);
+			}
+		},
+		initialize: function() {
+			var list = [];
+			NFLCIME.dispatchEvent({
+				type: &#39;ModuleGetList&#39;,
+				list: list
+			});
+			for (var i = 0; i &lt; list.length; i++) {
+				var module = list[i];
+				switch (module.id) {
+					case &#39;cvt.burmese.burmese.bit&#39;:
+						this.bitConverter = module;
+						break;
+					case &#39;cvt.burmese.burmese.myan&#39;:
+						this.myanConverter = module;
+						break;
+					case &#39;cvt.burmese.burmese.wininnwa&#39;:
+						this.wininnwaConverter = module;
+						break;
+					case &#39;cvt.burmese.burmese.winmyanmar&#39;:
+						this.winmyanmarConverter = module;
+						break;
+					case &#39;cvt.burmese.burmese.zawgyi&#39;:
+						this.zawgyiConverter = module;
+						break;
+				}
+			}
+		},
+		bitConverter: null,
+		myanConverter: null,
+		wininnwaConverter: null,
+		winmyanmarConverter: null,
+		zawgyiConverter: null
+	}
+});
+</pre>
+</body>
+</html>

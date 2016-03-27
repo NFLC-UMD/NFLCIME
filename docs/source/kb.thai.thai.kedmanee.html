@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-thai-thai-kedmanee'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.thai.thai.kedmanee
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.thai.thai.kedmanee&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb&#39;],
+		mapNormal: {
+			0xc0: &#39;_&#39;, // `
+			0x31: &#39;\u0e45&#39;, // 1
+			0x32: &#39;/&#39;, // 2
+			0x33: &#39;-&#39;, // 3
+			0x34: &#39;\u0e20&#39;, // 4
+			0x35: &#39;\u0e16&#39;, // 5
+			0x36: &#39;\u0e38&#39;, // 6
+			0x37: &#39;\u0e36&#39;, // 7
+			0x38: &#39;\u0e04&#39;, // 8
+			0x39: &#39;\u0e15&#39;, // 9
+			0x30: &#39;\u0e08&#39;, // 0
+			0xbd: &#39;\u0e02&#39;, // -
+			0xbb: &#39;\u0e0a&#39;, // =
+			0x51: &#39;\u0e46&#39;, // q
+			0x57: &#39;\u0e44&#39;, // w
+			0x45: &#39;\u0e33&#39;, // e
+			0x52: &#39;\u0e1e&#39;, // r
+			0x54: &#39;\u0e30&#39;, // t
+			0x59: &#39;\u0e31&#39;, // y
+			0x55: &#39;\u0e35&#39;, // u
+			0x49: &#39;\u0e23&#39;, // i
+			0x4f: &#39;\u0e19&#39;, // o
+			0x50: &#39;\u0e22&#39;, // p
+			0xdb: &#39;\u0e1a&#39;, // [
+			0xdd: &#39;\u0e25&#39;, // ]
+			0xdc: &#39;\u0e03&#39;, // \
+			0x41: &#39;\u0e1f&#39;, // a
+			0x53: &#39;\u0e2b&#39;, // s
+			0x44: &#39;\u0e01&#39;, // d
+			0x46: &#39;\u0e14&#39;, // f
+			0x47: &#39;\u0e40&#39;, // g
+			0x48: &#39;\u0e49&#39;, // h
+			0x4a: &#39;\u0e48&#39;, // j
+			0x4b: &#39;\u0e32&#39;, // k
+			0x4c: &#39;\u0e2a&#39;, // l
+			0xba: &#39;\u0e27&#39;, // ;
+			0xde: &#39;\u0e07&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0e1c&#39;, // z
+			0x58: &#39;\u0e1b&#39;, // x
+			0x43: &#39;\u0e41&#39;, // c
+			0x56: &#39;\u0e2d&#39;, // v
+			0x42: &#39;\u0e34&#39;, // b
+			0x4e: &#39;\u0e37&#39;, // n
+			0x4d: &#39;\u0e17&#39;, // m
+			0xbc: &#39;\u0e21&#39;, // ,
+			0xbe: &#39;\u0e43&#39;, // .
+			0xbf: &#39;\u0e1d&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		},
+		mapShift: {
+			0xc0: &#39;%&#39;, // `
+			0x31: &#39;+&#39;, // 1
+			0x32: &#39;\u0e51&#39;, // 2
+			0x33: &#39;\u0e52&#39;, // 3
+			0x34: &#39;\u0e53&#39;, // 4
+			0x35: &#39;\u0e54&#39;, // 5
+			0x36: &#39;\u0e39&#39;, // 6
+			0x37: &#39;\u0e3f&#39;, // 7
+			0x38: &#39;\u0e55&#39;, // 8
+			0x39: &#39;\u0e56&#39;, // 9
+			0x30: &#39;\u0e57&#39;, // 0
+			0xbd: &#39;\u0e58&#39;, // -
+			0xbb: &#39;\u0e59&#39;, // =
+			0x51: &#39;\u0e50&#39;, // q
+			0x57: &#39;&quot;&#39;, // w
+			0x45: &#39;\u0e0e&#39;, // e
+			0x52: &#39;\u0e11&#39;, // r
+			0x54: &#39;\u0e18&#39;, // t
+			0x59: &#39;\u0e4d&#39;, // y
+			0x55: &#39;\u0e4a&#39;, // u
+			0x49: &#39;\u0e13&#39;, // i
+			0x4f: &#39;\u0e2f&#39;, // o
+			0x50: &#39;\u0e0d&#39;, // p
+			0xdb: &#39;\u0e10&#39;, // [
+			0xdd: &#39;,&#39;, // ]
+			0xdc: &#39;\u0e05&#39;, // \
+			0x41: &#39;\u0e24&#39;, // a
+			0x53: &#39;\u0e06&#39;, // s
+			0x44: &#39;\u0e0f&#39;, // d
+			0x46: &#39;\u0e42&#39;, // f
+			0x47: &#39;\u0e0c&#39;, // g
+			0x48: &#39;\u0e47&#39;, // h
+			0x4a: &#39;\u0e4b&#39;, // j
+			0x4b: &#39;\u0e29&#39;, // k
+			0x4c: &#39;\u0e28&#39;, // l
+			0xba: &#39;\u0e0b&#39;, // ;
+			0xde: &#39;.&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;(&#39;, // z
+			0x58: &#39;)&#39;, // x
+			0x43: &#39;\u0e09&#39;, // c
+			0x56: &#39;\u0e2e&#39;, // v
+			0x42: &#39;\u0e3a&#39;, // b
+			0x4e: &#39;\u0e4c&#39;, // n
+			0x4d: &#39;?&#39;, // m
+			0xbc: &#39;\u0e12&#39;, // ,
+			0xbe: &#39;\u0e2c&#39;, // .
+			0xbf: &#39;\u0e26&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

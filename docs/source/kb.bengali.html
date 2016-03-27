@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-bengali'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.bengali
+ * Base keyboard class for Bengali languages:
+ * - Devanagari
+ * - Bengali
+ * - Burmese
+ *
+ *
+ * Overwrites componentUnicodeGroups and decomposition provided by
+ * {@link NFLCIME.kb.brahmi}.
+ *
+ * @extends NFLCIME.kb.brahmi
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.bengali&#39;,
+		type: &#39;contextual input&#39;,
+		inheritance: [&#39;kb.brahmi&#39;],
+		componentUnicodeGroups: [
+			// from specific to general
+			{
+				type: &#39;consonantAppearingAsSignPre&#39;,
+				pattern: &#39;\u09b0\u09cd&#39;
+			}, // RA halant
+			{
+				type: &#39;consonantAppearingAsSignPost&#39;,
+				pattern: &#39;\u09cd[\u09b0\u09af]&#39;
+			}, // halant RA, halant ya
+			{
+				type: &#39;consonantHalfForms&#39;,
+				pattern: &#39;[\u0995-\u09b9\u09dc-\u09df]\u09cd&#39;
+			}, {
+				type: &#39;consonant&#39;,
+				pattern: &#39;[\u0995-\u09b9\u09dc-\u09df]&#39;
+			}, {
+				type: &#39;consonantModifiers&#39;,
+				pattern: &#39;[\u09bc\u09bd]&#39;
+			}, {
+				type: &#39;vowelSign&#39;,
+				pattern: &#39;[\u09c1-\u09c4\u09e2\u09e3]&#39;
+			}, {
+				type: &#39;vowelAppearingOnLeft&#39;,
+				pattern: &#39;[\u09bf\u09c7\u09c8\u09cb\u09cc]&#39;
+			}, {
+				type: &#39;vowelAppearingOnRight&#39;,
+				pattern: &#39;[\u09be\u09c0\u09d7]&#39;
+			}, {
+				type: &#39;syllableModifiers&#39;,
+				pattern: &#39;[\u0981-\u0983]&#39;
+			}, {
+				type: &#39;vowelIndependent&#39;,
+				pattern: &#39;[\u0985-\u0994\u09e0\u09e1]&#39;
+			}
+		],
+		decomposition: [{
+			from: &#39;\u0986&#39;,
+			to: &#39;\u0985\u09be&#39;
+		}, {
+			from: &#39;\u0986&#39;,
+			to: &#39;\u0985\u09be&#39;
+		}, {
+			from: &#39;\u09cb&#39;,
+			to: &#39;\u09c7\u09be&#39;
+		}, {
+			from: &#39;\u09cc&#39;,
+			to: &#39;\u09c7\u09d7&#39;
+		}]
+	}
+});
+</pre>
+</body>
+</html>

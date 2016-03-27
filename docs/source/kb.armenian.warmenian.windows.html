@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-kb-armenian-warmenian-windows'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.kb.armenian.warmenian.windows
+ * Western Armenian language keyboard map class.
+ *
+ * @extends NFLCIME.Keyboard
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;kb.armenian.warmenian.windows&#39;,
+		type: &#39;keyboard layout&#39;,
+		inheritance: [&#39;kb&#39;],
+		mapNormal: {
+			0xc0: &#39;\u055d&#39;, // `
+			0x31: &#39;:&#39;, // 1
+			0x32: &#39;\u0571&#39;, // 2
+			0x33: &#39;\u0575&#39;, // 3
+			0x34: &#39;\u055b&#39;, // 4
+			0x35: &#39;,&#39;, // 5
+			0x36: &#39;-&#39;, // 6
+			0x37: &#39;.&#39;, // 7
+			0x38: &#39;\u00ab&#39;, // 8
+			0x39: &#39;\u00bb&#39;, // 9
+			0x30: &#39;\u0585&#39;, // 0
+			0xbd: &#39;\u057c&#39;, // -
+			0xbb: &#39;\u056a&#39;, // =
+			0x51: &#39;\u056d&#39;, // q
+			0x57: &#39;\u057e&#39;, // w
+			0x45: &#39;\u0567&#39;, // e
+			0x52: &#39;\u0580&#39;, // r
+			0x54: &#39;\u0564&#39;, // t
+			0x59: &#39;\u0565&#39;, // y
+			0x55: &#39;\u0568&#39;, // u
+			0x49: &#39;\u056b&#39;, // i
+			0x4f: &#39;\u0578&#39;, // o
+			0x50: &#39;\u0562&#39;, // p
+			0xdb: &#39;\u0579&#39;, // [
+			0xdd: &#39;\u057b&#39;, // ]
+			0xdc: &#39;\&#39;&#39;, // \
+			0x41: &#39;\u0561&#39;, // a
+			0x53: &#39;\u057d&#39;, // s
+			0x44: &#39;\u057f&#39;, // d
+			0x46: &#39;\u0586&#39;, // f
+			0x47: &#39;\u056f&#39;, // g
+			0x48: &#39;\u0570&#39;, // h
+			0x4a: &#39;\u0573&#39;, // j
+			0x4b: &#39;\u0584&#39;, // k
+			0x4c: &#39;\u056c&#39;, // l
+			0xba: &#39;\u0569&#39;, // ;
+			0xde: &#39;\u0583&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0566&#39;, // z
+			0x58: &#39;\u0581&#39;, // x
+			0x43: &#39;\u0563&#39;, // c
+			0x56: &#39;\u0582&#39;, // v
+			0x42: &#39;\u057a&#39;, // b
+			0x4e: &#39;\u0576&#39;, // n
+			0x4d: &#39;\u0574&#39;, // m
+			0xbc: &#39;\u0577&#39;, // ,
+			0xbe: &#39;\u0572&#39;, // .
+			0xbf: &#39;\u056e&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		},
+		mapShift: {
+			0xc0: &#39;\u055c&#39;, // `
+			0x31: &#39;1&#39;, // 1
+			0x32: &#39;\u0541&#39;, // 2
+			0x33: &#39;\u0545&#39;, // 3
+			0x34: &#39;3&#39;, // 4
+			0x35: &#39;4&#39;, // 5
+			0x36: &#39;9&#39;, // 6
+			0x37: &#39;\u0587&#39;, // 7
+			0x38: &#39;(&#39;, // 8
+			0x39: &#39;)&#39;, // 9
+			0x30: &#39;\u0555&#39;, // 0
+			0xbd: &#39;\u054c&#39;, // -
+			0xbb: &#39;\u053a&#39;, // =
+			0x51: &#39;\u053d&#39;, // q
+			0x57: &#39;\u054e&#39;, // w
+			0x45: &#39;\u0537&#39;, // e
+			0x52: &#39;\u0550&#39;, // r
+			0x54: &#39;\u0534&#39;, // t
+			0x59: &#39;\u0535&#39;, // y
+			0x55: &#39;\u0538&#39;, // u
+			0x49: &#39;\u053b&#39;, // i
+			0x4f: &#39;\u0548&#39;, // o
+			0x50: &#39;\u0532&#39;, // p
+			0xdb: &#39;\u0549&#39;, // [
+			0xdd: &#39;\u054b&#39;, // ]
+			0xdc: &#39;\u055e&#39;, // \
+			0x41: &#39;\u0531&#39;, // a
+			0x53: &#39;\u054d&#39;, // s
+			0x44: &#39;\u054f&#39;, // d
+			0x46: &#39;\u0556&#39;, // f
+			0x47: &#39;\u053f&#39;, // g
+			0x48: &#39;\u0540&#39;, // h
+			0x4a: &#39;\u0543&#39;, // j
+			0x4b: &#39;\u0554&#39;, // k
+			0x4c: &#39;\u053c&#39;, // l
+			0xba: &#39;\u0539&#39;, // ;
+			0xde: &#39;\u0553&#39;, // &#39;
+			0x0d: &#39;\u000d&#39;, // [return]
+			0x5a: &#39;\u0536&#39;, // z
+			0x58: &#39;\u0551&#39;, // x
+			0x43: &#39;\u0533&#39;, // c
+			0x56: &#39;\u0552&#39;, // v
+			0x42: &#39;\u054a&#39;, // b
+			0x4e: &#39;\u0546&#39;, // n
+			0x4d: &#39;\u0544&#39;, // m
+			0xbc: &#39;\u0547&#39;, // ,
+			0xbe: &#39;\u0542&#39;, // .
+			0xbf: &#39;\u053e&#39;, // /
+			0x20: &#39;\u0020&#39; // [space]
+		}
+	}
+});
+</pre>
+</body>
+</html>

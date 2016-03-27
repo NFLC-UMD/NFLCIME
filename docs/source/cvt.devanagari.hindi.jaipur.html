@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='NFLCIME-cvt-devanagari-hindi-jaipur'>/**
+</span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
+ *
+ * @class NFLCIME.cvt.devanagari.hindi.jaipur
+ * @extends NFLCIME.CVT
+ *
+ */
+
+NFLCIME.dispatchEvent({
+	type: &#39;ModuleAdd&#39;,
+	module: {
+		id: &#39;cvt.devanagari.hindi.jaipur&#39;,
+		type: &#39;encoding converter&#39;,
+		inheritance: [&#39;cvt&#39;],
+		lang: &#39;hi&#39;,
+		// TODO: replace this early, state-machine implementation with RegExp based conversion for consistency sake
+		insertBeforeConsonants: function(s, c) {
+			var i = s.length - 1;
+			while (cc = s.charCodeAt(i), !(cc &gt;= 0x0915 &amp;&amp; cc &lt;= 0x0939) &amp;&amp; i &gt; 0) i--;
+			if (i &gt; 0) {
+				while (s.charCodeAt(i - 1) == 0x094d) i -= 2;
+			}
+			return s.substr(0, i) + c + s.substr(i);
+		},
+		insertAfterConsonants: function(s, c) {
+			var i = s.length - 1;
+			while (cc = s.charCodeAt(i), !(cc &gt;= 0x0915 &amp;&amp; cc &lt;= 0x0939) &amp;&amp; i &gt; 0) i--;
+			return s.substr(0, i + 1) + c + s.substr(i + 1);
+		},
+		convertTextSegment: function(segment) {
+			segment.text = this.convertText(segment.text);
+		},
+		convertText: function(text) {
+			var v = this.vowelMap;
+			var f = this.fullFormMap
+			var h = this.halfFormMap
+			var m = this.signMap;
+			var li = this.vowelLigatureMap;
+			var lines = text.split(&#39;\r\n&#39;);
+			var res = &#39;&#39;;
+			for (var i = 0, lc = lines.length; i &lt; lc; i++) {
+				var words = lines[i].split(&#39; &#39;);
+				var i_sign = false;
+				for (var j = 0, wc = words.length; j &lt; wc; j++) {
+					var w1 = words[j];
+					var w2 = &#39;&#39;;
+					for (var k = 0; k &lt; w1.length; k++) {
+						var c = w1.charCodeAt(k);
+						var x;
+						if (x = f[c]) {
+							w2 += x;
+							if (i_sign) {
+								w2 += &#39;\u093f&#39;;
+								i_sign = false;
+							}
+						} else if (x = v[c]) {
+							w2 += x;
+						} else if (x = h[c]) {
+							w2 += x + &#39;\u094D&#39;;
+						} else if (x = m[c]) {
+							if (x.charCodeAt(0) == 0x094d) {
+								w2 = this.insertAfterConsonants(w2, x);
+							} else {
+								w2 += x;
+							}
+						} else if (c == 0x0069) {
+							i_sign = true;
+						} else if (c == 0x0025 || c == 0x0052) {
+							w2 = this.insertBeforeConsonants(w2, &#39;\u0930\u094d&#39;);
+						} else {
+							w2 += String.fromCharCode(c);
+						}
+					}
+					res += w2 + &#39; &#39;;
+				}
+				res += &#39;\r\n&#39;;
+			}
+			for (combo in li) {
+				res = res.replace(new RegExp(combo, &#39;g&#39;), li[combo]);
+			}
+			res = res.replace(new RegExp(&#39;\u0902([\u093e-\u094c])&#39;, &#39;g&#39;), &#39;$1\u0902&#39;);
+			res = res.replace(new RegExp(&#39;([\u093e\u0949-\u094c])([\u0941-\u0948])&#39;, &#39;g&#39;), &#39;$2$1&#39;);
+			res = res.replace(new RegExp(&#39; ([\u0941-\u0948])&#39;, &#39;g&#39;), &#39;$1 &#39;);
+			res = res.replace(new RegExp(&#39;\u0902\u0902&#39;, &#39;g&#39;), &#39;\u0902&#39;);
+			res = res.replace(new RegExp(&#39;\u0947\u0947&#39;, &#39;g&#39;), &#39;\u0947&#39;);
+			return res;
+		},
+		vowelMap: {
+			0x26: &#39;\u0941&#39;,
+			0x2a: &#39;\u0942&#39;,
+			0x45: &#39;\u0948&#39;,
+			0x46: &#39;\u0944&#39;,
+			0x49: &#39;\u0940&#39;,
+			0x4f: &#39;\u094C&#39;,
+			0x55: &#39;\u0942&#39;,
+			0x56: &#39;\u0944&#39;,
+			0x57: &#39;\u0948&#39;,
+			0x5a: &#39;\u0943&#39;,
+			0x5e: &#39;\u0907&#39;,
+			0x61: &#39;\u093e&#39;,
+			0x65: &#39;\u0947&#39;,
+			0x66: &#39;\u0943&#39;,
+			0x6f: &#39;\u094b&#39;,
+			0x75: &#39;\u0941&#39;,
+			0x77: &#39;\u0947&#39;,
+			0xa8: &#39;\u0909&#39;,
+			0xb4: &#39;\u090f&#39;,
+			0xc8: &#39;\u0908&#39;,
+			0xcb: &#39;\u090a&#39;,
+			0xcf: &#39;\u090b&#39;,
+			0xe5: &#39;\u0905&#39;,
+			0x2264: &#39;\u0910&#39;
+		},
+		fullFormMap: {
+			0x40: &#39;\u095C&#39;,
+			0x42: &#39;\u092d&#39;,
+			0x43: &#39;\u091b&#39;,
+			0x44: &#39;\u0927&#39;,
+			0x47: &#39;\u0918&#39;,
+			0x4a: &#39;\u091d&#39;,
+			0x4b: &#39;\u0916&#39;,
+			0x4c: &#39;\u0933&#39;,
+			0x4e: &#39;\u0923&#39;,
+			0x50: &#39;\u092b&#39;,
+			0x51: &#39;\u0920&#39;,
+			0x54: &#39;\u0925&#39;,
+			0x58: &#39;\u091e&#39;,
+			0x5c: &#39;\u0921&#39;,
+			0x62: &#39;\u092c&#39;,
+			0x63: &#39;\u091a&#39;,
+			0x64: &#39;\u0926&#39;,
+			0x67: &#39;\u0917&#39;,
+			0x68: &#39;\u0939&#39;,
+			0x6a: &#39;\u091c&#39;,
+			0x6b: &#39;\u0915&#39;,
+			0x6c: &#39;\u0932&#39;,
+			0x6d: &#39;\u092e&#39;,
+			0x6e: &#39;\u0928&#39;,
+			0x70: &#39;\u092a&#39;,
+			0x71: &#39;\u091f&#39;,
+			0x72: &#39;\u0930&#39;,
+			0x73: &#39;\u0938&#39;,
+			0x74: &#39;\u0924&#39;,
+			0x76: &#39;\u0935&#39;,
+			0x78: &#39;\u0936&#39;,
+			0x79: &#39;\u092f&#39;,
+			0x59: &#39;\u092f&#39;,
+			0x7a: &#39;\u0937&#39;,
+			0x7c: &#39;\u0922&#39;,
+			0xd1: &#39;\u095e&#39;,
+			0xd2: &#39;\u095d&#39;,
+			0xf1: &#39;\u0958&#39;,
+			0xf2: &#39;\u0959&#39;,
+			0xf3: &#39;\u095a&#39;,
+			0xf4: &#39;\u095b&#39;,
+			0x0101: &#39;\u0958&#39;,
+			0x0102: &#39;\u0959&#39;,
+			0x0103: &#39;\u095a&#39;,
+			0x0104: &#39;\u095b&#39;,
+			0x0105: &#39;\u095e&#39;,
+			0x0106: &#39;\u095c&#39;,
+			0x0107: &#39;\u095d&#39;,
+			0xffff: &#39;\u0919&#39;,
+			0x3c: &#39;\u0930\u0941&#39;,
+			0x3e: &#39;\u0930\u0942&#39;,
+			0x48: &#39;\u0939\u090b&#39;,
+			0x7b: &#39;\u0926\u0943&#39;,
+			0x7d: &#39;\u0926\u0944&#39;,
+			0xa1: &#39;\u0915\u094d\u0930&#39;,
+			0xa4: &#39;\u0919\u094d\u0916&#39;,
+			0xb0: &#39;\u0939\u094d\u092e&#39;,
+			0xb1: &#39;\u0939\u094d\u0935&#39;,
+			0xbb: &#39;\u0926\u094d\u0935&#39;,
+			0xc0: &#39;\u091e\u094d\u0935&#39;,
+			0xc1: &#39;\u0926\u094d\u0927&#39;,
+			0xc3: &#39;\u0915\u094d\u0924&#39;,
+			0xc4: &#39;\u0917\u094d\u0930&#39;,
+			0xc6: &#39;\u0926\u094d\u092d&#39;,
+			0xc7: &#39;\u0936\u094d\u0930&#39;,
+			0xcd: &#39;\u0938\u094d\u0930&#39;,
+			0xd5: &#39;\u0937\u094d\u0920&#39;,
+			0xd6: &#39;\u0918\u094d\u0930&#39;,
+			0xd8: &#39;\u0922\u094d\u092e&#39;,
+			0xdb: &#39;\u091f\u094d\u0920&#39;,
+			0xdc: &#39;\u091b\u094d\u0930&#39;,
+			0xe0: &#39;\u091f\u094d\u0930&#39;,
+			0xe1: &#39;\u091c\u094d\u0930&#39;,
+			0xe2: &#39;\u0921\u094d\u0930&#39;,
+			0xe3: &#39;\u0928\u094d\u0930&#39;,
+			0xe4: &#39;\u0927\u094d\u0930&#39;,
+			0xe8: &#39;\u092b\u094d\u0930&#39;,
+			0xe9: &#39;\u092a\u094d\u0930&#39;,
+			0xea: &#39;\u092c\u094d\u0930&#39;,
+			0xeb: &#39;\u092d\u094d\u0930&#39;,
+			0xec: &#39;\u0935\u094d\u0930&#39;,
+			0xed: &#39;\u092e\u094d\u0930&#39;,
+			0xf5: &#39;\u092a\u094d\u0924&#39;,
+			0xf6: &#39;\u0936\u094d\u0935&#39;,
+			0xf9: &#39;\u0936\u094d\u091a&#39;,
+			0xfa: &#39;\u0936\u094d\u0928&#39;,
+			0xfb: &#39;\u092a\u094d\u0928&#39;,
+			0xfc: &#39;\u091e\u094d\u091c&#39;,
+			0xff: &#39;\u0937\u094d\u091f&#39;,
+			0x0152: &#39;\u0926\u094d\u0917&#39;,
+			0x0153: &#39;\u0915\u094d\u0937&#39;,
+			0x02d9: &#39;\u091c\u094d\u091e&#39;,
+			0x02db: &#39;\u0928\u094d\u0928&#39;,
+			0x2013: &#39;\u0924\u094d\u0924&#39;,
+			0x2014: &#39;\u0939\u094d\u0932&#39;,
+			0x2019: &#39;\u0926\u094d\u0930&#39;,
+			0x201a: &#39;\u0939\u094d\u0930&#39;,
+			0x201c: &#39;\u0924\u094d\u0930&#39;,
+			0x201d: &#39;\u0926\u094d\u092f&#39;,
+			0x201e: &#39;\u0926\u094d\u0927&#39;,
+			0x2021: &#39;\u0939\u094d\u0928&#39;,
+			0x2030: &#39;\u0926\u094d\u0926&#39;,
+			0x2039: &#39;\u0919\u094d\u0917&#39;,
+			0x203a: &#39;\u0919\u094d\u0918&#39;,
+			0x2044: &#39;\u0919\u094d\u0915&#39;,
+			0xb7: &#39;\u0939\u094d\u092f&#39;,
+			0x2219: &#39;\u0939\u094d\u092f&#39;,
+			0xf001: &#39;\u091f\u094d\u091f&#39;,
+			0xf002: &#39;\u0939\u094d\u0923&#39;
+		},
+		halfFormMap: {
+			0x7e: &#39;\u0928&#39;,
+			0xa3: &#39;\u091e&#39;,
+			0xa5: &#39;\u092f&#39;,
+			0xa9: &#39;\u0917&#39;,
+			0xac: &#39;\u0932&#39;,
+			0xaf: &#39;\u095e&#39;,
+			0xb8: &#39;\u0921&#39;,
+			0xbe: &#39;\u095b&#39;,
+			0xc9: &#39;\u0939&#39;,
+			0xca: &#39;\u0925&#39;,
+			0xcc: &#39;\u0918&#39;,
+			0xce: &#39;\u0927&#39;,
+			0xd0: &#39;\u0916&#39;,
+			0xd3: &#39;\u091c\u094d\u091e&#39;,
+			0xd4: &#39;\u091d&#39;,
+			0xd9: &#39;\u091e&#39;,
+			0xdf: &#39;\u0938&#39;,
+			0xe7: &#39;\u091a&#39;,
+			0xee: &#39;\u091b&#39;,
+			0xef: &#39;\u0926&#39;,
+			0xf0: &#39;\u0958&#39;,
+			0x0131: &#39;\u092d&#39;,
+			0x0178: &#39;\u0919&#39;,
+			0x02c6: &#39;\u0923&#39;,
+			0x02da: &#39;\u0915&#39;,
+			0x02dd: &#39;\u091f&#39;,
+			0x0394: &#39;\u091c&#39;,
+			0x2206: &#39;\u091c&#39;,
+			0x03bc: &#39;\u092e&#39;,
+			0x03C0: &#39;\u092a&#39;,
+			0x03A9: &#39;\u0937&#39;,
+			0x2126: &#39;\u0937&#39;,
+			0xB5: &#39;\u092E&#39;,
+			0x03BC: &#39;\u092E&#39;,
+			0x2018: &#39;\u0924\u094d\u0930&#39;,
+			0x2020: &#39;\u0924&#39;,
+			0x220F: &#39;\u092B&#39;,
+			0x221A: &#39;\u0935&#39;,
+			0x222B: &#39;\u092C&#39;,
+			0x2248: &#39;\u0936&#39;,
+			0x22F2: &#39;\u0936&#39;,
+			0x2211: &#39;\u0915\u094d\u0937&#39;,
+			0x2260: &#39;\u0924\u094d\u0924&#39;,
+			0x25ca: &#39;\u0936\u094d\u0930&#39;,
+			0xF000: &#39;\u0916&#39;
+		},
+		signMap: {
+			0x23: &#39;\u0902&#39;,
+			0x41: &#39;\u0901&#39;,
+			0x4d: &#39;\u0902&#39;,
+			0x5f: &#39;\u0952&#39;,
+			0x60: &#39;\u094d&#39;,
+			0xab: &#39;\u0951&#39;,
+			0xae: &#39;\u094d\u0930&#39;,
+			0xba: &#39;\u0970&#39;,
+			0xbf: &#39;\u093c&#39;,
+			0xc2: &#39;\u094d\u0930&#39;,
+			0xc5: &#39;\u0901&#39;,
+			0x017e: &#39;\u094d&#39;,
+			0x02dc: &#39;\u0902&#39;,
+			0x2202: &#39;\u094d\u0930&#39;,
+			0x2265: &#39;\u0964&#39;
+		},
+		vowelLigatureMap: {
+			&#39;\u0905\u093e&#39;: &#39;\u0906&#39;,
+			&#39;\u0905\u094b&#39;: &#39;\u0913&#39;,
+			&#39;\u0905\u094C&#39;: &#39;\u0914&#39;,
+			&#39;\u090f\u0947&#39;: &#39;\u0910&#39;,
+			&#39;\u090f\u0901&#39;: &#39;\u090d&#39;,
+			&#39;\u0906\u0901&#39;: &#39;\u0911&#39;,
+			&#39;\u0906\u0947&#39;: &#39;\u0913&#39;,
+			&#39;\u0906\u0948&#39;: &#39;\u0914&#39;,
+			&#39;\u00b6&#39;: &#39;\u201d&#39;,
+			&#39;\u2022&#39;: &#39;\u201c&#39;,
+			&#39;\u00aa&#39;: &#39;\u2018&#39;,
+			&#39;\u00a7&#39;: &#39;\u2019&#39;,
+			&#39;\u00ab&#39;: &#39;\u0027&#39;,
+			&#39;\u02d8&#39;: &#39;\u203a&#39;,
+			&#39;\u02c9&#39;: &#39;\u2039&#39;
+		}
+	}
+});
+</pre>
+</body>
+</html>
