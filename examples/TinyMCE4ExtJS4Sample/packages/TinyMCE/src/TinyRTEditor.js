@@ -35,7 +35,7 @@ Ext.define('Ext.ux.form.TinyRTEditor', {
 
 			me.on('editorready',  function() {
 				// console.log('editor ready:' + new Date());
-					 NFLCIME.reinitialize();
+					 // NFLCIME.reinitialize();
 					 me.fireEvent('focus',me);
 			},me,{buffer: 1000});
 

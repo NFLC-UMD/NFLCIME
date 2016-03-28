@@ -24,6 +24,18 @@
 
 var NFLCIME = (NFLCIME || {});
 
+
+<span id='NFLCIME-method-extend'>/**
+</span> * This function adds properties to the NFLCIME class
+ * if they are not already present and overwrites them if they
+ * are already present.
+ *
+ * It works similarly to Ext.apply()
+ * @param {Object} [obj] The object to extend
+ * @param {Object} [ext] The object, containing properties and methods, that should be added to [obj]. Will not perform assignemnt if associated value is undefined.
+ * @return {Object} the extended object
+ */
+
 NFLCIME.extend = function(obj, ext) {
 	var i, l, name, args = arguments,
 		value;
@@ -45,7 +57,13 @@ NFLCIME.extend = function(obj, ext) {
 };
 
 NFLCIME.extend(NFLCIME, {
-	// Add a listener for a specific event (listner[&#39;on&#39; + eventName] will be invoked)
+
+<span id='NFLCIME-method-addEventListener'>	/**
+</span>	 * Add a listener for a specific event (listner[&#39;on&#39; + eventName] will be invoked)
+	 * @param {String} [eventName] The name of the listener
+	 * @param {Function} [listener] The listener function
+	 * @param {Boolean} [capture] If true, adds &#39;_cap&#39; to the eventName. Defaults to false. Captured events will be executed prior to non-captured events.
+	 */
 	addEventListener: function(eventName, listener, capture) {
 		var name = eventName + ((capture) ? &#39;_cap&#39; : &#39;&#39;);
 
@@ -56,7 +74,14 @@ NFLCIME.extend(NFLCIME, {
 		listeners.push(listener);
 
 	},
-	// Remove a listener
+	
+<span id='NFLCIME-method-removeEventListener'>	/**
+</span>	 * Remove an event listener
+	 * @param {String} [eventName] The name of the listener
+	 * @param {Function} [listener] The listener function
+	 * @param {Boolean} [capture] If true, adds &#39;_cap&#39; to the eventName. Defaults to false.
+	 */
+
 	removeEventListener: function(eventName, listener, capture) {
 		var name = eventName + ((capture) ? &#39;_cap&#39; : &#39;&#39;);
 		var listeners = this.eventListenerHash[name];
@@ -71,7 +96,13 @@ NFLCIME.extend(NFLCIME, {
 			}
 		}
 	},
-	// Dispatch an event to all listening objects
+	
+<span id='NFLCIME-method-dispatchEvent'>	/**
+</span>	 * Dispatch an event to all listening objects. Sends events to capturing listeners first.
+	 * @param {Object} [evt] An event object
+	 * @return {Object} The result from running the event handler
+	 */
+
 	dispatchEvent: function(evt) {
 		var result;
 		var loops = [&#39;_cap&#39;, &#39;&#39;]; // send event to capturing listeners first
@@ -97,8 +128,17 @@ NFLCIME.extend(NFLCIME, {
 		}
 		return undefined;
 	},
-	//--- Event handlers
-	// Attach handlers to a a window
+	
+
+
+<span id='NFLCIME-method-onWindowListen'>	/**
+</span>	 * Attach event listeners to a window, evt.target must point to the window
+	 * For firefox and safari, adds a mousedown event listener to prevent textboxes from losing focus to elments
+	 * marked as &quot;unselectable&quot;
+	 * @param {Object} [evt] An event object
+	 *
+	 */
+
 	onWindowListen: function(evt) {
 		var win = evt.target;
 		switch (this.environment.browser) {
@@ -110,7 +150,16 @@ NFLCIME.extend(NFLCIME, {
 		}
 		this.windowsHandled.push(win);
 	},
-	// Detach handlers a window
+	
+
+<span id='NFLCIME-method-onWindowIgnore'>	/**
+</span>	 * Detaches event from all handled windows, evt.target must point to the window
+	 * For firefox and safari,removes the mousedown event listener that prevent textboxes from losing focus to elments
+	 * marked as &quot;unselectable&quot;
+	 * @param {Object} [evt] An event object
+	 *
+	 */
+
 	onWindowIgnore: function(evt) {
 		var win = evt.target;
 		switch (this.environment.browser) {
@@ -125,7 +174,16 @@ NFLCIME.extend(NFLCIME, {
 			}
 		}
 	},
-	// Get the list of windows
+	
+
+<span id='NFLCIME-method-onWindowGetList'>	/**
+</span>	 * Get list of windows
+	 * Loops through the this.windowsHandled property and cleans up array for any windows that have been closed.
+	 * Updates evt.list array property with registered, available windows
+	 * @param {Object} [evt] An event object
+	 *
+	 */
+
 	onWindowGetList: function(evt) {
 		for (var i = this.windowsHandled.length - 1; i &gt;= 0; i--) {
 			var win = this.windowsHandled[i];
@@ -137,8 +195,19 @@ NFLCIME.extend(NFLCIME, {
 			evt.list.push(this.windowsHandled[i]);
 		}
 	},
-	// Whether a given IME service is active for a given element
+	
+
+<span id='NFLCIME-method-onServiceApplicable'>	/**
+</span>	 * Determines whether a given IME service is active for a given element
+	 * Looks for an element attribute of NFLCIME, which must be formatted as a space delimited string
+	 * @param {Object} [evt] An event object
+	 *
+	 * Example: &amp;lt;textarea NFLCIME=&quot;all&quot;/&amp;gt;, &amp;lt;textarea NFLCIME=&quot;kb cvt&quot;/&amp;gt;
+	 *
+	 */
+
 	onServiceApplicable: function(evt) {
+
 		var element = evt.target;
 		var services_requested = evt.service.split(/\s*,\s*/);
 		evt.applicable = false;
@@ -171,18 +240,31 @@ NFLCIME.extend(NFLCIME, {
 			}
 		}
 	},
-	// Add a module (triggered by dynamically loaded script files)
+	
+
+<span id='NFLCIME-method-onModuleAdd'>	/**
+</span>	 * Loads a module, checking module dependencies. Displaytches the &#39;ModuleRegister&#39; event if the module is ready
+	 * Kicks off process for loading dependent modules, if required, and throws current module request into the
+	 * @param {Object} [evt] An event object
+	 *
+	 * Example: &amp;lt;textarea NFLCIME=&quot;all&quot;/&amp;gt;, &amp;lt;textarea NFLCIME=&quot;kb cvt&quot;/&amp;gt;
+	 *
+	 */
+
 	onModuleAdd: function(evt) {
 		var module = evt.module;
+		
 
 		if (this.checkModuleDependency(module)) {
 			var ready = this.initializeModule(module);
 			if (ready) {
+				console.log(&#39;module ready:&#39;,evt.module.id);
 				this.dispatchEvent({
 					type: &#39;ModuleRegister&#39;,
 					module: module
 				});
 			} else {
+				console.log(&#39;module not ready&#39;, evt.module);
 				// the module isn&#39;t quite ready yet, likely because it&#39;s waiting for an asynchronous operation to finish
 				// once that&#39;s done, the module will fire a ModuleRegister event itself
 			}
@@ -191,7 +273,14 @@ NFLCIME.extend(NFLCIME, {
 			this.pendingModules.push(module);
 		}
 	},
-	// Register a module
+	
+
+<span id='NFLCIME-method-onModuleRegister'>	/**
+</span>	 * Register a module - event is raised from the core modules
+	 * @param {Object} [evt] An event object containing the module info
+	 * 
+	 */
+
 	onModuleRegister: function(evt) {
 		var module = evt.module;
 		this.registeredModules[module.id] = module;
@@ -231,7 +320,18 @@ NFLCIME.extend(NFLCIME, {
 			}
 		}
 	},
-	// Load a module contained in a Javascript file
+	
+<span id='NFLCIME-method-onModuleLoad'>	/**
+</span>	 * Loads a module from an external .js file.
+	 * @param {Object} [evt] An event object containing the module info
+	 *
+	 * Event properties:
+	 * moduleId, compressed, activate
+	 *
+	 * If the compressed bit is set, it is assumed that the module was part of a compressed and minified build
+	 * The module gets added to the registeredModules object. If the activate flag is set, the ModuleActivate event is dispatched
+	 */
+
 	onModuleLoad: function(evt) {
 		var id = evt.moduleId;
 		var activate = evt.activate;
@@ -254,15 +354,35 @@ NFLCIME.extend(NFLCIME, {
 		}
 		return true;
 	},
-	// Get list of load modules
+	
+<span id='NFLCIME-method-onModuleGetList'>	/**
+</span>	 * Loops through all registered modules and adds references to the evt.list property
+	 * @param {Object} [evt] An event object containing the module info
+	 *
+	 */
+
+
 	onModuleGetList: function(evt) {
 		var id;
 		for (id in this.registeredModules) {
 			evt.list.unshift(this.registeredModules[id]);
 		}
 	},
+	
+
 	//--- Private functions
 	// See if the modules that a module depends on are loaded
+
+<span id='NFLCIME-method-checkModuleDependency'>	/**
+</span>	 * @private
+	 *
+	 *
+	 * @param {Object} [module] A Module reference
+	 * @return {Boolean}
+	 */
+
+
+
 	checkModuleDependency: function(module) {
 		if (module.dependency) {
 			for (var j = 0; j &lt; module.dependency.length; j++) {
@@ -282,7 +402,16 @@ NFLCIME.extend(NFLCIME, {
 		}
 		return true;
 	},
-	// Load modules that a module dpends on
+	
+
+<span id='NFLCIME-method-loadDependentModules'>	/**
+</span>	 * @private
+	 * Load modules that a module dpends on.
+	 * Dispatches the ModuleLoad event for any dependencies (module.dependency[]) or inheritance (module.inheritance[])
+	 *
+	 * @param {Object} [module] A Module reference
+	 */
+
 	loadDependentModules: function(module) {
 		if (module.dependency) {
 			for (var j = 0; j &lt; module.dependency.length; j++) {
@@ -393,34 +522,25 @@ NFLCIME.extend(NFLCIME, {
 			}
 			var script = document.createElement(&#39;SCRIPT&#39;);
 
-			console.log(&#39;loading: &#39;, full_url);
+			
 			script.src = full_url;
 			head.appendChild(script);
 
 		}
 	},
-	/*
-	loadScriptFile:function(url) {
-		var head = document.getElementsByTagName(&#39;HEAD&#39;)[0];
-		if(head) {
-			// add the folder path if necessary
-			var full_url = (/^\w+:/.test(url) || /^\//.test(url)) ? url : this.environment.scriptURLRoot + url;
-			// make sure we&#39;re not loading a script twice
-			var scripts = document.getElementsByTagName(&#39;SCRIPT&#39;);
-			for(var i = 0; i &lt; scripts.length; i++) {
-				if(scripts[i].src == full_url) {
-					return;
-				}
-			}
-			var script = document.createElement(&#39;SCRIPT&#39;);
-			script.src = full_url;
-			head.appendChild(script);
-
-
-		}
-	},
-	*/
-	// Initialize a module, copy functionalities from inherited modules if necessary
+	
+<span id='NFLCIME-method-initializeModule'>	/**
+</span>	 * @private
+	 *
+	 * Initialize a module, copy functionalities from inherited modules if necessary
+	 *
+	 *
+	 * module.initialize : initialization function
+	 * module.inheritance: array
+	 *
+	 *
+	 * @param {Object} [module] A Module
+	 */
 	initializeModule: function(module) {
 		var result;
 		if (module.inheritance) {
@@ -452,7 +572,19 @@ NFLCIME.extend(NFLCIME, {
 		}
 		return (result != false);
 	},
-	// Get a list of initialization functions, including those of inherited modules
+
+<span id='NFLCIME-method-getInitializationFunctions'>	/**
+</span>	 * @private
+	 *
+	 * Get a list of initialization functions, including those of inherited modules
+	 *
+	 *
+	 *
+	 * @param {Object} [module] A Module
+	 * @param {Array} [list] List of functions
+	 */
+
+
 	getInitializationFunctions: function(module, list) {
 		var func = module.initialize;
 		if (func) {
@@ -476,7 +608,15 @@ NFLCIME.extend(NFLCIME, {
 			}
 		}
 	},
-	// Evaluate the code inside the SCRIPT node as an object
+	
+
+<span id='NFLCIME-method-parseConfigurationCode'>	/**
+</span>	 * @private
+	 *
+	 * Evaluate the code inside the SCRIPT node as an object (this.scriptNode)
+	 *
+	 */
+
 	parseConfigurationCode: function() {
 		var code = this.scriptNode.innerHTML;
 		var browser = this.environment.browser;
@@ -495,14 +635,47 @@ NFLCIME.extend(NFLCIME, {
 		//Feb 21.2013 SEB. Extending the configuration object with the init_modules object. Loading these in tinyMCE
 		this.extend(this.environment.configuration, this.init_modules);
 	},
-	// Prevent focus change on unseletable elements
+
+
+<span id='NFLCIME-method-enforceUnselectable'>	/**
+</span>	 * @private
+	 *
+	 * Prevent focus change on unselectable elements. 
+	 * Unselectable elements are defined as html elements that have an &quot;unselectable&quot; attribute,
+	 * e.g. (&amp;lt;textarea unselectable=&quot;true&quot; /&amp;gt;)
+	 * @param {Object} [evt] Event
+	 */
+
 	enforceUnselectable: function(evt) {
 		var unselectable = evt.target.getAttribute(&quot;unselectable&quot;);
 		if (unselectable &amp;&amp; unselectable.toLowerCase() == &#39;on&#39;) {
 			evt.preventDefault();
 		}
 	},
-	// Initialization function
+	
+
+<span id='NFLCIME-method-initialize'>	/**
+</span>	 * @private
+	 * Initialize the module
+	 * Tries to locate the Script node that loads nflcime.js or nflcime-packed.js
+	 * Will load any modules define by the &quot;modules&quot; property of the script
+	 * Invokes this.parseConfigurationCode() method to eval code that&#39;s inside the Script element
+	 * Attaches event listeners for the following events:
+	 * &lt;ul&gt;
+	 * &lt;li&gt;WindowListen&lt;/li&gt;
+	 * &lt;li&gt;WindowIgnore&lt;/li&gt;
+	 * &lt;li&gt;WindowGetList&lt;/li&gt;
+	 * &lt;li&gt;ServiceApplicable&lt;/li&gt;
+	 * &lt;li&gt;ModuleAdd&lt;/li&gt;
+	 * &lt;li&gt;ModuleRegister&lt;/li&gt;
+	 * &lt;li&gt;ModuleActivate&lt;/li&gt;
+	 * &lt;li&gt;ModuleLoad&lt;/li&gt;
+	 * &lt;li&gt;ModuleGetList&lt;/li&gt;
+	 * &lt;/ul&gt;
+	 * Automatically activates the cursor module if the lang module is invoked
+	 */
+
+
 	initialize: function() {
 		// figure out the url root of this script
 		var scripts = document.getElementsByTagName(&#39;SCRIPT&#39;);
@@ -511,7 +684,9 @@ NFLCIME.extend(NFLCIME, {
 			var url = script.src;
 			if (url) {
 				var match;
-				if (match = /(.*\/)?[^\/]*nflcime.js$/i.exec(url)) {
+
+				if (match = /(.*\/)?[^\/]*[nflcime.js|nflcime-packed]$/i.exec(url)) {
+
 					this.scriptNode = script;
 					this.scriptContainer = script.parentNode;
 					this.environment.scriptURLRoot = match[1];
@@ -523,6 +698,9 @@ NFLCIME.extend(NFLCIME, {
 				}
 			}
 		}
+
+
+
 		if (!this.scriptNode) {
 			alert(&#39;Cannot find the SCRIPT node linking to nflcime.js&#39;);
 			return;
@@ -544,10 +722,21 @@ NFLCIME.extend(NFLCIME, {
 		this.addEventListener(&#39;ModuleLoad&#39;, this);
 		this.addEventListener(&#39;ModuleGetList&#39;, this);
 		var init_modules = this.environment.configuration[&#39;Modules&#39;];
+
 		if (init_modules) {
 
 			for (var i = 0; i &lt; init_modules.length; i++) {
+
 				var m = init_modules[i];
+
+				if (m.id == &#39;lang&#39; &amp;&amp; m.compressed) {
+					init_modules.push({
+						id: &#39;cursor&#39;,
+						activate: true,
+						compressed: true
+					});
+				}
+
 				this.dispatchEvent({
 					type: &#39;ModuleLoad&#39;,
 					moduleId: m.id,
@@ -562,19 +751,7 @@ NFLCIME.extend(NFLCIME, {
 		});
 	},
 
-	reinitialize: function() {
-		this.removeEventListener(&#39;WindowListen&#39;, this);
-		this.removeEventListener(&#39;WindowIgnore&#39;, this);
-		this.removeEventListener(&#39;WindowGetList&#39;, this);
-		this.removeEventListener(&#39;ServiceApplicable&#39;, this);
-		this.removeEventListener(&#39;ModuleAdd&#39;, this);
-		this.removeEventListener(&#39;ModuleRegister&#39;, this);
-		this.removeEventListener(&#39;ModuleActivate&#39;, this);
-		this.removeEventListener(&#39;ModuleLoad&#39;, this);
-		this.removeEventListener(&#39;ModuleGetList&#39;, this);
-
-		this.initialize();
-	},
+	
 
 	//--- Private variables
 	environment: {
@@ -583,17 +760,32 @@ NFLCIME.extend(NFLCIME, {
 		configuration: {}
 	},
 	scriptNode: null,
+
+<span id='NFLCIME-property-scriptContainer'>	/**
+</span>	 * @private
+	 *  The parent node of the script node that loads nflcime.js (typically the &amp;lt;head&amp;gt;)
+	 */
+
 	scriptContainer: null,
+
+
 	settingsCode: &#39;&#39;,
 	eventListenerHash: {},
 	closures: {},
 	registeredModules: {},
+
+<span id='NFLCIME-property-pendingModules'>	/**
+</span>	 * @private
+	 *  Array of modules that are waiting for dependencies to load
+	 */
+
 	pendingModules: [],
+
 	activateOnLoad: {},
 	windowsHandled: []
 });
 
-function trace() {};
+// function trace() {};
 NFLCIME.initialize();
 </pre>
 </body>

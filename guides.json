@@ -1,0 +1,32 @@
+[
+
+  {
+  	"title" : "Getting Started",
+  	"items" : [
+      {
+      	"name" : "getting_started",
+      	"url" : "guides/getting_started",
+      	"title" : "Getting Started with NFLC IME",
+      	"description" : "This introduction explains how to attach a foreign language keyboard to an HTML text area"
+      }
+  	]
+  },
+  {
+  	"title" : "Contributing to the Project",
+  	"items" : [
+  	  {
+      	"name" : "modifyingkernel",
+      	"url" : "guides/contributing",
+      	"title" : "Modifying the Core",
+      	"description" : "This guide explains how to modify the core and create a production build"
+      },
+      {
+      	"name" : "addlanguage",
+      	"url" : "guides/addlanguage",
+      	"title" : "Adding/Modifying a Language Keyboard",
+      	"description" : "This guide explains how to add or modify a language keyboard"
+      }
+  	]
+  }
+
+]

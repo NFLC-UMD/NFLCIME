@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <title>TinyMCE4Sample</title>
 
+    <!-- using "Developer edition" -->
+     <script src="../../NFLCIME/nflcime.js">
+        Modules: [
+            {id: 'cursor', compressed: false, activate: true},
+            {id: 'rt', compressed: false, activate: true}
+        ]
+    </script>
+
     <!-- for ICE/TinyMCE -->
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>
@@ -29,12 +37,7 @@
     <script type="text/javascript" src="packages/TinyMCE/resources/ice/tinymce4_plugin/plugin.js"></script>
 
 
-     <script src="../../NFLCIME/nflcime.js">
-        Modules: [
-            {id: 'cursor', compressed: true, activate: true},
-            {id: 'rt', compressed: true, activate: true}
-        ]
-    </script>
+
 
     <!-- <x-compile> -->
         <!-- <x-bootstrap> -->
