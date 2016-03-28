@@ -4,7 +4,7 @@
         "name": "Simple-Textarea",
         "title": "HTML Textarea",
         "description": "Simple invocation of IME in a Textarea with a Language Selector",
-        "url": "../../../examples/textareatest.html",
+        "url": "../../../examples/textareawithcomboselector.html",
         "icon": "../../../resources/docs/application_enterprise_information.png",
         "status": "updated"
     },

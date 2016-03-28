@@ -39,7 +39,7 @@ NFLCIME.extend = function(obj, ext) {
 				}
 			}
 		}
-	};
+	}
 
 	return obj;
 };
@@ -338,7 +338,8 @@ NFLCIME.extend(NFLCIME, {
 			&quot;rt.scrube.js&quot;,
 			&quot;rt.js&quot;,
 			&quot;cursor.js&quot;,
-			&quot;lang.js&quot;
+			&quot;lang.js&quot;,
+			&quot;languages.json&quot;
 		];
 
 		if (sourcefiles.indexOf(url) === -1) {
@@ -414,8 +415,8 @@ NFLCIME.extend(NFLCIME, {
 			var script = document.createElement(&#39;SCRIPT&#39;);
 			script.src = full_url;
 			head.appendChild(script);
-			
-			
+
+
 		}
 	},
 	*/
@@ -593,6 +594,7 @@ NFLCIME.extend(NFLCIME, {
 });
 
 function trace() {};
-NFLCIME.initialize();</pre>
+NFLCIME.initialize();
+</pre>
 </body>
 </html>
