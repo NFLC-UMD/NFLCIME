@@ -114,12 +114,13 @@ tinymce.PluginManager.add('bloom', function(ed, url) {
 	};
 
 	bloom_plugin.doLanguagesExist = function() {
+		
 		if (bloom_plugin.exists("NFLCIME.registeredModules.lang.languages")) {
-			console.log('Languages loaded.');
+			// console.log('Languages loaded.');
 			bloom_plugin.supportedLanguages = NFLCIME.registeredModules.lang.languages;
 			bloom_plugin.afterLanguagesExist();
 		} else {
-			console.log('Waiting on languages to load.');
+			// console.log('Waiting on languages to load.');
 			setTimeout(function() {
 				bloom_plugin.doLanguagesExist();
 			}, 100);
@@ -477,6 +478,7 @@ tinymce.PluginManager.add('bloom', function(ed, url) {
 
 
 		ed.on('setBloomLanguages', function __setbloomlanguages__(ed) {
+
 			// only set once
 			// if (!ed.bloomLanguagesSet) {
 			// added type conversion 09/17/2014 sdd

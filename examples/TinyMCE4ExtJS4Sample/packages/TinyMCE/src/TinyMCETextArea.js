@@ -563,7 +563,7 @@ Ext.define('Ext.ux.form.TinyMCETextArea', {
 
                 // this is going to set value of underlying textfield,
                 // but the Ext component won't register the change
-                console.log('change',new Date());
+                // console.log('change',new Date());
                 ed.save();
 
                 if (me.inline) {

@@ -16,7 +16,7 @@
   "weight": 2,
   "kbd": false
 }, {
-  "id": "msa",
+  "id": "arabic",
   "twoLetterISO": "ar",
   "threeLetterISO": "arb",
   "characterSet": "\u0600-\u063a",
