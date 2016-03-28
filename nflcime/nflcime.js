@@ -122,6 +122,7 @@ NFLCIME.extend(NFLCIME, {
 	},
 	// Whether a given IME service is active for a given element
 	onServiceApplicable: function(evt) {
+
 		var element = evt.target;
 		var services_requested = evt.service.split(/\s*,\s*/);
 		evt.applicable = false;
@@ -157,15 +158,18 @@ NFLCIME.extend(NFLCIME, {
 	// Add a module (triggered by dynamically loaded script files)
 	onModuleAdd: function(evt) {
 		var module = evt.module;
+		
 
 		if (this.checkModuleDependency(module)) {
 			var ready = this.initializeModule(module);
 			if (ready) {
+				console.log('module ready:',evt.module.id);
 				this.dispatchEvent({
 					type: 'ModuleRegister',
 					module: module
 				});
 			} else {
+				console.log('module not ready', evt.module);
 				// the module isn't quite ready yet, likely because it's waiting for an asynchronous operation to finish
 				// once that's done, the module will fire a ModuleRegister event itself
 			}
@@ -376,33 +380,13 @@ NFLCIME.extend(NFLCIME, {
 			}
 			var script = document.createElement('SCRIPT');
 
-			console.log('loading: ', full_url);
+			
 			script.src = full_url;
 			head.appendChild(script);
 
 		}
 	},
-	/*
-	loadScriptFile:function(url) {
-		var head = document.getElementsByTagName('HEAD')[0];
-		if(head) {
-			// add the folder path if necessary
-			var full_url = (/^\w+:/.test(url) || /^\//.test(url)) ? url : this.environment.scriptURLRoot + url;
-			// make sure we're not loading a script twice
-			var scripts = document.getElementsByTagName('SCRIPT');
-			for(var i = 0; i < scripts.length; i++) {
-				if(scripts[i].src == full_url) {
-					return;
-				}
-			}
-			var script = document.createElement('SCRIPT');
-			script.src = full_url;
-			head.appendChild(script);
-
-
-		}
-	},
-	*/
+	
 	// Initialize a module, copy functionalities from inherited modules if necessary
 	initializeModule: function(module) {
 		var result;
@@ -494,7 +478,9 @@ NFLCIME.extend(NFLCIME, {
 			var url = script.src;
 			if (url) {
 				var match;
-				if (match = /(.*\/)?[^\/]*nflcime.js$/i.exec(url)) {
+
+				if (match = /(.*\/)?[^\/]*[nflcime.js|nflcime-packed]$/i.exec(url)) {
+
 					this.scriptNode = script;
 					this.scriptContainer = script.parentNode;
 					this.environment.scriptURLRoot = match[1];
@@ -506,6 +492,9 @@ NFLCIME.extend(NFLCIME, {
 				}
 			}
 		}
+
+
+
 		if (!this.scriptNode) {
 			alert('Cannot find the SCRIPT node linking to nflcime.js');
 			return;
@@ -527,10 +516,21 @@ NFLCIME.extend(NFLCIME, {
 		this.addEventListener('ModuleLoad', this);
 		this.addEventListener('ModuleGetList', this);
 		var init_modules = this.environment.configuration['Modules'];
+
 		if (init_modules) {
 
 			for (var i = 0; i < init_modules.length; i++) {
+
 				var m = init_modules[i];
+
+				if (m.id == 'lang' && m.compressed) {
+					init_modules.push({
+						id: 'cursor',
+						activate: true,
+						compressed: true
+					});
+				}
+
 				this.dispatchEvent({
 					type: 'ModuleLoad',
 					moduleId: m.id,

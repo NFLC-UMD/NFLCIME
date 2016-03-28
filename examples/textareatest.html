@@ -5,18 +5,13 @@
 
 <link rel="stylesheet" type="text/css" href="../NFLCIME/fontcss/langs.css" />
 
-<script language="javascript" src="../NFLCIME/nflcime.js">
+<script language="javascript" src="../NFLCIME/nflcime-packed.js">
 
 Modules:[
 //	{ id:'pers.cookie', activate:true },
-	{ id:'ui.iframe', activate:true },
-	{ id:'lang', activate:true }
-],
-
-UIModules:[
-	{ id:'ui.trace', url:'xtra.ui.trace.html', options: { hAlign:'right', vAlign:'top', width:200, height:300 } }
+	{ id:'ui.iframe', activate:true, compressed: true},
+	{ id:'lang', activate:true , compressed: true}
 ]
-
 </script>
 <style>
 
@@ -34,14 +29,6 @@ TEXTAREA {
 </head>
 <body>
 <h2>New Languages for LLO_TTO(1&amp;2)_FY12</h2>
-<!-- 
-
-ayl	Arabic, Libyan 
-ces	Czech
-deu German
-ton Tongan
-
--->
 
 <div class="box">
 <h3>Arabic, Libyan</h3>

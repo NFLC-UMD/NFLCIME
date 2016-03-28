@@ -7,23 +7,22 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-          'source/nflcime_f.js',
-          'source/nflcime.js',
-          'source/pers.cookie.js',
-          'source/ui.iframe.js',
-          'source/cursor.js',
-          'source/lang.js',
-          'source/kb.js',
-          'source/rt.js',
-          'source/rt.scrube.js'
+          // 'nflcime/src/nflcime_f.js',
+          'nflcime/nflcime.js',
+         //  'nflcime/src/nflcime_f.js',
+          'nflcime/src/pers.cookie.js',
+          'nflcime/src/ui.iframe.js',
+          'nflcime/src/cursor.js',
+          'nflcime/src/kb.js',
+          'nflcime/src/rt.js',
+          'nflcime/src/rt.scrube.js',
+          'nflcime/src/lang.js'
         ],
-        dest: 'nflcime-packed.js'
+        dest: 'nflcime/nflcime-packed.js'
       }
     },
     uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-      },
+    
       dist: {
         files: {
           'build/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']

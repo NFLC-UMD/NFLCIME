@@ -14,6 +14,7 @@ NFLCIME.dispatchEvent({
 		type: 'language',
 		dependency: ['cursor'],
 		onModuleActivate: function(evt) {
+			console.log('lang is activated');
 			var module = evt.module;
 			if (module == this) {
 				NFLCIME.addEventListener('FocusChanged', this);
@@ -561,6 +562,7 @@ NFLCIME.dispatchEvent({
 			}
 		},
 		initialize: function(env, subclassing) {
+			console.log('lang initializing!');
 			var me = this;
 			this.defaultIETFTag = env.configuration.defaultIETFTag;
 
