@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     
       dist: {
         files: {
-          'build/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          'nflcime/nflcime-packed.min.js': ['nflcime/nflcime-packed.js']
         }
       }
     }
