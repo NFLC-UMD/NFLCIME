@@ -1,4 +1,4 @@
-# My Example guide
+# Getting Started with the API
 
 A guide about blah blah blah...
 
