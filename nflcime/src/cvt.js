@@ -1,6 +1,6 @@
 /**
  * @docauthor Steve Drucker <sdrucker@figleaf.com>
- *
+ * Convert text during Rich Text paste
  * @class NFLCIME.CVT
  *
  */

@@ -154,7 +154,7 @@ function initialize() {
 	attachDOMHandler(element('frame-drag-bar'), 'dblclick', function(evt) { if(evt.target.className != 'corner-button') module.toggleCollapse() });
 	// load google translate module
 	if(window.google) {
-		google.load('language', '1', { language:'en', callback:onGoogleAPILoad } );
+		google.load('language', '2', { language:'en', callback:onGoogleAPILoad } );
 	}
 	// attach handlers to page elements
 	attachDOMHandler(element('source-language'), 'change', onSourceChange);
