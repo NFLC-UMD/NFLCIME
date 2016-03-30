@@ -5,7 +5,7 @@
   "characterSet": "a-zA-Z\u00eb@\u00cb\u00c7",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "amharic",
   "twoLetterISO": "am",
@@ -14,7 +14,7 @@
   "script": "geez",
   "direction": "ltr",
   "weight": 2,
-  "kbd": false
+  "kbd": true
 }, {
   "id": "arabic",
   "twoLetterISO": "ar",
@@ -24,7 +24,7 @@
   "direction": "rtl",
   "weight": 10,
   "variants": ["aao", "abh", "abv", "acm", "acq", "acw", "acx", "acy", "adf", "aeb", "aec", "afb", "ajp", "apc", "apd", "arb", "arq", "ars", "ary", "arz", "auz", "avl", "ayh", "ayl", "ayn", "ayp", "bbz", "pga", "shu", "ssh"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "azeri",
   "twoLetterISO": "az",
@@ -32,7 +32,7 @@
   "characterSet": "\u0400-\u044f\u04b9\u04d9\u0493\u04e9\u04b8\u04d8\u0492\u04e8",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "bambara",
   "twoLetterISO": "bm",
@@ -40,7 +40,7 @@
   "characterSet": "a-zA-Z\u00e7\u00e9\u025b\u0254\u00e0\u00e8\u0272\u014b\u00f9\u019d\u014a\u0190\u0186",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "balochi",
   "threeLetterISO": "bal",
@@ -48,7 +48,7 @@
   "script": "arabic",
   "direction": "rtl",
   "variants": ["bgp", "bcc", "bgn"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "belarussian",
   "twoLetterISO": "be",
@@ -56,7 +56,7 @@
   "characterSet": "\u0400-\u044f\u0406\u0456\u045e",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "bengali",
   "twoLetterISO": "bn",
@@ -64,14 +64,14 @@
   "characterSet": "\u0980-\u09ff",
   "script": "bengali",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "brahui",
   "threeLetterISO": "brh",
   "characterSet": "\u0600-\u063a\u0698\u06a9\u06af\u0679\u067e\u0686\u0688\u0691\u06cc\u06d2\u06d3\u06ba\u06be\u06c0\u06c1\u06c2\u06c3\u06f0-\u06f9",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "bulgarian",
   "twoLetterISO": "bg",
@@ -79,7 +79,7 @@
   "characterSet": "\u0400-\u044f",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "burmese",
   "twoLetterISO": "my",
@@ -87,7 +87,7 @@
   "characterSet": "\u1000-\u109f",
   "script": "burmese",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "chechen",
   "twoLetterISO": "ce",
@@ -95,7 +95,7 @@
   "characterSet": "\u0400-\u044fI",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "chinese",
   "twoLetterISO": "zh",
@@ -113,7 +113,7 @@
   "characterSet": "a-zA-Z\u0161\u0111\u017e\u010d\u0107\u0160\u0110\u017d\u010c\u0106",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "czech",
   "twoLetterISO": "cs",
@@ -121,7 +121,7 @@
   "characterSet": "a-zA-Z\u011b\u0161\u010d\u0159\u017e\u00fd\u00e1\u00ed\u00e9\u00fa\u016f",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "danish",
   "twoLetterISO": "da",
@@ -129,14 +129,14 @@
   "characterSet": "a-zA-Z\u00e5\u00e6\u00f8\u00c5\u00c6\u00d8",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "dari",
   "threeLetterISO": "prs",
   "characterSet": "\u0600-\u063a\u0698\u06a9\u06af\u067e\u0686\u06cc\u06f0-\u06f9",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "dinka",
   "threeLetterISO": "din",
@@ -144,7 +144,7 @@
   "script": "latin",
   "direction": "ltr",
   "variants": ["dip", "diw", "dib", "dks", "dik"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "dutch",
   "twoLetterISO": "nl",
@@ -152,14 +152,15 @@
   "characterSet": "a-zA-Z",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "english",
   "twoLetterISO": "en",
   "threeLetterISO": "eng",
   "characterSet": "a-zA-Z",
   "script": "latin",
-  "direction": "ltr"
+  "direction": "ltr",
+  "kbd": false
 }, {
   "id": "estonian",
   "twoLetterISO": "es",
@@ -167,7 +168,7 @@
   "characterSet": "a-zA-Z\u00fc\u00f5\u00f6\u00e4\u00dc\u00d5\u00d6\u00c4\u0161\u017e",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "farsi",
   "twoLetterISO": "fa",
@@ -177,7 +178,7 @@
   "direction": "rtl",
   "weight": 5,
   "variants": ["prs", "pes"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "finnish",
   "twoLetterISO": "fi",
@@ -185,7 +186,7 @@
   "characterSet": "a-zA-Z\u00e5\u00f6\u00e4\u00c5\u00d6\u00c4",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "french",
   "twoLetterISO": "fr",
@@ -194,7 +195,7 @@
   "script": "latin",
   "direction": "ltr",
   "weight": 8,
-  "kbd": false
+  "kbd": true
 }, {
   "id": "georgian",
   "twoLetterISO": "ka",
@@ -202,7 +203,7 @@
   "characterSet": "\u10a0-\u10ff",
   "script": "georgian",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "german",
   "twoLetterISO": "de",
@@ -210,7 +211,7 @@
   "characterSet": "a-zA-Z\u00fc\u00f6\u00e4\u00df\u00dc\u00d6\u00c4",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "greek",
   "twoLetterISO": "el",
@@ -218,7 +219,7 @@
   "characterSet": "\u0370-\u03ff",
   "script": "greek",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "gujarati",
   "twoLetterISO": "gu",
@@ -226,7 +227,7 @@
   "characterSet": "\u0a80-\u0aff",
   "script": "gujarati",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "haitian",
   "twoLetterISO": "ht",
@@ -234,14 +235,14 @@
   "characterSet": "a-zA-Z\u00e0\u00e8\u00f2",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "hassaniyya",
   "threeLetterISO": "mey",
   "characterSet": "\u0600-\u063a",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "hausa",
   "twoLetterISO": "ha",
@@ -249,7 +250,7 @@
   "characterSet": "a-zA-Z\u0253\u0257\u0199\u01b4\u0181\u018a\u0198\u01b3",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "hebrew",
   "twoLetterISO": "he",
@@ -257,7 +258,7 @@
   "characterSet": "\u0590-\u05ff",
   "script": "hebrew",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "hindi",
   "twoLetterISO": "hi",
@@ -266,7 +267,7 @@
   "script": "devanagari",
   "direction": "ltr",
   "weight": 6,
-  "kbd": false
+  "kbd": true
 }, {
   "id": "hindko",
   "threeLetterISO": "hno",
@@ -274,7 +275,7 @@
   "script": "arabic",
   "direction": "rtl",
   "variants": ["hnd"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "hungarian",
   "twoLetterISO": "hu",
@@ -282,7 +283,7 @@
   "characterSet": "a-zA-Z\u00f6\u00fc\u00f3\u0151\u00fa\u0171\u00e9\u00e1\u00d6\u00dc\u00d3\u0150\u00da\u0170\u00c9\u00c1",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "igbo",
   "twoLetterISO": "ig",
@@ -290,14 +291,14 @@
   "characterSet": "a-zA-Z\u1ee5\u1ecb\u1ecd\u1ee4\u1eca\u1ecc\u0300\u0301\u0304",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "iraqi",
   "threeLetterISO": "acm",
   "characterSet": "\u0600-\u063a",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "italian",
   "twoLetterISO": "it",
@@ -305,7 +306,7 @@
   "characterSet": "a-zA-Z\u00e0\u00e8\u00ec\u00f2\u00f9",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "japanese",
   "twoLetterISO": "ja",
@@ -321,7 +322,7 @@
   "characterSet": "\u0600-\u063a\u06c4\u0672\u0673\u06f0-\u06f9",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "kazakh",
   "twoLetterISO": "kk",
@@ -329,7 +330,7 @@
   "characterSet": "\u0400-\u044f\u04d9\u0456\u04a3\u0493\u04af\u04b1\u049b\u04e9\u04bb\u04d8\u0406\u04a2\u0492\u04ae\u04b0\u049a\u04e8\u04ba",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "korean",
   "twoLetterISO": "ko",
@@ -346,7 +347,7 @@
   "script": "",
   "direction": "",
   "variants": ["ckb", "kmr", "sdh"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "kurmanji",
   "threeLetterISO": "kmr",
@@ -361,7 +362,7 @@
   "characterSet": "\u0400-\u044f\u04e8\u04e9\u04a2\u04a3\u04ae\u04af",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "latvian",
   "twoLetterISO": "lv",
@@ -369,7 +370,7 @@
   "characterSet": "a-zA-Z\u016b\u0113\u010d\u017e\u0137\u0161\u0146\u012b\u0101\u013c\u016a\u0112\u010c\u017d\u0136\u0160\u0145\u012a\u0100\u013b",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "lithuanian",
   "twoLetterISO": "lt",
@@ -377,7 +378,7 @@
   "characterSet": "a-zA-Z\u0105\u010d\u0119\u0117\u012f\u0161\u0173\u016b\u017e\u0104\u010c\u0118\u0116\u012e\u0160\u0172\u016a\u017d",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "lao",
   "twoLetterISO": "lo",
@@ -385,7 +386,7 @@
   "characterSet": "\u0e80-\u0eff",
   "script": "lao",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "macedonian",
   "twoLetterISO": "mk",
@@ -393,21 +394,21 @@
   "characterSet": "\u0400-\u044f\u0453\u045c\u045f\u0403\u040c\u040f",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "maguindanao",
   "threeLetterISO": "mdh",
   "characterSet": "a-zA-Z",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "maranao",
   "threeLetterISO": "mrw",
   "characterSet": "a-zA-Z",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "norwegian",
   "twoLetterISO": "no",
@@ -416,7 +417,7 @@
   "script": "latin",
   "direction": "ltr",
   "variants": ["nob", "nno"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "pashto",
   "twoLetterISO": "ps",
@@ -425,7 +426,7 @@
   "script": "arabic",
   "direction": "rtl",
   "variants": ["pst", "pbu", "pbt"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "potwari",
   "threeLetterISO": "phr",
@@ -433,7 +434,7 @@
   "script": "arabic",
   "direction": "rtl",
   "variants": ["pst", "pbu", "pbt"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "polish",
   "twoLetterISO": "pl",
@@ -441,7 +442,7 @@
   "characterSet": "a-zA-Z\u0119\u00f3\u0105\u015b\u0142\u017c\u017a\u0107\u0144\u0118\u00d3\u0104\u015a\u0141\u017b\u0179\u0106\u0143",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "epunjabi",
   "twoLetterISO": "pa",
@@ -450,7 +451,7 @@
   "script": "gurmukhi",
   "direction": "ltr",
   "weight": 2,
-  "kbd": false
+  "kbd": true
 }, {
   "id": "wpunjabi",
   "twoLetterISO": "pa",
@@ -458,7 +459,7 @@
   "characterSet": "\u0600-\u063a\u0698\u06a9\u06af\u0679\u067e\u0686\u0688\u0691\u06cc\u06d2\u06d3\u06ba\u06be\u06c0\u06c1\u06c2\u06c3\u06f0-\u06f9",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "portugese",
   "twoLetterISO": "pt",
@@ -466,7 +467,7 @@
   "characterSet": "a-zA-Z\u00e1\u00e2\u00e3\u00e0\u00e7\u00e9\u00ea\u00ed\u00f3\u00f4\u00f5\u00fa\u00c1\u00c2\u00c3\u00c0\u00c7\u00c9\u00ca\u00cd\u00d3\u00d4\u00d5\u00da",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "quechua",
   "twoLetterISO": "qu",
@@ -474,7 +475,7 @@
   "characterSet": "a-zA-Z\u00e1\u00e9\u00ed\u00f3\u00fa\u00fc\u00f1\u00c1\u00c9\u00cd\u00d3\u00da\u00dc\u00d1",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "romanian",
   "twoLetterISO": "ro",
@@ -482,7 +483,7 @@
   "characterSet": "a-zA-Z\u0103\u00ee\u00e2\u0219\u021b\u0102\u00ce\u00c2\u0218\u021a",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "russian",
   "twoLetterISO": "ru",
@@ -491,7 +492,7 @@
   "script": "cyrillic",
   "direction": "ltr",
   "weight": 8,
-  "kbd": false
+  "kbd": true
 }, {
   "id": "sama",
   "threeLetterISO": "ssb",
@@ -499,7 +500,7 @@
   "script": "latin",
   "direction": "ltr",
   "variants": ["sml", "slm"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "serbian",
   "twoLetterISO": "sr",
@@ -507,7 +508,7 @@
   "characterSet": "\u0410-\u044f\u0452\u0458\u0459\u045a\u045b\u045f",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "sindhi",
   "twoLetterISO": "sd",
@@ -515,14 +516,14 @@
   "characterSet": "\u0600-\u063a",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "siraiki",
   "threeLetterISO": "skr",
   "characterSet": "\u0600-\u063a\u0698\u06a9\u06af\u0679\u067e\u0686\u0688\u0691\u06cc\u06d2\u06d3\u06ba\u06be\u06c0\u06c1\u06c2\u06c3\u06b0\u06f0-\u06f9",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "slovene",
   "twoLetterISO": "sl",
@@ -530,7 +531,7 @@
   "characterSet": "a-zA-Z",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "slovak",
   "twoLetterISO": "sk",
@@ -538,7 +539,7 @@
   "characterSet": "a-zA-Z\u013e\u0161\u010d\u0165\u017e\u00fd\u00e1\u00ed\u00e9\u00fa\u00e4\u0148\u00f4",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "sorani",
   "threeLetterISO": "ckb",
@@ -554,14 +555,14 @@
   "script": "latin",
   "direction": "ltr",
   "weight": 7,
-  "kbd": false
+  "kbd": true
 }, {
   "id": "sudanese",
   "threeLetterISO": "apd",
   "characterSet": "\u0600-\u063a",
   "script": "arabic",
   "direction": "rtl",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "swahili",
   "twoLetterISO": "sw",
@@ -578,7 +579,7 @@
   "characterSet": "a-zA-Z\u00e5\u00f6\u00e4\u00c5\u00d6\u00c4",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "tagalog",
   "twoLetterISO": "tl",
@@ -586,7 +587,7 @@
   "characterSet": "a-zA-Z",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "tajik",
   "twoLetterISO": "tg",
@@ -594,7 +595,7 @@
   "characterSet": "\u0400-\u044f\u0493\u04ef\u049b\u04b3\u04b7\u04e3\u0492\u04ee\u049a\u04b2\u04b6\u04e2",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "thai",
   "twoLetterISO": "th",
@@ -602,7 +603,7 @@
   "characterSet": "\u0e00-\u0e7f",
   "script": "thai",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "tigrinya",
   "twoLetterISO": "ti",
@@ -610,7 +611,7 @@
   "characterSet": "\u1200-\u137f",
   "script": "geez",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "turkish",
   "twoLetterISO": "tr",
@@ -618,7 +619,7 @@
   "characterSet": "a-zA-Z\u00e9\u011f\u00fc\u015f\u00f6\u00e7\u011f\u00fc\u015f\u00e7",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "turkmen",
   "twoLetterISO": "tk",
@@ -626,7 +627,7 @@
   "characterSet": "a-zA-Z\u00fd\u00e4\u00fc\u00f6\u017e\u0148\u015f\u00e7\u00dd\u00c4\u00dc\u00d6\u017d\u0147\u015e\u00c7",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "ukrainian",
   "twoLetterISO": "uk",
@@ -634,7 +635,7 @@
   "characterSet": "\u0400-\u044f\u0454\u0404\u0406\u0491\u0456\u0457",
   "script": "cyrillic",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "uzbek",
   "twoLetterISO": "uz",
@@ -643,7 +644,7 @@
   "script": "cyrillic",
   "direction": "ltr",
   "variants": ["uzn", "uzs"],
-  "kbd": false
+  "kbd": true
 }, {
   "id": "wolof",
   "twoLetterISO": "wo",
@@ -651,7 +652,7 @@
   "characterSet": "a-zA-Z\u014b\u00e0\u0101\u00e9\u00eb\u0113\u012b\u00f3\u014d\u016b\u00f1\u014a\u00c0\u00c9\u00d3\u00cb\u0100\u0112\u012a\u014c\u016a\u00d1",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "urdu",
   "twoLetterISO": "ur",
@@ -660,7 +661,7 @@
   "script": "arabic",
   "direction": "rtl",
   "weight": 2,
-  "kbd": false
+  "kbd": true
 }, {
   "id": "vietnamese",
   "twoLetterISO": "vi",
@@ -668,14 +669,14 @@
   "characterSet": "a-zA-Z\u0103\u00e2\u00ea\u00f4\u01a1\u01b0\u0102\u00c2\u00ca\u00d4\u01a0\u01af\u0300\u0301\u0303\u0309\u0323",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "yakan",
   "threeLetterISO": "yka",
   "characterSet": "a-zA-Z",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }, {
   "id": "yoruba",
   "twoLetterISO": "yo",
@@ -683,5 +684,5 @@
   "characterSet": "a-zA-Z\u00c0\u00c1\u00c8\u00c9\u00cc\u00cd\u00d2\u00d3\u00d9\u00da\u00e0\u00e1\u00e8\u00e9\u00ec\u00ed\u00f2\u00f3\u00f9\u00fa\u0300\u0301\u0323\u1e62\u1e63\u1eb8\u1eb9\u1ecc\u1ecd",
   "script": "latin",
   "direction": "ltr",
-  "kbd": false
+  "kbd": true
 }]

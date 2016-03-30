@@ -35,7 +35,7 @@ Ext.define('TinyMCE4Sample.view.Main', {
             width: 800,
             height: 200,
             iceUserName: 'anonymous',
-            languages : "en,arb",
+            languages : "en,arb,amh,sqi",
             plugin_bloom: true,
             plugin_ice: true,
             plugin_icesearchreplace: false,

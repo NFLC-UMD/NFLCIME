@@ -87,6 +87,7 @@ NFLCIME.extend(NFLCIME, {
 	 */
 
 	dispatchEvent: function(evt) {
+		console.log(evt);
 		var result;
 		var loops = ['_cap', '']; // send event to capturing listeners first
 		for (var k = 0; k < loops.length; k++) {

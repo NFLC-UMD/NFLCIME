@@ -29,6 +29,7 @@ NFLCIME.dispatchEvent({
 		 */
 
 		onModuleActivate: function(evt) {
+	
 			var module = evt.module;
 			if (module == this) {
 				if (!this.active) {

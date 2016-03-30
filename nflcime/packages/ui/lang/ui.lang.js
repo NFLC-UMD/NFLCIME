@@ -103,7 +103,6 @@ function onClick(evt) {
 			setOption(target.id, target.checked);
 			break;
 		case 'link':
-			debugger;
 			var url = target.id + '.html';
 			NFLCIME.dispatchEvent( { type:'UIModuleLoad', moduleId:target.id, url:url, options: { hAlign:'left', vAlign:'top', x:defaultModulePosition.x, y:defaultModulePosition.y } } );
 			defaultModulePosition.x += 30;
