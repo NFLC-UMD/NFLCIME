@@ -1193,7 +1193,13 @@ NFLCIME.dispatchEvent({
 			}
 			return false;
 		},
-		// Move the end-point of a DOM range object
+
+		
+		/**
+		 * Move the end-point of a DOM range object
+		 * 
+		 * 
+		 */
 		moveRangeEnd : function(container, range, amount) {
 			if (amount == 0) {
 				return;
@@ -1204,7 +1210,13 @@ NFLCIME.dispatchEvent({
 							range.endOffset, amount, true);
 			range.setEnd(result.node, result.index);
 		},
-		// Move the starting-point of a DOM range object
+		
+		/**
+		 * Move the starting-point of a DOM range object
+		 * 
+		 * 
+		 */
+		 
 		moveRangeStart : function(container, range, amount) {
 			if (amount == 0) {
 				return;

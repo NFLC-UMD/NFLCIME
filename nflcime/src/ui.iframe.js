@@ -1,3 +1,11 @@
+/**
+ * @docauthor Steve Drucker <sdrucker@figleaf.com.com>
+ *
+ * @class ui.iframe.base
+ *
+ * Creates a draggable iframe that's used to render the onscreen virtual keyboard
+ */
+
 NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 {
 	id:'ui.iframe.base',

@@ -1,8 +1,24 @@
+/**
+ * @docauthor Steve Drucker <sdrucker@figleaf.com.com>
+ *
+ * @class rt.scrube
+ *
+ * Scrubs text that is pasted into a rich-text editor
+ */
+
+
 NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 {
 	id:'rt.scrube',
 	type:'util',
 	dependency:['rt'],
+	
+	/**
+	 * Adds an event listener for the "RichTextPaste" event
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onModuleActivate:function(evt) {
 		var module = evt.module;
 		if(module == this && !this.active) {
@@ -10,12 +26,27 @@ NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 			NFLCIME.addEventListener('RichTextPaste', this);
 		}
 	},
+	
+	/**
+	 * Removes the event listener for the "RichTextPaste" event
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onModuleDeactivate:function(evt) {
 		var module = evt.module;
 		if(module == this && this.active) {
 			NFLCIME.removeEventListener('RichTextPaste', this);
 		}
 	},
+
+	/**
+	 * Converts text using symbolic font to unicode
+	 * Removes font and font sizes & sets the target language
+	 *
+	 * @param {Object} [evt] Event details
+	 */
+
 	onRichTextPaste:function(evt) {
 		var segments = evt.textSegments;
 		for(var i = 0; i < segments.length; i++) {

@@ -854,7 +854,15 @@ NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 	//--- Private variables
 	cookieValueGroups:{}
 }
-} );;NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
+} );;/**
+ * @docauthor Steve Drucker <sdrucker@figleaf.com.com>
+ *
+ * @class ui.iframe.base
+ *
+ * Creates a draggable iframe that's used to render the onscreen virtual keyboard
+ */
+
+NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 {
 	id:'ui.iframe.base',
 	type:'iframe',
@@ -3153,7 +3161,13 @@ NFLCIME.dispatchEvent({
 			}
 			return false;
 		},
-		// Move the end-point of a DOM range object
+
+		
+		/**
+		 * Move the end-point of a DOM range object
+		 * 
+		 * 
+		 */
 		moveRangeEnd : function(container, range, amount) {
 			if (amount == 0) {
 				return;
@@ -3164,7 +3178,13 @@ NFLCIME.dispatchEvent({
 							range.endOffset, amount, true);
 			range.setEnd(result.node, result.index);
 		},
-		// Move the starting-point of a DOM range object
+		
+		/**
+		 * Move the starting-point of a DOM range object
+		 * 
+		 * 
+		 */
+		 
 		moveRangeStart : function(container, range, amount) {
 			if (amount == 0) {
 				return;
@@ -5608,11 +5628,27 @@ NFLCIME.dispatchEvent({
 		}
 	}
 });
-;NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
+;/**
+ * @docauthor Steve Drucker <sdrucker@figleaf.com.com>
+ *
+ * @class rt.scrube
+ *
+ * Scrubs text that is pasted into a rich-text editor
+ */
+
+
+NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 {
 	id:'rt.scrube',
 	type:'util',
 	dependency:['rt'],
+	
+	/**
+	 * Adds an event listener for the "RichTextPaste" event
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onModuleActivate:function(evt) {
 		var module = evt.module;
 		if(module == this && !this.active) {
@@ -5620,12 +5656,27 @@ NFLCIME.dispatchEvent({
 			NFLCIME.addEventListener('RichTextPaste', this);
 		}
 	},
+	
+	/**
+	 * Removes the event listener for the "RichTextPaste" event
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onModuleDeactivate:function(evt) {
 		var module = evt.module;
 		if(module == this && this.active) {
 			NFLCIME.removeEventListener('RichTextPaste', this);
 		}
 	},
+
+	/**
+	 * Converts text using symbolic font to unicode
+	 * Removes font and font sizes & sets the target language
+	 *
+	 * @param {Object} [evt] Event details
+	 */
+
 	onRichTextPaste:function(evt) {
 		var segments = evt.textSegments;
 		for(var i = 0; i < segments.length; i++) {

@@ -19,6 +19,7 @@
 </span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com&gt;
  *
  * @class Language
+ * Responsible for launching on-screen keyboard when change of language is detected
  *
  */
 
@@ -31,7 +32,7 @@ NFLCIME.dispatchEvent({
 		type: &#39;language&#39;,
 		dependency: [&#39;cursor&#39;],
 		onModuleActivate: function(evt) {
-			console.log(&#39;lang is activated&#39;);
+			
 			var module = evt.module;
 			if (module == this) {
 				NFLCIME.addEventListener(&#39;FocusChanged&#39;, this);
@@ -456,7 +457,8 @@ NFLCIME.dispatchEvent({
 			return false;
 		},
 		launchLanguageInterface: function() {
-			if (this.language) {
+			
+			if (this.language &amp;&amp; this.language.kbd) {
 				var url = &#39;ui.lang.&#39; + this.language.id + &#39;.html&#39;;
 				NFLCIME.dispatchEvent({
 					type: &#39;UIModuleLoad&#39;,
@@ -477,8 +479,18 @@ NFLCIME.dispatchEvent({
 				}
 			}
 		},
+
+
+
+<span id='Language-method-launchKeyboard'>		/**
+</span>		 * Launch onscreen keyboard
+		 *
+		 * 
+		 */
+
 		launchKeyboard: function() {
-			if (this.keyboardId &amp;&amp; this.keyboardEnabled) {
+
+			if (this.keyboardId &amp;&amp; this.keyboardEnabled &amp;&amp; this.language.kbd) {
 				// load and activate the layout
 				NFLCIME.dispatchEvent({
 					type: &#39;ModuleLoad&#39;,
@@ -495,6 +507,13 @@ NFLCIME.dispatchEvent({
 				}
 			}
 		},
+
+<span id='Language-method-launchKeyboardInterface'>		/**
+</span>		 * Launch onscreen keyboard interface
+		 *
+		 * 
+		 */
+
 		launchKeyboardInterface: function() {
 			if (this.keyboard &amp;&amp; this.keyboardShow) {
 				var url = &#39;ui.&#39; + this.keyboard.id + &#39;.html&#39;;

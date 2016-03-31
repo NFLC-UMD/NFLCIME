@@ -15,11 +15,27 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
+  <pre class="prettyprint lang-js"><span id='rt-scrube'>/**
+</span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com.com&gt;
+ *
+ * @class rt.scrube
+ *
+ * Scrubs text that is pasted into a rich-text editor
+ */
+
+
+NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
 {
 	id:&#39;rt.scrube&#39;,
 	type:&#39;util&#39;,
 	dependency:[&#39;rt&#39;],
+	
+<span id='rt-scrube-method-onModuleActivate'>	/**
+</span>	 * Adds an event listener for the &quot;RichTextPaste&quot; event
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onModuleActivate:function(evt) {
 		var module = evt.module;
 		if(module == this &amp;&amp; !this.active) {
@@ -27,12 +43,27 @@
 			NFLCIME.addEventListener(&#39;RichTextPaste&#39;, this);
 		}
 	},
+	
+<span id='rt-scrube-method-onModuleDeactivate'>	/**
+</span>	 * Removes the event listener for the &quot;RichTextPaste&quot; event
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onModuleDeactivate:function(evt) {
 		var module = evt.module;
 		if(module == this &amp;&amp; this.active) {
 			NFLCIME.removeEventListener(&#39;RichTextPaste&#39;, this);
 		}
 	},
+
+<span id='rt-scrube-method-onRichTextPaste'>	/**
+</span>	 * Converts text using symbolic font to unicode
+	 * Removes font and font sizes &amp; sets the target language
+	 *
+	 * @param {Object} [evt] Event details
+	 */
+
 	onRichTextPaste:function(evt) {
 		var segments = evt.textSegments;
 		for(var i = 0; i &lt; segments.length; i++) {

@@ -30,6 +30,13 @@ NFLCIME.dispatchEvent({
 	module : {
 		id : &#39;cursor&#39;,
 		type : &#39;core&#39;,
+
+<span id='Cursor-method-onModuleActivate'>		/**
+</span>		 * Attach DOM event Listeners
+		 *
+		 * @param {Object} [evt] Event details
+		 */
+
 		onModuleActivate : function(evt) {
 			var module = evt.module;
 			if (module == this &amp;&amp; !this.active) {
@@ -45,22 +52,94 @@ NFLCIME.dispatchEvent({
 					var win = list[i];
 					this.attachDOMHandlers(win);
 				}
-				// listen for new windows
+			
+<span id='Cursor-event-WindowListen'>				/**
+</span>				 * @event WindowListen
+				 * Listen for new windows
+				 */
 				NFLCIME.addEventListener(&#39;WindowListen&#39;, this);
+
+<span id='Cursor-event-WindowIgnore'>				/**
+</span>				 * @event WindowIgnore
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;WindowIgnore&#39;, this);
+
+<span id='Cursor-event-CursorMove'>				/**
+</span>				 * @event CursorMove
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorMove&#39;, this);
+
+<span id='Cursor-event-CursorGetContext'>				/**
+</span>				 * @event CursorGetContext
+				 *
+				 */
+
 				NFLCIME.addEventListener(&#39;CursorGetContext&#39;, this);
+
+<span id='Cursor-event-CursorGetFocusedEdit'>				/**
+</span>				 * @event CursorGetFocusedEdit
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorGetFocusedEdit&#39;, this);
+
+<span id='Cursor-event-CursorSaveFocusedEdit'>				/**
+</span>				 * @event CursorSaveFocusedEdit
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorSaveFocusedEdit&#39;, this);
+
+<span id='Cursor-event-CursorRestoreFocusedEdit'>				/**
+</span>				 * @event CursorRestoreFocusedEdit
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorRestoreFocusedEdit&#39;, this);
+
+<span id='Cursor-event-CursorGetContainer'>				/**
+</span>				 * @event CursorGetContainer
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorGetContainer&#39;, this);
+
+<span id='Cursor-event-CursorGetSelectedText'>				/**
+</span>				 * @event CursorGetSelectedText
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorGetSelectedText&#39;, this);
+
+<span id='Cursor-event-CursorInsertText'>				/**
+</span>				 * @event CursorInsertText
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorInsertText&#39;, this);
+
+<span id='Cursor-event-CursorInsertHTML'>				/**
+</span>				 * @event CursorInsertHTML
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorInsertHTML&#39;, this);
+
+<span id='Cursor-event-CursorClearSelection'>				/**
+</span>				 * @event CursorClearSelection
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorClearSelection&#39;, this);
+
+<span id='Cursor-event-CursorInsertEmptyText'>				/**
+</span>				 * @event CursorInsertEmptyText
+				 *
+				 */
 				NFLCIME.addEventListener(&#39;CursorInsertEmptyText&#39;, this);
 			}
 		},
+
+<span id='Cursor-method-onModuleDeactivate'>		/**
+</span>		 * Remove event listeners
+		 *
+		 * @param {Object} [evt] Event details
+		 */
+
 		onModuleDeactivate : function(evt) {
 			var module = evt.module;
 			if (module == this &amp;&amp; this.active) {
@@ -88,8 +167,17 @@ NFLCIME.dispatchEvent({
 				NFLCIME.removeEventListener(&#39;CursorClearSelection&#39;, this);
 			}
 		},
-		// --- Event handlers
-		// Move the selection
+		
+
+
+<span id='Cursor-method-onCursorMove'>		/**
+</span>		 * Figures out the start and end of the cursor text selection and moves it to the &quot;dropped&quot; location
+		 * If dragging within a wysiwyg editor, it invokes the {@link #moveRangeEnd}
+		 * and {@link #moveRangeStart} methods
+		 * @param {Object} [evt] Event details
+		 */
+
+
 		onCursorMove : function(evt) {
 			var edit = evt.target;
 			var move_end = evt.end;
@@ -158,10 +246,22 @@ NFLCIME.dispatchEvent({
 				this.previousCursorPosition = this.getCursorPosition(edit);
 			}
 		},
+
+<span id='Cursor-method-onCursorSaveFocusedEdit'>		/**
+</span>		 * Stores previous event target into the {@link #previousFocusedEdit} runtime property
+		 * @param {Object} [evt] Event details
+		 */
+
 		onCursorSaveFocusedEdit : function(evt) {
 			var edit = evt.target;
 			this.previousFocusedEdit = edit;
 		},
+
+<span id='Cursor-method-onCursorRestoreFocusedEdit'>		/**
+</span>		 * If {@link #previousFocusedEdit} is set, restores cursor and element focus to previous event target
+		 * @param {Object} [evt] Event details
+		 */
+
 		onCursorRestoreFocusedEdit : function(evt) {
 			if (this.previousFocusedEdit) {
 				var edit = this.previousFocusedEdit;
@@ -174,6 +274,15 @@ NFLCIME.dispatchEvent({
 				evt.target = this.previousFocusedEdit;
 			}
 		},
+
+
+<span id='Cursor-method-onCursorGetContainer'>		/**
+</span>		 * Figures out which editable object (textarea, input, or editable window) that the cursor is in and
+		 * assigns it to the evt.container property
+		 *
+		 * @param {Object} [evt] Event details
+		 */
+
 		onCursorGetContainer : function(evt) {
 			var edit = evt.target;
 			switch (this.browser) {
@@ -208,7 +317,17 @@ NFLCIME.dispatchEvent({
 					break;
 			}
 		},
-		// Get a certain number of character before and after the selection
+		
+
+<span id='Cursor-method-onCursorGetContext'>		/**
+</span>		 * Get a certain number of character before and after the selection.
+		 * Sets evt.textBehind string and event.textAhead string
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Number} [evt.behindCount] Number of chars before cursor
+		 * @param {Number} [evt.aheadCount] Number of chars after cursor
+		 */
+
 		onCursorGetContext : function(evt) {
 			var edit = evt.target;
 			var behind_count = evt.behindCount;
@@ -288,12 +407,32 @@ NFLCIME.dispatchEvent({
 					break;
 			}
 		},
+
+
+<span id='Cursor-method-onCursorGetFocusedEdit'>		/**
+</span>		 * Returns {@link #focusedEdit} as evt.target if {@link #focusedEdit} is defined and {@link #windowLostFocused} is false
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Number} [evt.behindCount] Number of chars before cursor
+		 * @param {Number} [evt.aheadCount] Number of chars after cursor
+		 */
+
+
 		onCursorGetFocusedEdit : function(evt) {
 			if (this.focusedEdit &amp;&amp; !this.windowLostFocus) {
 				evt.target = this.focusedEdit;
 			}
 		},
-		// Insert text at the cursor, removing any selected text
+		
+
+<span id='Cursor-method-onCursorInsertText'>		/**
+</span>		 * Insert text at the cursor, removing any selected text
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] HTML Element
+		 * @param {String} [evt.text] Text to insert
+		 */
+
 		onCursorInsertText : function(evt) {
 			var edit = evt.target;
 			var text = evt.text;
@@ -436,7 +575,17 @@ NFLCIME.dispatchEvent({
 				this.previousCursorPosition = this.getCursorPosition(edit);
 			}
 		},
-		// Insert HTML at the cursor
+		
+<span id='Cursor-method-onCursorInsertHTML'>		/**
+</span>		 * Insert HTML at the current cursor position
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] HTML Element
+		 * @param {String} [evt.html] HTML to insert
+		 * @param {String} [evt.text] Plain text to insert
+		 */
+
+
 		onCursorInsertHTML : function(evt) {
 			var edit = evt.target;
 			var html = evt.html;
@@ -492,6 +641,17 @@ NFLCIME.dispatchEvent({
 				this.previousCursorPosition = this.getCursorPosition(edit);
 			}
 		},
+
+
+<span id='Cursor-method-onCursorInsertTag'>		/**
+</span>		 * Insert HTML element at cursor position, deleting current selection
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] HTML Element
+		 * @param {String} [evt.html] HTML to insert
+		 */
+
+
 		onCursorInsertTag : function(evt) {
 			var edit = evt.target;
 			var tag = evt.html;
@@ -536,6 +696,17 @@ NFLCIME.dispatchEvent({
 				// this.previousCursorPosition = this.getCursorPosition(edit);
 			}
 		},
+
+
+<span id='Cursor-method-onCursorInsertEmptyText'>		/**
+</span>		 * Insert text node containing character &#39;\ufeff&#39; at cursor position.
+		 * This is the Unicode Character &#39;ZERO WIDTH NO-BREAK SPACE&#39; and is used to set the Byte Order Mark
+		 * See http://en.wikipedia.org/wiki/Byte_order_mark for more details.
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] HTML Element
+		 */
+
 		onCursorInsertEmptyText : function(evt){
 			var doc = evt.target,
 			    selection = doc.getSelection(),
@@ -555,6 +726,16 @@ NFLCIME.dispatchEvent({
 			    selection.removeAllRanges();
 			    selection.addRange(range);	
 		},
+
+
+<span id='Cursor-method-onCursorGetSelectedText'>		/**
+</span>		 * Sets the evt.text property by getting the currently selected text
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] HTML Element
+		 * @param {Object} [evt.text] HTML Element
+		 */
+
 		onCursorGetSelectedText : function(evt) {
 			var edit = evt.target;
 			var text = evt.text;
@@ -584,7 +765,15 @@ NFLCIME.dispatchEvent({
 					break;
 			}
 		},
-		// Clear selected text
+		
+
+<span id='Cursor-method-onCursorClearSelection'>		/**
+</span>		 * Clear the current text selection
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] HTML Element
+		 */
+
 		onCursorClearSelection : function(evt) {
 			var edit = evt.target;
 			var doc = edit.ownerDocument;
@@ -612,7 +801,13 @@ NFLCIME.dispatchEvent({
 					}
 			}
 		},
-		// Fire an onchange event after element blur
+		
+
+<span id='Cursor-method-fireElementChangeEvent'>		/**
+</span>		 * Fire an onchange event after element blur
+		 *
+		 */
+
 		fireElementChangeEvent : function() {
 			var element;
 			if (this.focusedEdit) {
@@ -633,7 +828,15 @@ NFLCIME.dispatchEvent({
 				}
 			}
 		},
-		// Keep track of which edit control has focus
+		
+
+<span id='Cursor-method-onElementFocus'>		/**
+</span>		 *  Keep track of which edit control has focus
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] Element firing the event
+		 */
+
+
 		onElementFocus : function(evt) {
 			var element = evt.target;
 	
@@ -672,7 +875,25 @@ NFLCIME.dispatchEvent({
 				}
 			}
 		},
+
+<span id='Cursor-property-onElementBlurTimeoutId'>		/**
+</span>		 * @property {Number}
+		 * @private
+		 * Used in the {@link #onElementBlur} method to capture the pointer to a 50 ms timeout delay on element blur closure
+		 */
+
 		onElementBlurTimeoutId : 0,
+
+
+<span id='Cursor-method-onElementBlur'>		/**
+</span>		 * Invokes {@link #fireElementChangeEvent} method on element blur for elements that have an nflcime attribute.
+		 * For iframe-based editors, it dispatches a {@link #CursorSaveFocusedEdit} event.
+		 *
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] Element firing the event
+		 */
+
+
 		onElementBlur : function(evt) {
 			var element = evt.target;
 			if (!element)
@@ -705,6 +926,12 @@ NFLCIME.dispatchEvent({
 				}
 			}
 		},
+
+<span id='Cursor-method-onElementBlurNotify'>		/**
+</span>		 * Invokes the {@link #fireElementChangeEvent} method and dispatches a {@link #FocusChanged} event
+		 *
+		 */
+
 		onElementBlurNotify : function() {
 			this.fireElementChangeEvent();
 			var prev = this.focusedEdit;
@@ -717,8 +944,12 @@ NFLCIME.dispatchEvent({
 			this.onElementBlurTimeoutId = 0;
 			this.stopCursorCheck();
 		},
-		// Check to see if the previously focused element regained focus when
-		// the window regained focus
+		
+<span id='Cursor-method-onWindowFocus'>		/**
+</span>		 * Check to see if the previously focused element regained focus when its window regained focus.
+		 * @param {Object} [evt] Event details
+		 */
+
 		onWindowFocus : function(evt) {
 			
 			if (!evt.target.nodeType) {
@@ -737,8 +968,12 @@ NFLCIME.dispatchEvent({
 				this.windowLostFocus = false;
 			}
 		},
-		// Focus is lost if the window containing the focused element loses
-		// focus
+		
+<span id='Cursor-method-onWindowBlur'>		/**
+</span>		 * Focus is lost if the window containing the focused element loses focus
+		 * @param {Object} [evt] Event details
+		 */
+
 		onWindowBlur : function(evt) {
 			if (!evt.target.nodeType) {
 				if (this.focusedEdit
@@ -752,10 +987,28 @@ NFLCIME.dispatchEvent({
 				this.windowLostFocus = true;
 			}
 		},
+
+
+<span id='Cursor-method-onWindowListen'>		/**
+</span>		 * Attach DOM Handlers to a window by invoking the {@link #attachDomHandlers} method.
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] The target window
+		 */
+
 		onWindowListen : function(evt) {
 			var win = evt.target;
 			this.attachDOMHandlers(win);
 		},
+
+
+<span id='Cursor-method-onWindowIgnore'>		/**
+</span>		 * Make sure we&#39;re not hanging onto objects from the window being
+		 * ignored, sets {@link #previousCursorPosition}
+		 * @param {Object} [evt] Event details
+		 * @param {Object} [evt.target] The target window
+		 */
+
+
 		onWindowIgnore : function(evt) {
 			var win = evt.target;
 			var doc = win.doc;
@@ -804,10 +1057,25 @@ NFLCIME.dispatchEvent({
 
 			}
 		},
-		// See if the cursor has moved
+		
+
+<span id='Cursor-method-onKeyDown'>		/**
+</span>		 * See if the cursor has moved by calling the {@link #scheduleCursorCheck} method
+		 * @param {Object} [evt] Event details
+		 */
+
 		onKeyDown : function(evt) {
 			this.scheduleCursorCheck();
 		},
+
+
+		
+<span id='Cursor-method-onMouseDown'>		/**
+</span>		 * Attach {@link #onMouseMove} method to a mousedown event and
+		 * see if the cursor has moved by calling the {@link #scheduleCursorCheck} method
+		 * @param {Object} [evt] Event details
+		 */
+		
 		onMouseDown : function(evt) {
 			var target = evt.target;
 			var doc = (target.nodeType == 1) ? target.ownerDocument : target;
@@ -942,7 +1210,13 @@ NFLCIME.dispatchEvent({
 			}
 			return false;
 		},
-		// Move the end-point of a DOM range object
+
+		
+<span id='Cursor-method-moveRangeEnd'>		/**
+</span>		 * Move the end-point of a DOM range object
+		 * 
+		 * 
+		 */
 		moveRangeEnd : function(container, range, amount) {
 			if (amount == 0) {
 				return;
@@ -953,7 +1227,13 @@ NFLCIME.dispatchEvent({
 							range.endOffset, amount, true);
 			range.setEnd(result.node, result.index);
 		},
-		// Move the starting-point of a DOM range object
+		
+<span id='Cursor-method-moveRangeStart'>		/**
+</span>		 * Move the starting-point of a DOM range object
+		 * 
+		 * 
+		 */
+		 
 		moveRangeStart : function(container, range, amount) {
 			if (amount == 0) {
 				return;
