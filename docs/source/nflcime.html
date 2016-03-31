@@ -104,7 +104,7 @@ NFLCIME.extend(NFLCIME, {
 	 */
 
 	dispatchEvent: function(evt) {
-		console.log(evt);
+		
 		var result;
 		var loops = [&#39;_cap&#39;, &#39;&#39;]; // send event to capturing listeners first
 		for (var k = 0; k &lt; loops.length; k++) {
@@ -259,7 +259,6 @@ NFLCIME.extend(NFLCIME, {
 		if (this.checkModuleDependency(module)) {
 			var ready = this.initializeModule(module);
 			if (ready) {
-				console.log(&#39;module ready:&#39;,evt.module.id);
 				this.dispatchEvent({
 					type: &#39;ModuleRegister&#39;,
 					module: module
@@ -523,7 +522,7 @@ NFLCIME.extend(NFLCIME, {
 			}
 			var script = document.createElement(&#39;SCRIPT&#39;);
 
-			
+		
 			script.src = full_url;
 			head.appendChild(script);
 
@@ -679,6 +678,7 @@ NFLCIME.extend(NFLCIME, {
 
 	initialize: function() {
 		// figure out the url root of this script
+		
 		var scripts = document.getElementsByTagName(&#39;SCRIPT&#39;);
 		for (var i = 0; i &lt; scripts.length; i++) {
 			var script = scripts[i];

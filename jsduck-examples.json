@@ -17,11 +17,27 @@
         "status": "updated"
     },
     {
-        "name": "TinyMCE4-A",
-        "title": "TinyMCE4 with Ext JS 4",
+        "name": "TinyMCE4-B",
+        "title": "TinyMCE4 with the NFLCIME Plugin",
         "description": "Using IME with the TinyMCE 4 WYSIWYG editor and ICE plugin",
-        "url": "../../../examples/TinyMCE4ExtJS4Sample/index.html",
+        "url": "../../../examples/TinyMCE4.html",
         "icon": "../../../resources/docs/application_enterprise_information.png",
         "status": "updated"
     }]
-}]
+},
+{
+    "title": "Sencha Ext JS Examples",
+    "items": [
+         {
+            "name": "TinyMCE4-A",
+            "title": "TinyMCE4 with Ext JS 4",
+            "description": "Using IME with the TinyMCE 4 WYSIWYG editor and ICE plugin from Sencha Ext JS 4",
+            "url": "../../../examples/TinyMCE4ExtJS4Sample/index.html",
+            "icon": "../../../resources/docs/application_enterprise_information.png",
+            "status": "updated"
+         }
+    ]
+}
+
+]
+

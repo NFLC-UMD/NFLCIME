@@ -856,6 +856,7 @@ Ext.define('Ext.ux.form.TinyMCETextArea', {
 
         // console.log(me.tinyMCEConfig);
         tinymce.init(me.tinyMCEConfig);
+        console.log(me.tinyMCEConfig);
 
 
 

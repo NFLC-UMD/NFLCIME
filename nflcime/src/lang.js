@@ -592,7 +592,7 @@ NFLCIME.dispatchEvent({
 
 			var url = NFLCIME.mapUrlToPackage('languages.json');
 			var full_url = (/^\w+:/.test(url) || /^\//.test(url)) ? url : env.scriptURLRoot + url;
-
+			
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
