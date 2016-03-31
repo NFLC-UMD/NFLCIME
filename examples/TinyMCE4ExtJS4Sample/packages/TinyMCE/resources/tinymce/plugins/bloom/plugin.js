@@ -475,16 +475,20 @@ tinymce.PluginManager.add('bloom', function(ed, url) {
 
 
 		// dynamically reconfigure supported languages
-
+		console.log('languages exist');
 
 		ed.on('setBloomLanguages', function __setbloomlanguages__(ed) {
-
+		
 			// only set once
 			// if (!ed.bloomLanguagesSet) {
 			// added type conversion 09/17/2014 sdd
 
 			if (typeof ed == 'object') {
-				langs = ed.langs;
+				if (ed.langs) {
+					langs = ed.langs;
+				} else {
+					langs = this.settings.bloom.languages; // for non-Ext code
+				}
 				if (typeof langs == 'string') {
 					langs = langs.split(',');
 				}
@@ -590,6 +594,11 @@ tinymce.PluginManager.add('bloom', function(ed, url) {
 			ed.bloomLanguagesSet = true;
 			// }
 
+		});
+
+		
+		ed.fire('setBloomLanguages', {
+			editor: ed
 		});
 	};
 
