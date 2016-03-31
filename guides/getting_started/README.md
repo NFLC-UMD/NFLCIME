@@ -89,47 +89,7 @@ Right-to-Left languages should apply a CSS class or STYLE attribute that sets di
 	<label for="myarabictextarea">Arabic Content</label>
 	<textarea id="myarabictextarea" lang="arb" class="lang-arb" style="direction:rtl" NFLCIME="on" />
 	
-
-	
-## Available Keyboards
-
-Keyboard definitions are registered in the NFLCIME/src/languages.json file.
-
-Available keyboards include:
-
-Language     | Code   | Language  | Code | Language | Code |
------------- | -------| --------  | ---- | -------- | ---- |
-Albanian     | sqi    | Amharic   | amh  | Arabic   | arb  |
-Azeri        | aze    | Bambara   | bam  | Balochi  | bal  |
-Belarussian  | bel    | Bengali   | ben  | Brahui   | brh  |
-Bulgarian    | bul    | Burmese   | mya  | Chechen  | che  |
-Chinese      | zho    | Croatian  | hrv  | Czech    | ces  |
-Danish       | dan    | Dari      | prs  | Dinka    | din  |
-Dutch        | nld    | Estonian  | est  | Farsi    | fas  |
-Finnish      | fin    | French    | fra  | Georgian | kat  |
-German       | deu    | Greek     | ell  | Gujarati | guj  |
-Haitian      | hat    | Hassaniyya | mey | Hausa   | hau  |
-Hebrew       | heb    | Hindi     | hin  | Hindko   | hno  | 
-Hungarian    | hun    | Igbo      | ibo  | Iraqi    | acm  |
-Italian      | ita    | Kashmiri  | kas  | Kazakh   | kaz  |  
-Korean       | kor    | Kurdish   | kur  | Kurmanji | kmr  |
-Kyrgyz       | kir    | Latvian   | lav  | Lithuanian | lit |
-Lao          | lao    | Macedonian | mkd | maguindanao | mdh |
-Maranao      | mrw    | Norwegian | nor  | Pashto   | pus |
-Potwari      | phr    | Polish    | pol  | ePunjabi | pan |
-wPunjabi     | pnb    | Portugese | por  | Quechua  | que | 
-Romanian     | ron    | Russian   | rus  | Sama     | ssb | 
-Serbian      | srp    | Sindhi    | snd  | Siraiki  | skr |
-Slovene      | slv    | Slovak    | slk  | Sorani   | ckb |
-Spanish      | spa    | Sudanese  | apd  | Swahili  | swa |
-Swedish      | swe    | Tagalog   | tgl  | Tajik    | tgk |
-Thai         | tha    | Tigrinya  | tir  | Turkish  | tur |
-Turkmen      | tuk    | Ukranian  | ukr  | Uzbek    | uzb |
-Wolof        | wol    | Urdu      | urd  | Vietnamese | vie |
-Yakan        | yka    | Yoruba    | yor
- 
-
-## Putting It All Together 
+### Putting It All Together 
 
 The following snippet illustrates loading NFLC IME and attaching a keyboard to a textarea:
 
@@ -162,5 +122,102 @@ The following snippet illustrates loading NFLC IME and attaching a keyboard to a
 
 	<h3>Arabic, Libyan</h3>
 	<textarea lang="ayl" class="lang-ayl" NFLCIME="on" style="direction: rtl"></textarea>
+
+
+## Using the TinyMCE4 WYSIWYG Plugin
+IME has a special plugin for the TinyMCE4 WYSIWYG editor.
+
+Currently the plugin is located in the /examples/TinyMCE4ExtJS4Sample/packages/TinyMCE/resources/tinymce/plugins/bloom folder.
+
+![tinymce4 screenshot](../resources/docs/tinymcewithime.png)
+
+
+The following code, when placed in the html &lt;head&gt; performs the following functions:
+
+- Loads the NFLC IME Library
+- Loads TinyMCE
+- Configures TinyMCE to attach to all textareas on the page
+- Loads the "bloom" (NFLCIME) plugin into TinyMCE
+- Configures which selectable language keyboards will be available to the user (bloom.languages property)
+- Invokes the appropriate NFLCIME modules from TinyMCE
+
+<!-- load the nflcime library with richtext option -->
+    <script src="../NFLCIME/nflcime.js">
+	    Modules: [
+	        {id: 'cursor', compressed: false, activate: true},
+	        {id: 'rt', compressed: false, activate: true}
+	    ]
+	</script>
+
+	<!-- load the tinymce widget -->
+    <script src="TinyMCE4ExtJS4Sample/packages/TinyMCE/resources/tinymce/tinymce.js"></script>
+
+	<!-- initialize the tinymce editor(s) -->
+	<script>
+	    tinymce.init({ 
+		 selector:"textarea",
+		 menubar: false,
+		 plugins: "bloom paste code visualblocks",
+		 content_css: "../NFLCIME/fontcss/langs.css,TinyMCE4ExtJS4Sample/packages/TinyMCE/resources/ice/tinymce4_plugin/css/ice.css",
+		 bloom: {
+		 	css: '../../../../../../../../NFLCIME/fontcss/langs.css',
+			defaultLanguage : "eng",
+			default_language : "eng",
+			languages : "arb,amh,sqi,eng",
+			services: "kb,cvt,rt",
+			Modules: [
+				{id: 'pers.cookie', activate: true},
+				{id: 'ui.iframe', activate: true},
+				{id: 'editor.tinymce', activate: true},
+				{id: 'rt.scrube', activate: true},
+				{id: 'lang', activate: true}
+			]
+		 },
+		 toolbar1: "undo redo | bold italic | strikethrough | charmap | code |  visualblocks  | bloomlanguagebutton bloomlanguageenablebutton bloomlanguageselectblockbutton bloomcharmapbutton | ice_togglechanges ice_toggleshowchanges iceacceptall icerejectall iceaccept icereject"
+		});
+	
+	</script>
+
+
+	
+## Available Keyboards
+
+Keyboard definitions are registered in the NFLCIME/src/languages.json file.
+
+Available keyboards include:
+
+Language     | Code   | Language  | Code | Language | Code |
+------------ | -------| --------  | ---- | -------- | ---- |
+             |        |           |      |          |      |
+Albanian     | sqi    | Amharic   | amh  | Arabic   | arb  |
+Azeri        | aze    | Bambara   | bam  | Balochi  | bal  |
+Belarussian  | bel    | Bengali   | ben  | Brahui   | brh  |
+Bulgarian    | bul    | Burmese   | mya  | Chechen  | che  |
+Chinese      | zho    | Croatian  | hrv  | Czech    | ces  |
+Danish       | dan    | Dari      | prs  | Dinka    | din  |
+Dutch        | nld    | Estonian  | est  | Farsi    | fas  |
+Finnish      | fin    | French    | fra  | Georgian | kat  |
+German       | deu    | Greek     | ell  | Gujarati | guj  |
+Haitian      | hat    | Hassaniyya | mey | Hausa   | hau  |
+Hebrew       | heb    | Hindi     | hin  | Hindko   | hno  | 
+Hungarian    | hun    | Igbo      | ibo  | Iraqi    | acm  |
+Italian      | ita    | Kashmiri  | kas  | Kazakh   | kaz  |  
+Korean       | kor    | Kurdish   | kur  | Kurmanji | kmr  |
+Kyrgyz       | kir    | Latvian   | lav  | Lithuanian | lit |
+Lao          | lao    | Macedonian | mkd | maguindanao | mdh |
+Maranao      | mrw    | Norwegian | nor  | Pashto   | pus |
+Potwari      | phr    | Polish    | pol  | ePunjabi | pan |
+wPunjabi     | pnb    | Portugese | por  | Quechua  | que | 
+Romanian     | ron    | Russian   | rus  | Sama     | ssb | 
+Serbian      | srp    | Sindhi    | snd  | Siraiki  | skr |
+Slovene      | slv    | Slovak    | slk  | Sorani   | ckb |
+Spanish      | spa    | Sudanese  | apd  | Swahili  | swa |
+Swedish      | swe    | Tagalog   | tgl  | Tajik    | tgk |
+Thai         | tha    | Tigrinya  | tir  | Turkish  | tur |
+Turkmen      | tuk    | Ukranian  | ukr  | Uzbek    | uzb |
+Wolof        | wol    | Urdu      | urd  | Vietnamese | vie |
+Yakan        | yka    | Yoruba    | yor
+ 
+
 
 

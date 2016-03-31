@@ -18,7 +18,7 @@
     },
     {
         "name": "TinyMCE4-B",
-        "title": "TinyMCE4 with the NFLCIME Plugin",
+        "title": "TinyMCE4 WYSIWYG",
         "description": "Using IME with the TinyMCE 4 WYSIWYG editor and ICE plugin",
         "url": "../../../examples/TinyMCE4.html",
         "icon": "../../../resources/docs/application_enterprise_information.png",
