@@ -87,7 +87,7 @@ NFLCIME.extend(NFLCIME, {
 	 */
 
 	dispatchEvent: function(evt) {
-		console.log(evt);
+		
 		var result;
 		var loops = ['_cap', '']; // send event to capturing listeners first
 		for (var k = 0; k < loops.length; k++) {
@@ -242,7 +242,6 @@ NFLCIME.extend(NFLCIME, {
 		if (this.checkModuleDependency(module)) {
 			var ready = this.initializeModule(module);
 			if (ready) {
-				console.log('module ready:',evt.module.id);
 				this.dispatchEvent({
 					type: 'ModuleRegister',
 					module: module
@@ -506,7 +505,7 @@ NFLCIME.extend(NFLCIME, {
 			}
 			var script = document.createElement('SCRIPT');
 
-			
+		
 			script.src = full_url;
 			head.appendChild(script);
 
@@ -662,6 +661,7 @@ NFLCIME.extend(NFLCIME, {
 
 	initialize: function() {
 		// figure out the url root of this script
+		
 		var scripts = document.getElementsByTagName('SCRIPT');
 		for (var i = 0; i < scripts.length; i++) {
 			var script = scripts[i];
@@ -3866,7 +3866,7 @@ NFLCIME.dispatchEvent({
 		onKeyPress: function(evt) {
 			// cursor.js write to textarea and input in Firefox through keypress events;
 			// setting this.keyCode to zero ensure
-
+			// debugger;
 			if (this.keyCode) {
 				var key = this.translateKey(this.keyCode);
 
@@ -3942,6 +3942,7 @@ NFLCIME.dispatchEvent({
 						var lang = {
 							type: 'LanguageGet'
 						};
+					
 						NFLCIME.dispatchEvent(lang);
 
 						// THIS IS IMPORTANT!!!!!!!
@@ -3951,7 +3952,14 @@ NFLCIME.dispatchEvent({
 						var doc = edit.ownerDocument;
 						var win = doc.defaultView;
 						var selection = win.getSelection();
+
+						// todo: modify for keyboard builder
+						if (selection.type == 'None') {
+							return false;
+						}
+
 						var range = selection.getRangeAt(0);
+
 						var container = null;
 						var langAttr = null;
 
@@ -3995,7 +4003,7 @@ NFLCIME.dispatchEvent({
 						} else {
 
 							// determine if we need to add a span, or modify P
-							// debugger;
+							
 							if (pEl && !(pEl.getAttribute('lang'))) {
 
 								// configure paragraph element
@@ -6711,7 +6719,7 @@ NFLCIME.dispatchEvent({
 
 			var url = NFLCIME.mapUrlToPackage('languages.json');
 			var full_url = (/^\w+:/.test(url) || /^\//.test(url)) ? url : env.scriptURLRoot + url;
-
+			
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4 && xhr.status == 200) {

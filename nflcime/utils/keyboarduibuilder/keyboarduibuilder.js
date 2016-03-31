@@ -33,14 +33,18 @@ function onModuleRegister(evt) {
 		var edit = element('hidden-edit');
 		keyDivs = [];
 		planesAvailable = [];
+
+		// loop through kb settings and pop characters into virtual keyboard
 		for(var i = 0; i < keyboardPlanes.length; i++) {
 			var plane = keyboardPlanes[i];
 			var prop = propertyNames[i];
 			var container = element('kb-plane-' + plane);
+			// if (i==1) { debugger;}
 			if(module[prop]) {
 				planesAvailable.push(plane);
 				container.style.display = '';
 				var states = keyboardStates[plane];
+			
 				for(var j = 0; j < keyCodeRows.length; j++) {
 					var row = keyCodeRows[j];
 					for(var k = 0; k < row.length; k++) {
@@ -50,12 +54,21 @@ function onModuleRegister(evt) {
 							div.firstChild.style.left = '';
 							div.firstChild.style.top = '';
 							var keyCode = parseInt(key.substr(2), 16);
+							
+
 							edit.value = '';
 							module.onKeyboardSetStates( { states:states } );
-							module.onKeyDown( { target:edit, keyCode:keyCode,  } );
+
+							// get actual character to display in key
+							// by invoking methods of the 
+							/*
+							module.onKeyDown( { target:edit, keyCode:keyCode  } );
 							module.onKeyPress( { target:edit, keyCode:keyCode, charCode:0 } );
 							module.onKeyUp( { target:edit, keyCode:keyCode } );
-							var character = edit.value;
+							*/
+							var character = module.lookUpKey(keyCode).insert;
+							console.log(module.lookUpKey(keyCode));
+
 							module.onKeyDown( { target:edit, keyCode:0x20 } );
 							module.onKeyPress( { target:edit, keyCode:0x20, charCode:0 } );
 							module.onKeyUp( { target:edit, keyCode:0x20 } );
@@ -104,6 +117,7 @@ function loadKeyboard() {
 		container.style.display = 'none';
 	}
 	loading_module_id = element('keyboard-id').value.replace(/\s+$/, '').replace(/^\s+/, '');
+
 	NFLCIME.dispatchEvent( { type:'ModuleLoad', moduleId:loading_module_id } );
 }
 var selection;
@@ -187,7 +201,7 @@ function buildHTML() {
 	var title = element('keyboard-title').value;
 	var id = element('keyboard-id').value;
 	var lines = [];
-	lines.push('<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">');
+	lines.push('<!doctype html5>');
 	lines.push('<html>');
 	lines.push('<head>');
 	lines.push('<title>' + title + '</title>');

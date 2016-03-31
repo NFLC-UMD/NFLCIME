@@ -409,7 +409,7 @@ NFLCIME.dispatchEvent({
 		onKeyPress: function(evt) {
 			// cursor.js write to textarea and input in Firefox through keypress events;
 			// setting this.keyCode to zero ensure
-
+			// debugger;
 			if (this.keyCode) {
 				var key = this.translateKey(this.keyCode);
 
@@ -485,6 +485,7 @@ NFLCIME.dispatchEvent({
 						var lang = {
 							type: 'LanguageGet'
 						};
+					
 						NFLCIME.dispatchEvent(lang);
 
 						// THIS IS IMPORTANT!!!!!!!
@@ -496,8 +497,12 @@ NFLCIME.dispatchEvent({
 						var selection = win.getSelection();
 
 						// todo: modify for keyboard builder
+						if (selection.type == 'None') {
+							return false;
+						}
 
 						var range = selection.getRangeAt(0);
+
 						var container = null;
 						var langAttr = null;
 
@@ -541,7 +546,7 @@ NFLCIME.dispatchEvent({
 						} else {
 
 							// determine if we need to add a span, or modify P
-							// debugger;
+							
 							if (pEl && !(pEl.getAttribute('lang'))) {
 
 								// configure paragraph element

@@ -37,6 +37,28 @@
             "status": "updated"
          }
     ]
+},
+{
+    "title": "Development Tools",
+    "items": [
+         {
+            "name": "KeyboardMapper",
+            "title": "Keyboard Mapper",
+            "description": "Use this utility to map foreign-language characters to keys on a keyboard",
+            "url": "../../../nflcime/utils/keyboardmapper/keyboardmapper.html",
+            "icon": "../../../resources/docs/application_enterprise_information.png",
+            "status": "updated"
+         },
+         {
+            "name": "KeyboardUIBuilder",
+            "title": "Keyboard UI Builder",
+            "description": "Use this utility to create the visual representation of the keyboard",
+            "url": "../../../nflcime/utils/keyboarduibuilder/keyboarduibuilder.html",
+            "icon": "../../../resources/docs/application_enterprise_information.png",
+            "status": "updated"
+         }
+
+    ]
 }
 
 ]
