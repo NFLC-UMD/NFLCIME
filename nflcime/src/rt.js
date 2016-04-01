@@ -1,7 +1,7 @@
 /**
  * @docauthor Christopher Rhodes <clrhodes@gmail.com>
  *
- * @class RichTextEditor
+ * @class NFLCIME.RichTextEditor
  *
  */
 

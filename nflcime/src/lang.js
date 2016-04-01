@@ -1,7 +1,7 @@
 /**
  * @docauthor Steve Drucker <sdrucker@figleaf.com>
  *
- * @class Language
+ * @class NFLCIME.Language
  * Responsible for launching on-screen keyboard when change of language is detected
  *
  */

@@ -15,10 +15,10 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='RichTextEditor'>/**
+  <pre class="prettyprint lang-js"><span id='NFLCIME-RichTextEditor'>/**
 </span> * @docauthor Christopher Rhodes &lt;clrhodes@gmail.com&gt;
  *
- * @class RichTextEditor
+ * @class NFLCIME.RichTextEditor
  *
  */
 
@@ -886,7 +886,7 @@ NFLCIME.dispatchEvent({
 				this.pasteDestination = null;
 			}
 		},
-<span id='RichTextEditor-method-initialize'>		/**
+<span id='NFLCIME-RichTextEditor-method-initialize'>		/**
 </span>		 *  Initialize the module.
 		 *  Sets the {@link #browser} property and initializes {@link #closures} and sets {@link #active} to false
 		 *  @param {Object} env The browser environment
@@ -900,20 +900,20 @@ NFLCIME.dispatchEvent({
 		},
 		//--- Private variables
 
-<span id='RichTextEditor-property-active'>		/**
+<span id='NFLCIME-RichTextEditor-property-active'>		/**
 </span>		 * @property {Boolean}
 		 * @private
 		 * Sets the module to be active/inactive
 		 */
 		active: false,
 
-<span id='RichTextEditor-property-browser'>		/**
+<span id='NFLCIME-RichTextEditor-property-browser'>		/**
 </span>		 * @property {String}
 		 * @private
 		 * Sets to the browser detected (ie/firefox/safari)
 		 */
 		browser: &#39;&#39;,
-<span id='RichTextEditor-property-pasteDestination'>		/**
+<span id='NFLCIME-RichTextEditor-property-pasteDestination'>		/**
 </span>		 * @property {HTMLElement}
 		 * @private
 		 * Used to track DOM node created for pasting via browser detection when NOT
@@ -921,14 +921,14 @@ NFLCIME.dispatchEvent({
 		 * RichTextEditor#pasteTrueTarget}.
 		 */
 		pasteDestination: null,
-<span id='RichTextEditor-property-pasteTrueTarget'>		/**
+<span id='NFLCIME-RichTextEditor-property-pasteTrueTarget'>		/**
 </span>		 * @property {HTMLElement}
 		 * @private
 		 * Used to track the active textarea DOM node for the editor when NOT
 		 * used with TinyMCE.
 		 */
 		pasteTrueTarget: null,
-<span id='RichTextEditor-property-selectionBeforePaste'>		/**
+<span id='NFLCIME-RichTextEditor-property-selectionBeforePaste'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * Used to track the start and end selection text when NOT used with
@@ -941,19 +941,19 @@ NFLCIME.dispatchEvent({
 		// Not currently set
 		fragmentAheadOfCursor: null,
 
-<span id='RichTextEditor-property-isPasting'>		/**
+<span id='NFLCIME-RichTextEditor-property-isPasting'>		/**
 </span>		 * @property {Boolean}
 		 * @private
 		 * Sets the pasting mode of the editor when NOT used with TinyMCE.
 		 */
 		isPasting: false,
-<span id='RichTextEditor-property-legacyPointSizesHash'>		/**
+<span id='NFLCIME-RichTextEditor-property-legacyPointSizesHash'>		/**
 </span>		 * @property {Object}
 		 * @private
 		 * Sets the available font sizes for the editor when NOT used with TinyMCE.
 		 */
 		legacyPointSizesHash: {},
-<span id='RichTextEditor-property-htmlColors'>		/**
+<span id='NFLCIME-RichTextEditor-property-htmlColors'>		/**
 </span>		 * @property {Object}
 		 * Available font colors for the editor when NOT used with TinyMCE.
 		 */

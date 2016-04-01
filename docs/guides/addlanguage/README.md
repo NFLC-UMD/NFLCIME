@@ -20,10 +20,17 @@ As you make selections, the javascript file will automatically adjust to reflect
 
 To create a brand new keyboard, simply input the name of a keyboard mapping class that does not yet exist and press the [load] button.
 
+## Creating and Editing a Keyboard UI
+
+After you've created or modified a key mapping, you will need to generate its corresponding visual interface. Use the tool at nflcime/utils/keyboarduibuilder/keybarduibuilder.html to generate the html markup required by the API.
+
+{@img keyboardeditor2.png Editing Keyboard UI}
+
+As illustrated in the screenshot above, the application will import your key mappings and lay them out onto a virtual keyboard. You can use the arrow buttons to center the foreign language characters in on each virtual "key." When you're done, copy the html generated in the app and paste it into a file in the nflcime/packages/ui/kb folder. Also, take a screenshot of the keyboard and save it out into the nflcime/packages/ui/kb/img folder.
 
 ## Registering New Keyboards / Languages
 
-You must register ll Keyboards/Languages in the file nflcime/src/languages.json. The example below registers the Belarussian keyboard.
+You must register all Keyboards/Languages in the file nflcime/src/languages.json. The example below registers the Belarussian keyboard.
 
 
     {

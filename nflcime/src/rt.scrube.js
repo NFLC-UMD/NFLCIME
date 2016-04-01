@@ -1,7 +1,7 @@
 /**
  * @docauthor Steve Drucker <sdrucker@figleaf.com.com>
  *
- * @class rt.scrube
+ * @class NFLCIME.rtscrube
  *
  * Scrubs text that is pasted into a rich-text editor
  */

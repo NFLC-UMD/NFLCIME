@@ -15,10 +15,10 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='rt-scrube'>/**
+  <pre class="prettyprint lang-js"><span id='NFLCIME-rtscrube'>/**
 </span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com.com&gt;
  *
- * @class rt.scrube
+ * @class NFLCIME.rtscrube
  *
  * Scrubs text that is pasted into a rich-text editor
  */
@@ -30,7 +30,7 @@ NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
 	type:&#39;util&#39;,
 	dependency:[&#39;rt&#39;],
 	
-<span id='rt-scrube-method-onModuleActivate'>	/**
+<span id='NFLCIME-rtscrube-method-onModuleActivate'>	/**
 </span>	 * Adds an event listener for the &quot;RichTextPaste&quot; event
 	 * 
 	 *
@@ -44,7 +44,7 @@ NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
 		}
 	},
 	
-<span id='rt-scrube-method-onModuleDeactivate'>	/**
+<span id='NFLCIME-rtscrube-method-onModuleDeactivate'>	/**
 </span>	 * Removes the event listener for the &quot;RichTextPaste&quot; event
 	 * 
 	 *
@@ -57,7 +57,7 @@ NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
 		}
 	},
 
-<span id='rt-scrube-method-onRichTextPaste'>	/**
+<span id='NFLCIME-rtscrube-method-onRichTextPaste'>	/**
 </span>	 * Converts text using symbolic font to unicode
 	 * Removes font and font sizes &amp; sets the target language
 	 *

@@ -1,8 +1,10 @@
 /**
  * @docauthor Steve Drucker <sdrucker@figleaf.com>
  *
- * @class Persistence
+ * @class NFLCIME.Persistence
  *
+ * Persists values as browser cookies
+ * 
  */
 
 
@@ -26,13 +28,32 @@ NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 			NFLCIME.removeEventListener('PersistenceSetValue', this);
 		}
 	},
+	/**
+	 * Event handler for getting a persisted value
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onPersistenceGetValue:function(evt) {
 		evt.value = this.getValue(evt.id, evt.name);
 	},
+
+	/**
+	 * Event handler for setting a persisted value
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onPersistenceSetValue:function(evt) {
 		this.setValue(evt.id, evt.name, evt.value);
 	},
+
 	//--- Private functions
+
+	/**
+	 * Get a persisted value by group and name
+	 * 
+	 */
 	getValue:function(group, name) {
 		var cookie_values = this.cookieValueGroups[group];
 		if(!cookie_values) {
@@ -41,6 +62,11 @@ NFLCIME.dispatchEvent( { type:'ModuleAdd', module:
 		var value = cookie_values[name];
 		return value;
 	},
+
+	/**
+	 * Persist a group/name/value
+	 * 
+	 */
 	setValue:function(group, name, value) {
 		var cookie_values = this.cookieValueGroups[group];
 		if(!cookie_values) {

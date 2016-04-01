@@ -1,7 +1,7 @@
 /**
  * @docauthor Steve Drucker <sdrucker@figleaf.com.com>
  *
- * @class ui.iframe.base
+ * @class NFLCIME.iframe
  *
  * Creates a draggable iframe that's used to render the onscreen virtual keyboard
  */

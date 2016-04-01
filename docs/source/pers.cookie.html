@@ -15,11 +15,13 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='Persistence'>/**
+  <pre class="prettyprint lang-js"><span id='NFLCIME-Persistence'>/**
 </span> * @docauthor Steve Drucker &lt;sdrucker@figleaf.com&gt;
  *
- * @class Persistence
+ * @class NFLCIME.Persistence
  *
+ * Persists values as browser cookies
+ * 
  */
 
 
@@ -43,13 +45,32 @@ NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
 			NFLCIME.removeEventListener(&#39;PersistenceSetValue&#39;, this);
 		}
 	},
+<span id='NFLCIME-Persistence-method-onPersistenceGetValue'>	/**
+</span>	 * Event handler for getting a persisted value
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onPersistenceGetValue:function(evt) {
 		evt.value = this.getValue(evt.id, evt.name);
 	},
+
+<span id='NFLCIME-Persistence-method-onPersistenceSetValue'>	/**
+</span>	 * Event handler for setting a persisted value
+	 * 
+	 *
+	 * @param {Object} [evt] Event details
+	 */
 	onPersistenceSetValue:function(evt) {
 		this.setValue(evt.id, evt.name, evt.value);
 	},
+
 	//--- Private functions
+
+<span id='NFLCIME-Persistence-method-getValue'>	/**
+</span>	 * Get a persisted value by group and name
+	 * 
+	 */
 	getValue:function(group, name) {
 		var cookie_values = this.cookieValueGroups[group];
 		if(!cookie_values) {
@@ -58,6 +79,11 @@ NFLCIME.dispatchEvent( { type:&#39;ModuleAdd&#39;, module:
 		var value = cookie_values[name];
 		return value;
 	},
+
+<span id='NFLCIME-Persistence-method-setValue'>	/**
+</span>	 * Persist a group/name/value
+	 * 
+	 */
 	setValue:function(group, name, value) {
 		var cookie_values = this.cookieValueGroups[group];
 		if(!cookie_values) {
