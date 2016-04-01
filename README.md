@@ -41,6 +41,8 @@ Yakan        | yka    | Yoruba    | yor
 Using the tools in this framework enable you to customize and create your 
 own virtual keyboards for multilingual data input!
 
+[Live Demo](http://webapps.figleaf.com/nflcime/docs/#!/example)
+
 # Getting Started
 
 1. Clone this repository.
