@@ -40,3 +40,20 @@ Yakan        | yka    | Yoruba    | yor
 
 Using the tools in this framework enable you to customize and create your 
 own virtual keyboards for multilingual data input!
+
+# Getting Started
+
+1. Clone this repository.
+
+        git clone https://github.com/NFLC-UMD/NFLCIME.git
+
+1. Open the following link under a local webserver to view the documentation, e.g.:
+
+        http://localhost/NFLCIME/docs/
+
+1. The lightbulb tab has several examples, i.e.
+
+        http://localhost/NFLCIME/docs/#!/example
+
+1. To see how to plug it into your web page, you can click 'Open in new window', then right-click and 'view page source'.
+
